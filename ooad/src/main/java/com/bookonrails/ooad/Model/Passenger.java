@@ -14,6 +14,18 @@ public class Passenger {
     private boolean isSeniorCitizen;
     private Birth birthpreference;
 
+    @ManyToOne
+    @JoinColumn(name = "ticket_id", nullable = false)
+    private Ticket ticket;
+
+    public Ticket getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(Ticket ticket) {
+        this.ticket = ticket;
+    }
+
     public Long getId() {
         return id;
     }

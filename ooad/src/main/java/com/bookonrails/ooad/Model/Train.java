@@ -15,7 +15,7 @@ public class Train {
     private double basePrice;
     private double farePerKM;
     private List<DayOfWeek> operatingDays;
-    private SeatAvailibility seatAvailability;
+    private List<SeatAvailability> seatAvailability;
     private InTrainMenu inTrainMenu;
     private Route route;
 
@@ -75,11 +75,11 @@ public class Train {
         this.operatingDays = operatingDays;
     }
 
-    public SeatAvailibility getSeatAvailability() {
+    public SeatAvailability getSeatAvailability() {
         return seatAvailability;
     }
 
-    public void setSeatAvailability(SeatAvailibility seatAvailability) {
+    public void setSeatAvailability(SeatAvailability seatAvailability) {
         this.seatAvailability = seatAvailability;
     }
 

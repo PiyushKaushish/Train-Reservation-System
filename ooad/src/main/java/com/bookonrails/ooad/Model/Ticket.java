@@ -1,6 +1,7 @@
 package com.bookonrails.ooad.Model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -9,25 +10,44 @@ import jakarta.persistence.*;
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long ticket_id;
     private String PNR;
     private Station SRC;
     private Station DEST;
+
+    @ManyToOne
     private User user;
+
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Passenger> passengers;
+
+    private List<MenuItem> foodOrdered;
+
+    public List<MenuItem> getFoodOrdered() {
+        return foodOrdered;
+    }
+
+    public void setFoodOrdered(List<MenuItem> foodOrdered) {
+        this.foodOrdered = foodOrdered;
+    }
+
     private Date date;
     private ClassType classes;
     private TicketStatus status;
     private int WaitingListNumber;
     private String bogeyNumber;
-    private PaymentStatus PaymentStatus;
+    private PaymentStatus paymentStatus;
+    private Timestamp timeStamp;
+    private double totalAmount;
+
+
 
     public PaymentStatus getPaymentStatus() {
-        return PaymentStatus;
+        return paymentStatus;
     }
 
-    public void setPaymentStatus(PaymentStatus paymentStatus) {
-        PaymentStatus = paymentStatus;
+    public void setPaymentStatus(PaymentStatus PaymentStatus) {
+        paymentStatus = PaymentStatus;
     }
 
     public Long getId() {
