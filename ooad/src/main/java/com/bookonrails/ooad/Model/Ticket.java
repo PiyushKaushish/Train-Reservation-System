@@ -19,6 +19,14 @@ public class Ticket {
     private TicketStatus status;
     private int WaitingListNumber;
     private String bogeyNumber;
+    private PaymentStatus PaymentStatus;
+    
+    public PaymentStatus getPaymentStatus() {
+        return PaymentStatus;
+    }
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
+        PaymentStatus = paymentStatus;
+    }
     public Long getId() {
         return id;
     }
