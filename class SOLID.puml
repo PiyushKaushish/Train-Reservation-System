@@ -1,0 +1,496 @@
+@startuml
+
+' top to bottom direction
+left to right direction 
+' define enums
+
+enum PaymentStatus {
+    Pending
+    Success
+    Failed
+}
+
+enum Gender {
+    Male
+    Female
+    Other
+}
+
+enum ClassType {
+    AC2Tier
+    AC3Tier
+    Sleeper
+}
+
+enum TicketStatus {
+    Confirmed
+    Waiting
+    Cancelled
+    RAC
+}
+
+enum Birth {
+    Lower
+    Middle
+    Upper
+    SideLower
+    SideUpper
+}
+
+enum DayOfWeek {
+    Monday
+    Tuesday
+    Wednesday
+    Thursday
+    Friday
+    Saturday
+    Sunday
+}
+
+' Define entities
+class User {
+    - userId: int
+    - username: string
+    - password: string
+    - email: string
+    - firstName: string
+    - lastName: string
+    - phoneNumber: string
+    - address: string
+    - bookingHistoryManager: BookingHistoryManager
+    - ticketCancellationManager: TicketCancellationManager
+
+
+    + login(username: string, password: string): boolean
+    + signUp(userInfo: UserInfo): boolean
+    + updateProfile(userInfo: UserInfo): boolean
+    + changePassword(oldPassword: string, newPassword: string): boolean
+    + logout(): void
+}
+
+class BookingHistoryManager {
+    + getBookingHistory(userId: int): Booking[]
+    + getBookingDetails(user:User,ticketId: int): Ticket[]
+    + checkPNRStatus(PNR: string): TicketStatus
+}
+
+class TicketCancellationManager {
+    + cancelTicket(ticketId: int, user:User): boolean
+}
+
+interface UserManagement {
+    + login(username: string, password: string): boolean
+    + signUp(userInfo: UserInfo): boolean
+    + updateProfile(userInfo: UserInfo): boolean
+    + changePassword(oldPassword: string, newPassword: string): boolean
+    + logout(): void
+}
+
+interface BookingManagement {
+    + getBookingHistory(userId: int): Booking[]
+    + getBookingDetails(user:User,ticketId: int): Ticket[]
+    + checkPNRStatus(PNR: string): TicketStatus
+}
+
+interface TicketCancellation {
+    + cancelTicket(ticketId: int, user:User): boolean
+}
+
+interface TrainManagement {
+    + addTrain(train: Train): void
+    + removeTrain(trainNo: string): void
+    + getTrainDetails(trainNo: string): Train
+    + searchBetweenStations(source: Station, destination: Station): Train[]
+    + getTrainBetweenStations(source: Station, destination: Station): Train[]
+    + updateOperatingDays(days: DayOfWeek[]): void
+}
+
+
+
+class Train {
+    - trainNo: string
+    - trainName: string
+    - trainType: string
+    - totalSeats: int
+    - basePrice: double
+    - farePerKM: double
+    - operatingDays: DayOfWeek[]
+    - seatAvailability: SeatAvailability
+    - inTrainMenu: InTrainMenu
+    - route: Route
+    - fareManager: FareManager
+    - routeManager: RouteManager
+    - seatAvailabilityManager: SeatAvailabilityManager
+
+    
+    + addTrain(train: Train): void
+    + removeTrain(trainNo: string): void
+    + getTrainDetails(trainNo: string): Train
+    + searchBetweenStations(source: Station, destination: Station): Train[]
+    + getTrainBetweenStations(source: Station, destination: Station): Train[]
+    + updateOperatingDays(days: DayOfWeek[]): void
+}
+
+' Create concrete subclasses for different train types
+class ExpressTrain {
+    + updateRoute(newRoute: Route): boolean
+    + updateFare(basePrice: double, farePerKM: double): void
+}
+
+class LocalTrain {
+    + updateRoute(newRoute: Route): boolean
+    + updateFare(basePrice: double, farePerKM: double): void
+}
+
+class RajdhaniTrain {
+    + updateRoute(newRoute: Route): boolean
+    + updateFare(basePrice: double, farePerKM: double): void
+}
+
+class SeatAvailabilityManager {
+    + checkSeatAvailability(trainNo: string, date: Date, class: ClassType): SeatAvailability[]
+    + updateSeatAvailability(trainNo: string, date: Date, class: ClassType, availableSeats: int): void
+}
+
+class RouteManager {
+    + updateRoute(trainNo: string, newRoute: Route): boolean
+    + getTrainRoute(trainNo: string): Route
+    + getRouteForStationsBetween(train: Train,source: Station, destination: Station): Station[]
+    + getRouteStationTimingsBetween(train:Train, source: Station, destination: Station): StationTimings[]
+}
+
+class FareManager {
+    + calculateFare(trainNo: string, source: Station, destination: Station, class: ClassType): double
+    + updateFare(basePrice: double, farePerKM: double): void
+}
+
+class Route {
+    - stationtimings: StationTimings[]
+
+    + updateRoute(route: Route): void
+    + addStation(station: Station, timing: StationTimings): void
+    + updateStationTiming(station: Station, timing: StationTimings): void
+    + removeStation(stationtime: StationTiming):void
+}
+
+class StationTimings {
+    - station: Station
+    - arrivalTime: Time
+    - departureTime: Time
+
+    + setArrivalTime(time: Time): void
+    + setDepartureTime(time: Time): void
+    + getArrivalTime(): Time
+    + getDepartureTime(): Time
+}
+class Station {
+    - stationCode: string
+    - stationName: string
+    - amenities: string[]
+    + getDetails(): string
+    + addAmenity(amenity: string): void
+    + removeAmenity(amenity: string): void
+}
+
+
+interface TicketType {
+    + confirmBooking(): boolean
+    + cancelBooking(): boolean
+}
+
+' Define ticket types
+class RegularTicket implements TicketType {
+    + confirmBooking(): boolean
+    + cancelBooking(): boolean
+}
+
+class TatkalTicket implements TicketType {
+    + confirmBooking(): boolean
+    + cancelBooking(): boolean
+}
+
+class Ticket {
+    - ticketId: int
+    - PNR : string
+    - SRC: Station
+    - DEST: Station
+    - user: User
+    - passengers: Passenger[]
+    - date: Date
+    - class: ClassType
+    - status: TicketStatus
+    - waitingListNumber: int
+    - bogeyNumber: string
+    - bookingManager: TicketBookingManager
+    - passengerManager: PassengerManager
+    - paymentManager: PaymentManager
+    - ticketType: TicketType
+
+
+    + getTicket(ticketId: int) : Ticket
+}
+
+' abstract class BookingManager {
+'     - seatAvailabilityManager: SeatAvailabilityManager
+'     - fareManager: FareManager
+'     - ticketManager: TicketBookingManager
+'     - paymentManager: PaymentManager
+'     - passengerManager: PassengerManager
+
+'     + BookingManager(seatAvailabilityManager: SeatAvailabilityManager, fareManager: FareManager, ticketManager: TicketManager, paymentManager: PaymentManager, passengerManager: PassengerManager
+' ) 
+'     + checkSeatAvailability(trainNo: string, date: Date, class: ClassType): boolean
+'     + calculateFare(trainNo: string, source: Station, destination: Station, class: ClassType): double
+
+'     + makeReservation(trainNo: string, date: Date, class: ClassType): Ticket
+'     + generateConfirmation(status: PaymentStatus): Ticket
+'     + confirmBooking(PNR: string): boolean
+'     + cancelBooking(PNR: string): boolean
+
+'     + addPassenger(ticket: Ticket, passengerInfo: PassengerInfo): void
+'     + removePassenger(ticket: Ticket, passengerId: int): boolean
+'     + updatePassengerInfo(ticket: Ticket, passengerId: int, passengerInfo: PassengerInfo): boolean
+
+'     + makePayment(paymentInfo: PaymentInfo): boolean
+'     + processPayment(ticket: Ticket, paymentInfo: PaymentInfo): boolean
+
+
+
+
+' }
+
+
+class TicketBookingManager {
+    + checkSeatAvailability(train: Train, date: Date, class: ClassType): boolean
+    + makeReservation(train: Train, date: Date, class: ClassType): Ticket
+    + generateConfirmation(status: PaymentStatus): Ticket
+    + confirmBooking(PNR: string): boolean
+    + cancelBooking(PNR : string): boolean
+}
+
+class PassengerManager {
+    + addPassenger(ticket: Ticket, passengerInfo: PassengerInfo): void
+    + removePassenger(ticket: Ticket, passengerId: int): boolean
+    + updatePassengerInfo(ticket: Ticket, passengerId: int, passengerInfo: PassengerInfo): boolean
+}
+
+class PaymentManager {
+    + makePayment(paymentInfo: PaymentInfo): boolean
+    + processPayment(ticket: Ticket, paymentInfo: PaymentInfo): boolean
+    + updatePaymentStatus(ticket: Ticket, newStatus: PaymentStatus): void
+}
+
+
+class Passenger {
+    - user : User
+    - passengerId : int
+    - name: string
+    - age: int
+    - gender: Gender
+    - isSeniorCitizen: boolean
+    - birthPreference: Birth
+}
+
+class SeatAvailability {
+    - train: Train
+    - class: ClassType
+    - date: Date
+    - availableSeats: int
+    - waitingList: Ticket[]
+    + updateSeatsAvailable(seats: int, date: Date): void
+    + updateWaitingList(): void
+    + getAvailableSeats(date: Date, class: ClassType): int
+    + addWaitingList(ticket: Ticket): int
+}
+
+' Define interfaces
+interface PaymentHandler {
+    + makePayment(): boolean
+    + processPayment(): boolean
+    + refundPayment(): boolean
+}
+
+' Define payment handlers
+class CardPaymentHandler implements PaymentHandler {
+    + makePayment(): boolean
+    + processPayment(): boolean
+    + refundPayment(): boolean
+}
+
+class UPIPaymentHandler implements PaymentHandler {
+    + makePayment(): boolean
+    + processPayment(): boolean
+    + refundPayment(): boolean
+}
+
+
+
+
+class Payment {
+    - paymentId: int
+    - ticket: Ticket
+    - amount: double
+    - status: PaymentStatus
+    - paymentHandler: PaymentHandler
+
+
+    + makePayment(): boolean
+    + processPayment(): boolean
+    + refundPayment(): boolean
+    + updatePaymentStatus(newStatus: PaymentStatus): void
+    + calculateAmount(trainFare: double, foodFare: double): double
+}
+
+class Feedback {
+    - feedbackId: int
+    - user: User
+    - ticket: Ticket
+    - rating: int
+    - comment: string
+    + submitFeedback(): boolean
+}
+
+class InTrainMenu {
+    - menuId: int
+    - items: MenuItem[]
+    + getMenu(): items
+    + addItem(item: MenuItem): void
+    + removeItem(itemId: int): boolean
+}
+
+class MenuItem {
+    - itemId: int
+    - name: string
+    - description: string
+    - price: double
+    + updateItem(itemId: int, newDetails: MenuItem): boolean
+}
+
+class Admin {
+    - adminId: int
+    - username: string
+    - password: string
+    - BookingManagementSystem : AdminBookingManagementSystem
+    - TrainManagementSystem : AdminTrainManagementSystem
+    - UserManagementSystem : AdminUserManagementSystem
+
+    + login(username: string, password: string): boolean
+    + logout(): void
+}
+
+class AdminTrainManagementSystem {
+    + addTrain(trainInfo: TrainInfo): boolean
+    + updateTrain(trainNo: string, newInfo: TrainInfo): boolean
+    + removeTrain(trainNo: string): boolean
+    + searchTrains(criteria: string): Train[]
+}
+
+class AdminUserManagementSystem {
+    + viewUserDetails(userId: int): UserInfo
+    + deactivateUserAccount(userId: int): boolean
+    + handlePasswordResetRequest(userId: int): boolean
+}
+
+class AdminBookingManagementSystem {
+    + viewBookings(userId: int): Booking[]
+    + processPaymentFailure(bookingId: int): boolean
+    + refundPayment(bookingId: int): boolean
+    + handleCustomerInquiries(): void
+}
+
+
+
+User "1" ..> "0..*" Ticket
+Ticket "1" --> "*" Passenger
+Train "1" -- "1" Route
+Train "1" <.. "*" Ticket
+Train ..> Station
+Train ..> Payment
+InTrainMenu ..> Payment
+Ticket "1" -- "*" Payment
+User "1" -- "*" Feedback
+Ticket "1" -- "*" Feedback
+Train "1" -- "1" InTrainMenu
+InTrainMenu "1" -- "*" MenuItem
+Admin -- User
+Admin -- Train
+Admin -- Ticket
+Admin -- Station
+Admin -- SeatAvailability
+Train "1" o-- "*" SeatAvailability
+
+' After Applying Solid Principles ( Single Responsibility Principle (SRP) )
+TicketBookingManager "1" --* "1" Ticket
+PassengerManager  "1"--* "1" Ticket
+PaymentManager "1" --* "1" Ticket
+PassengerManager ..> Passenger
+PaymentManager ..> Payment
+
+User "1" *-- "1" BookingHistoryManager
+User "1" *-- "1" TicketCancellationManager
+BookingHistoryManager ..> Ticket
+TicketCancellationManager ..> Ticket
+
+SeatAvailabilityManager "1"--*"1" Train
+RouteManager "1"--*"1" Train
+FareManager "1"--*"1" Train
+
+RouteManager ..> Route
+SeatAvailabilityManager ..> SeatAvailability
+
+Route "1" -- "*" StationTimings
+StationTimings "1" -- "1" Station
+
+AdminBookingManagementSystem --* Admin
+AdminTrainManagementSystem --* Admin
+AdminUserManagementSystem --* Admin
+
+AdminBookingManagementSystem ..>Ticket
+AdminTrainManagementSystem ..> Train
+AdminUserManagementSystem ..> User
+
+' After Applying Solid Principles ( Open/Closed Principle (OCP) )
+
+Payment ..> PaymentHandler
+
+Ticket -- TicketType
+
+
+' After Applying Solid Principles ( Liskov Substitution Principle (LSP) )
+Train <|-- ExpressTrain
+Train <|-- LocalTrain
+Train <|-- RajdhaniTrain
+
+FareManager <.. RajdhaniTrain
+FareManager <.. LocalTrain
+FareManager <.. ExpressTrain
+
+RouteManager <.. RajdhaniTrain
+RouteManager <.. LocalTrain
+RouteManager <.. ExpressTrain
+
+' After Applying Solid Principles ( Interface Segregation Principle (ISP) )
+
+User ..> UserManagement
+UserManagement <|.. AdminUserManagementSystem
+
+Ticket ..> TicketCancellation
+TicketCancellation <|.. TicketCancellationManager
+
+User ..> BookingManagement
+BookingManagement <|.. BookingHistoryManager
+
+Train ..> TrainManagement
+TrainManagement <|.. AdminTrainManagementSystem
+
+
+' After Applying Solid Principles ( Dependency Inversion Principle (DIP) )
+' BookingManager ..> SeatAvailabilityManager
+' BookingManager ..> FareManager
+' BookingManager ..> TicketBookingManager
+' BookingManager ..> PaymentManager
+' BookingManager ..> PassengerManager
+
+
+
+@enduml
