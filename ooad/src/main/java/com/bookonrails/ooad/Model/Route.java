@@ -11,7 +11,7 @@ public class Route {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private Long Id;
-    private List<StattionTimings> stationTimings;
+    private List<StationTimings> stationTimings;
     
     public Long getId() {
         return Id;
@@ -19,10 +19,10 @@ public class Route {
     public void setId(Long id) {
         Id = id;
     }
-    public List<StattionTimings> getStationTimings() {
+    public List<StationTimings> getStationTimings() {
         return stationTimings;
     }
-    public void setStationTimings(List<StattionTimings> stationTimings) {
+    public void setStationTimings(List<StationTimings> stationTimings) {
         this.stationTimings = stationTimings;
     }
     
