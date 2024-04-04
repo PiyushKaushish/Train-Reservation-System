@@ -1,0 +1,247 @@
+@startuml
+
+' define enums
+
+enum PaymentStatus {
+    Pending
+    Success
+    Failed
+}
+
+enum Gender {
+    Male
+    Female
+    Other
+}
+
+enum ClassType {
+    AC2Tier
+    AC3Tier
+    Sleeper
+}
+
+enum TicketStatus {
+    Confirmed
+    Waiting
+    Cancelled
+    RAC
+}
+
+enum Birth {
+    Lower
+    Middle
+    Upper
+    SideLower
+    SideUpper
+}
+
+enum DayOfWeek {
+    Monday
+    Tuesday
+    Wednesday
+    Thursday
+    Friday
+    Saturday
+    Sunday
+}
+
+' Define entities
+class User {
+    - userId: int
+    - username: string
+    - password: string
+    - email: string
+    - firstName: string
+    - lastName: string
+    - phoneNumber: string
+    - address: string
+    + login(username: string, password: string): boolean
+    + signUp(userInfo: UserInfo): boolean
+    + updateProfile(userInfo: UserInfo): boolean
+    + changePassword(oldPassword: string, newPassword: string): boolean
+    + logout(): void
+}
+
+class Train {
+    - trainNo: string
+    - trainName: string
+    - trainType: string
+    - totalSeats: int
+    - basePrice: double
+    - farePerKM: double
+    - schedule : Schedule
+    - operatingDays: DayOfWeek[]
+    + searchBetweenStations(source: Station, destination: Station): Train[]
+    + checkSeatAvailability(date: Date, class: ClassType): SeatAvailability[]
+    + updateSchedule(newSchedule: Schedule): boolean
+    + updateFarePerKM(fare: double): void
+    + updateBasePrice(price: double): void
+    + updateOperatingDays(days: DayOfWeek[]): void
+    + updateTotalSeats(seats: int): void
+    + getTrainRoute(trainNo: string): Route
+    + getTrainDetails(trainNo: string): Train
+    + getTrainBetweenStations(source: Station, destination: Station): Train[]
+    + getTrainSchedule(trainNo: string): Schedule
+    + getTrainFare(trainNo: string, source: Station, destination: Station): double
+    + getTrainSeatAvailability(trainNo: string, date: Date, class: ClassType): SeatAvailability[]
+}
+
+class Schedule {
+  - routes: Route[]
+  + addRoute(train: Train, route: Route): void
+  + removeRoute(train: Train): void
+  + getTrainSchedule(): Schedule
+}
+
+class Route {
+    - stations: Station[]
+    - timings: Timings[]
+    + getRouteDetails(source: Station, destination: Station): string
+    + getStationsBetween(source: Station, destination: Station): Station[]
+    + getTimingsBetween(source: Station, destination: Station): Timings[]
+    + addRoute(route: Route): void
+    + updateRoute(route: Route): void
+    + removeStation(station: Station): void
+    + addStation(station: Station, timing: Timings): void
+    + updateStationTiming(station: Station, timing: Timings): void
+    + removeStation(station:Station):void
+}
+
+class Station {
+    - stationCode: string
+    - stationName: string
+    - amenities: string[]
+    + getDetails(): string
+    + addAmenity(amenity: string): void
+    + removeAmenity(amenity: string): void
+}
+
+class Timings {
+    - station: Station
+    - arrivalTime: Time
+    - departureTime: Time
+    + setArrivalTime(time: Time): void
+    + setDepartureTime(time: Time): void
+    + getArrivalTime(): Time
+    + getDepartureTime(): Time
+}
+
+class Ticket {
+    - ticketId: int
+    - SRC: Station
+    - DEST: Station
+    - user: User
+    - train: Train
+    - passengers: Passenger[]
+    - date: Date
+    - class: ClassType
+    - status: TicketStatus
+    - waitingListNumber: int
+    - bogeyNumber: string
+    + confirmBooking(): boolean
+    + cancelBooking(): boolean
+    + checkPNRStatus(): TicketStatus
+    + getTicketDetails(): string
+    + getPNRStatus(): string
+    + getTicketStatus(): TicketStatus
+    + makePayment(paymentInfo: PaymentInfo): boolean
+    + addPassenger(passengerInfo: PassengerInfo): void
+    + removePassenger(passengerId: int): boolean
+}
+
+class Passenger {
+    - user : User
+    - passengerId : int
+    - name: string
+    - age: int
+    - gender: Gender
+    - isSeniorCitizen: boolean
+    - birthPreference: Birth
+    + updatePassengerInfo(passengerInfo: PassengerInfo): boolean
+}
+
+class SeatAvailability {
+    - train: Train
+    - class: ClassType
+    - date: Date
+    - availableSeats: int
+    - waitingList: Ticket[]
+    + updateSeatsAvailable(seats: int, date: Date): void
+    + updateWaitingList(): void
+    + getAvailableSeats(date: Date, class: ClassType): int
+    + addWaitingList(ticket: Ticket): int
+}
+
+class Payment {
+    - paymentId: int
+    - ticket: Ticket
+    - amount: double
+    - status: PaymentStatus
+    + makePayment(): boolean
+    + processPayment(): boolean
+    + refundPayment(): boolean
+    + updatePaymentStatus(newStatus: PaymentStatus): void
+    + calculateAmount(trainFare: double, foodFare: double): double
+}
+
+class Feedback {
+    - feedbackId: int
+    - user: User
+    - ticket: Ticket
+    - rating: int
+    - comment: string
+    + submitFeedback(): boolean
+}
+
+class InTrainMenu {
+    - menuId: int
+    - items: MenuItem[]
+    + getMenu(): items
+    + addItem(item: MenuItem): void
+    + removeItem(itemId: int): boolean
+}
+
+class MenuItem {
+    - itemId: int
+    - name: string
+    - description: string
+    - price: double
+    + updateItem(itemId: int, newDetails: MenuItem): boolean
+}
+
+class Admin {
+    - adminId: int
+    - username: string
+    - password: string
+    + login(username: string, password: string): boolean
+    + logout(): void
+    + manageTrains(): void
+    + manageUsers(): void
+    + manageBookings(): void
+    + viewLogsAndReports(): void
+}
+
+
+
+
+User "1" ..> "0..*" Ticket
+Ticket "1" --> "*" Passenger
+Train "1" -- "1" Route
+Train "1" <.. "*" Ticket
+Train ..> Station
+Train ..> Payment
+InTrainMenu ..> Payment
+Station "1" -- "*" Timings
+Ticket "1" -- "*" Payment
+User "1" -- "*" Feedback
+Ticket "1" -- "*" Feedback
+Train "1" -- "1" InTrainMenu
+InTrainMenu "1" -- "*" MenuItem
+Admin -- User
+Admin -- Train
+Admin -- Ticket
+Admin -- Station
+Admin -- SeatAvailability
+Train "1" o-- "*" SeatAvailability
+
+@enduml
