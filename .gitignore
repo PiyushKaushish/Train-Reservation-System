@@ -1,2 +1,4 @@
 # main git ignore files
 
+/ooad/main/resources/application.properties
+
