@@ -20,7 +20,7 @@ public class SeatAvailability {
     private ClassType classes;
     private int availableSeats;
     private List<Ticket> waitingList;
-    private List<Integer> CancelledSeats;
+    private List<Integer> CancelledSeats; // check n%2 = 1 -> Lower, n%2 = 0 -> Upper
     private int lastBookedLowerSeat;
     private int lastBookedUpperSeat;
 

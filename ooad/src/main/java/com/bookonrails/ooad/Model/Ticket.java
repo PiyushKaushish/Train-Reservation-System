@@ -1,6 +1,5 @@
 package com.bookonrails.ooad.Model;
 
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +20,7 @@ public class Ticket {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Passenger> passengers;
 
+    @OneToMany(cascade = CascadeType.ALL)
     private List<MenuItem> foodOrdered;
 
     public List<MenuItem> getFoodOrdered() {
@@ -37,7 +37,6 @@ public class Ticket {
     private int WaitingListNumber;
     private String bogeyNumber;
     private PaymentStatus paymentStatus;
-    private Timestamp timeStamp;
     private double totalAmount;
 
 
@@ -51,11 +50,19 @@ public class Ticket {
     }
 
     public Long getId() {
-        return id;
+        return ticket_id;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.ticket_id = id;
+    }
+
+    public double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount= totalAmount;
     }
 
     public String getPNR() {

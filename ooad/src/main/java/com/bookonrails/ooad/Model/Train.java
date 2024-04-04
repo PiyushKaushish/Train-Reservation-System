@@ -75,11 +75,11 @@ public class Train {
         this.operatingDays = operatingDays;
     }
 
-    public SeatAvailability getSeatAvailability() {
+    public List<SeatAvailability> getSeatAvailability() {
         return seatAvailability;
     }
 
-    public void setSeatAvailability(SeatAvailability seatAvailability) {
+    public void setSeatAvailability(List<SeatAvailability> seatAvailability) {
         this.seatAvailability = seatAvailability;
     }
 
