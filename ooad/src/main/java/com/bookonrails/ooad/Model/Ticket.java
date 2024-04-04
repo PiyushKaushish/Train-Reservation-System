@@ -1,5 +1,6 @@
 package com.bookonrails.ooad.Model;
 import java.sql.Date;
+import java.util.List;
 
 import jakarta.persistence.*;
 
@@ -12,7 +13,7 @@ public class Ticket {
     private Station SRC;
     private Station DEST;
     private User user;
-    private Passenger passengers;
+    private List<Passenger> passengers;
     private Date date;
     private ClassType classes;
     private TicketStatus status;
@@ -48,10 +49,10 @@ public class Ticket {
     public void setUser(User user) {
         this.user = user;
     }
-    public Passenger getPassengers() {
+    public List<Passenger> getPassengers() {
         return passengers;
     }
-    public void setPassengers(Passenger passengers) {
+    public void setPassengers(List<Passenger> passengers) {
         this.passengers = passengers;
     }
     public Date getDate() {
