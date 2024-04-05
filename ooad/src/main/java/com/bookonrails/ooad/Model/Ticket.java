@@ -25,11 +25,16 @@ public class Ticket {
     private int quantity;
 
     private Date date;
+    // enum
     private ClassType classes;
+    // enum
     private TicketStatus status;
+    
     private int WaitingListNumber;
     private String bogeyNumber;
+    // enum
     private PaymentStatus paymentStatus;
+
     private double totalAmount;
     private double foodprice;
 

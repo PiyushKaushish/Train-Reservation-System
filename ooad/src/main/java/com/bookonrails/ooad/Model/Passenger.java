@@ -13,6 +13,7 @@ public class Passenger {
     private Gender gender;
     private boolean isSeniorCitizen;
     private Birth birthpreference;
+    private int seatNo; 
 
     @ManyToOne
     @JoinColumn(name = "ticket_id", nullable = false)
@@ -81,4 +82,14 @@ public class Passenger {
     public void setBirthpreference(Birth birthpreference) {
         this.birthpreference = birthpreference;
     }
+
+    public int getSeatNo() {
+        return seatNo;
+    }
+
+    public void setSeatNo(int seatNo) {
+        this.seatNo = seatNo;
+    }
+
+    
 }

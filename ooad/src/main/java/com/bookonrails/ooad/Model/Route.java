@@ -1,9 +1,6 @@
 package com.bookonrails.ooad.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
@@ -11,6 +8,11 @@ public class Route {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
+
+    @OneToOne(mappedBy = "route", fetch=FetchType.LAZY)
+    private Train train;
+    
+    @OneToMany(mappedBy = "route")
     private List<StationTimings> stationTimings;
 
     public Long getId() {

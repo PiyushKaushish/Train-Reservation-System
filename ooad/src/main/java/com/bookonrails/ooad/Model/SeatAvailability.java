@@ -3,19 +3,18 @@ package com.bookonrails.ooad.Model;
 import java.util.Date;
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.*;
 
 @Entity
 public class SeatAvailability {
     @Id
-    @OneToMany
+    @ManyToOne
+    @JoinColumn(name = "trainNo", nullable = false)
     private Train train;
+
     @Temporal(TemporalType.DATE)
     private Date date;
+    
     private int no_of_coaches;
     private ClassType classes;
     private int availableSeats;
@@ -23,6 +22,10 @@ public class SeatAvailability {
     private List<Integer> CancelledSeats; // check n%2 = 1 -> Lower, n%2 = 0 -> Upper
     private int lastBookedLowerSeat;
     private int lastBookedUpperSeat;
+
+    public SeatAvailability(){
+        this.setAvailableSeats();
+    }
 
     public Train getTrain() {
         return train;
@@ -60,8 +63,8 @@ public class SeatAvailability {
         return availableSeats;
     }
 
-    public void setAvailableSeats(int availableSeats) {
-        this.availableSeats = availableSeats;
+    public void setAvailableSeats() {
+        this.availableSeats = no_of_coaches*30; // Assuming that each coach has 30 seats
     }
 
     public List<Ticket> getWaitingList() {

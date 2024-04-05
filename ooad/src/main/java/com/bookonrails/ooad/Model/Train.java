@@ -2,8 +2,8 @@ package com.bookonrails.ooad.Model;
 
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
 
 @Entity
 public class Train {
@@ -14,9 +14,19 @@ public class Train {
     private int totalSeats;
     private double basePrice;
     private double farePerKM;
+
+    // enum
+    @ElementCollection
     private List<DayOfWeek> operatingDays;
+
+    @OneToMany(mappedBy = "trainNo")
     private List<SeatAvailability> seatAvailability;
-    private InTrainMenu inTrainMenu;
+
+    // private InTrainMenu inTrainMenu;
+
+    @OneToOne(
+        cascade= CascadeType.ALL, fetch=FetchType.LAZY)
+    @JoinColumn(name ="route_id", referencedColumnName = "Id")
     private Route route;
 
     public String getTrainNo() {
@@ -83,13 +93,13 @@ public class Train {
         this.seatAvailability = seatAvailability;
     }
 
-    public InTrainMenu getInTrainMenu() {
-        return inTrainMenu;
-    }
+    // public InTrainMenu getInTrainMenu() {
+    //     return inTrainMenu;
+    // }
 
-    public void setInTrainMenu(InTrainMenu inTrainMenu) {
-        this.inTrainMenu = inTrainMenu;
-    }
+    // public void setInTrainMenu(InTrainMenu inTrainMenu) {
+    //     this.inTrainMenu = inTrainMenu;
+    // }
 
     public Route getRoute() {
         return route;
