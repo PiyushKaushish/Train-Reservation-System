@@ -20,16 +20,9 @@ public class Ticket {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Passenger> passengers;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<MenuItem> foodOrdered;
-
-    public List<MenuItem> getFoodOrdered() {
-        return foodOrdered;
-    }
-
-    public void setFoodOrdered(List<MenuItem> foodOrdered) {
-        this.foodOrdered = foodOrdered;
-    }
+    private Boolean wantFood;
+    private Boolean veg;
+    private int quantity;
 
     private Date date;
     private ClassType classes;
@@ -38,7 +31,7 @@ public class Ticket {
     private String bogeyNumber;
     private PaymentStatus paymentStatus;
     private double totalAmount;
-
+    private double foodprice;
 
 
     public PaymentStatus getPaymentStatus() {
@@ -143,6 +136,57 @@ public class Ticket {
 
     public void setBogeyNumber(String bogeyNumber) {
         this.bogeyNumber = bogeyNumber;
+    }
+
+    public Long getTicket_id() {
+        return ticket_id;
+    }
+
+    public void setTicket_id(Long ticket_id) {
+        this.ticket_id = ticket_id;
+    }
+
+    public Boolean getWantFood() {
+        return wantFood;
+    }
+
+    public void setWantFood(Boolean wantFood) {
+        this.wantFood = wantFood;
+    }
+
+    public Boolean getVeg() {
+        return veg;
+    }
+
+    public void setVeg(Boolean veg) {
+        this.veg = veg;
+        this.setFoodprice();
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public double getFoodprice() {
+        return foodprice;
+    }
+
+    public void setFoodprice() {
+        FoodPrice fp= new FoodPrice();
+        double p;
+        if(veg){
+             p=fp.getVegprice()*quantity;
+        }
+        else{
+            p=fp.getNonvegprice()*quantity;
+        }
+        
+        this.foodprice = p;
+
     }
 
 }
