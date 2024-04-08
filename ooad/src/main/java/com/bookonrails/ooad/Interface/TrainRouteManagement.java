@@ -23,6 +23,13 @@ public interface TrainRouteManagement {
     public StationTimings getStationInRoute(Route route,Station station);
     public StationTimings getStationInRoute(String trainNo,Station station);
     
+    // CRUD Station Timing class
+    public void addStationTiming(StationTimings stationTimings);
+    public void updateStationTiming(StationTimings stationTimings);
+    public void deleteStationTiming(StationTimings stationTimings);
+    public StationTimings getStationTiming(Long stationTimingId);
+    public StationTimings getStationTiming(Route route,Station station);
+    public StationTimings getStationTiming(String trainNo,Station station);
     
     
 }
