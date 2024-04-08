@@ -9,7 +9,12 @@ public class Station {
     @Id
     private String stationCode;
     private String stationName;
-    private List<String> amenities;
+
+    @OneToMany(mappedBy = "station", cascade = CascadeType.ALL)
+    private List<Ticket> sourceTickets;
+
+    @OneToMany(mappedBy = "station", cascade = CascadeType.ALL)
+    private List<Ticket> destinationTickets;
 
     public String getStationCode() {
         return stationCode;
@@ -27,11 +32,20 @@ public class Station {
         this.stationName = stationName;
     }
 
-    public List<String> getAmenities() {
-        return amenities;
+
+    public List<Ticket> getSourceTickets() {
+        return sourceTickets;
     }
 
-    public void setAmenities(List<String> amenities) {
-        this.amenities = amenities;
+    public void setSourceTickets(List<Ticket> sourceTickets) {
+        this.sourceTickets = sourceTickets;
+    }
+
+    public List<Ticket> getDestinationTickets() {
+        return destinationTickets;
+    }
+
+    public void setDestinationTickets(List<Ticket> destinationTickets) {
+        this.destinationTickets = destinationTickets;
     }
 }

@@ -12,6 +12,7 @@ public class Passenger {
     private int age;
     private Gender gender;
     private boolean isSeniorCitizen;
+    @Enumerated(EnumType.STRING)
     private Birth birthpreference;
     private int seatNo; 
 

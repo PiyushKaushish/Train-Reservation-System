@@ -11,7 +11,16 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ticket_id;
     private String PNR;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="trainNo", referencedColumnName = "trainNo")
+    private Train train;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="SRC", referencedColumnName = "stationCode")
     private Station SRC;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="DEST", referencedColumnName = "stationCode")
     private Station DEST;
 
     @ManyToOne
@@ -19,11 +28,11 @@ public class Ticket {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Passenger> passengers;
-
+    
     private Boolean wantFood;
     private Boolean veg;
     private int quantity;
-
+    
     private Date date;
     // enum
     private ClassType classes;
@@ -34,11 +43,19 @@ public class Ticket {
     private String bogeyNumber;
     // enum
     private PaymentStatus paymentStatus;
-
+    
     private double totalAmount;
     private double foodprice;
+    
+    
+    public Train getTrain() {
+        return train;
+    }
 
-
+    public void setTrain(Train train) {
+        this.train = train;
+    }
+    
     public PaymentStatus getPaymentStatus() {
         return paymentStatus;
     }
