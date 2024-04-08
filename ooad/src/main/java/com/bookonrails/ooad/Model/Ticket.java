@@ -35,18 +35,25 @@ public class Ticket {
     
     private Date date;
     // enum
+    @Enumerated(EnumType.STRING)
     private ClassType classes;
     // enum
+    @Enumerated(EnumType.STRING)
     private TicketStatus status;
     
     private int WaitingListNumber;
     private String bogeyNumber;
     // enum
+    @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
+
+    @OneToOne(mappedBy = "ticket",fetch=FetchType.LAZY)
+    private Payment payment;
+    
     
     private double totalAmount;
     private double foodprice;
-
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seat_availability_id", nullable = false)
     private SeatAvailability seatAvailability;
@@ -55,7 +62,7 @@ public class Ticket {
     public Train getTrain() {
         return train;
     }
-
+    
     public void setTrain(Train train) {
         this.train = train;
     }
@@ -63,7 +70,7 @@ public class Ticket {
     public PaymentStatus getPaymentStatus() {
         return paymentStatus;
     }
-
+    
     public void setPaymentStatus(PaymentStatus PaymentStatus) {
         paymentStatus = PaymentStatus;
     }
@@ -79,37 +86,45 @@ public class Ticket {
     public double getTotalAmount() {
         return totalAmount;
     }
-
+    
     public void setTotalAmount(double totalAmount) {
         this.totalAmount= totalAmount;
     }
-
+    
     public String getPNR() {
         return PNR;
     }
-
+    
     public void setPNR(String pNR) {
         PNR = pNR;
     }
-
+    
     public Station getSRC() {
         return SRC;
     }
-
+    
     public void setSRC(Station sRC) {
         SRC = sRC;
     }
-
+    
     public Station getDEST() {
         return DEST;
     }
-
+    
     public void setDEST(Station dEST) {
         DEST = dEST;
     }
-
+    
     public User getUser() {
         return user;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 
     public void setUser(User user) {

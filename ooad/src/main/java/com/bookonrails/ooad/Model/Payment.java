@@ -7,8 +7,11 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ticket_id", referencedColumnName = "ticket_id")
     private Ticket ticket;
     private double amount;
+    @Enumerated(EnumType.STRING)
     private PaymentStatus status;
 
     public int getId() {
