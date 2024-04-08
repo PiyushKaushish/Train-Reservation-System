@@ -16,10 +16,13 @@ public class Train {
     private double farePerKM;
 
     // enum
-    @ElementCollection
-    private List<DayOfWeek> operatingDays;
+    // @ElementCollection
+    // private List<DayOfWeek> operatingDays;
 
-    @OneToMany(mappedBy = "trainNo")
+    @OneToMany(mappedBy = "trainNo",fetch = FetchType.LAZY)
+    private List<OperatingDay> operatingDays;
+
+    @OneToMany(mappedBy = "trainNo",fetch = FetchType.LAZY)
     private List<SeatAvailability> seatAvailability;
 
     // private InTrainMenu inTrainMenu;
@@ -77,11 +80,11 @@ public class Train {
         this.farePerKM = farePerKM;
     }
 
-    public List<DayOfWeek> getOperatingDays() {
+    public List<OperatingDay> getOperatingDays() {
         return operatingDays;
     }
 
-    public void setOperatingDays(List<DayOfWeek> operatingDays) {
+    public void setOperatingDays(List<OperatingDay> operatingDays) {
         this.operatingDays = operatingDays;
     }
 
