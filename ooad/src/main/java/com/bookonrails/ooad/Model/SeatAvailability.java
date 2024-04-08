@@ -8,6 +8,9 @@ import jakarta.persistence.*;
 @Entity
 public class SeatAvailability {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
     @ManyToOne
     @JoinColumn(name = "trainNo", nullable = false)
     private Train train;
@@ -16,10 +19,18 @@ public class SeatAvailability {
     private Date date;
     
     private int no_of_coaches;
+    @Enumerated(EnumType.STRING) // to store the type of coach as a string
     private ClassType classes;
     private int availableSeats;
+
+    @OneToMany(mappedBy = "seatAvailability", cascade = CascadeType.ALL)
     private List<Ticket> waitingList;
+    
+    @ElementCollection
+    @CollectionTable(name = "CancelledSeats", joinColumns = @JoinColumn(name = "seatAvailability_id"))
+    @Column(name = "seat_number")
     private List<Integer> CancelledSeats; // check n%2 = 1 -> Lower, n%2 = 0 -> Upper
+
     private int lastBookedLowerSeat;
     private int lastBookedUpperSeat;
 

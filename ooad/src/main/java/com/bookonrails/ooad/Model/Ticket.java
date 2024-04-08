@@ -46,6 +46,10 @@ public class Ticket {
     
     private double totalAmount;
     private double foodprice;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "seat_availability_id", nullable = false)
+    private SeatAvailability seatAvailability;
     
     
     public Train getTrain() {
@@ -209,6 +213,19 @@ public class Ticket {
         
         this.foodprice = p;
 
+    }
+
+    
+    public void setFoodprice(double foodprice) {
+        this.foodprice = foodprice;
+    }
+
+    public SeatAvailability getSeatAvailability() {
+        return seatAvailability;
+    }
+
+    public void setSeatAvailability(SeatAvailability seatAvailability) {
+        this.seatAvailability = seatAvailability;
     }
 
 }
