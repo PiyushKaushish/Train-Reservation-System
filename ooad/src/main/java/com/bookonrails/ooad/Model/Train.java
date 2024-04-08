@@ -12,8 +12,6 @@ public class Train {
     private String trainName;
     private String traintype;
     private int totalSeats;
-    private double basePrice;
-    private double farePerKM;
 
     // enum
     // @ElementCollection
@@ -67,21 +65,6 @@ public class Train {
         this.totalSeats = totalSeats;
     }
 
-    public double getBasePrice() {
-        return basePrice;
-    }
-
-    public void setBasePrice(double basePrice) {
-        this.basePrice = basePrice;
-    }
-
-    public double getFarePerKM() {
-        return farePerKM;
-    }
-
-    public void setFarePerKM(double farePerKM) {
-        this.farePerKM = farePerKM;
-    }
 
     public List<OperatingDay> getOperatingDays() {
         return operatingDays;

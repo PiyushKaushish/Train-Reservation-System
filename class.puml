@@ -24,15 +24,11 @@ enum TicketStatus {
     Confirmed
     Waiting
     Cancelled
-    RAC
 }
 
 enum Birth {
     Lower
-    Middle
     Upper
-    SideLower
-    SideUpper
 }
 
 enum DayOfWeek {

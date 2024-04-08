@@ -10,7 +10,7 @@ public class SeatAvailability {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @ManyToOne
     @JoinColumn(name = "trainNo", nullable = false)
     private Train train;
@@ -34,6 +34,10 @@ public class SeatAvailability {
     private int lastBookedLowerSeat;
     private int lastBookedUpperSeat;
 
+    private double basePrice;
+    private double farePerKM;
+
+    
     public SeatAvailability(){
         this.setAvailableSeats();
     }
@@ -89,7 +93,8 @@ public class SeatAvailability {
     public List<Integer> getCancelledSeats() {
         return CancelledSeats;
     }
-
+    
+    // birth has only 2 preferences - Lower or Upper
     public void setCancelledSeats(List<Integer> cancelledSeats) {
         CancelledSeats = cancelledSeats;
     }
@@ -110,6 +115,33 @@ public class SeatAvailability {
         this.lastBookedUpperSeat = lastBookedUpperSeat;
     }
 
-    // birth has only 2 preferences - Lower or Upper
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setAvailableSeats(int availableSeats) {
+        this.availableSeats = availableSeats;
+    }
+
+    public double getBasePrice() {
+        return basePrice;
+    }
+
+    public void setBasePrice(double basePrice) {
+        this.basePrice = basePrice;
+    }
+
+    public double getFarePerKM() {
+        return farePerKM;
+    }
+
+    public void setFarePerKM(double farePerKM) {
+        this.farePerKM = farePerKM;
+    }
+
 
 }

@@ -11,6 +11,8 @@ public class StationTimings {
     @JoinColumn(name = "route_id", nullable = false)
     private Route route;
 
+    @ManyToOne
+    @JoinColumn(name = "stationCode", nullable = false)
     private Station station;
 
     private Time arrivalTime;
