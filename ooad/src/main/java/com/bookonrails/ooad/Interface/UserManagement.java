@@ -1,5 +1,7 @@
 package com.bookonrails.ooad.Interface;
 
+import java.util.List;
+
 import com.bookonrails.ooad.Model.User;
 
 public interface UserManagement {
@@ -14,4 +16,6 @@ public interface UserManagement {
     public boolean updateProfile(User user);
     public boolean changePassword(User user, String newPassword);
     public void logout();
+    public User viewUserDetails(String username);
+    public List<User> viewAllUsers();
 }
