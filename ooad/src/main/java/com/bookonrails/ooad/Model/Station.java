@@ -16,8 +16,16 @@ public class Station {
     @OneToMany(mappedBy = "station", cascade = CascadeType.ALL)
     private List<Ticket> destinationTickets;
 
-    @OneToMany(mappedBy = "station",fetch = FetchType.LAZY)
-    private StationTimings stationTimings;
+    @OneToMany(mappedBy = "station",cascade = CascadeType.ALL)
+    private List<StationTimings> stationTimings;
+
+    public List<StationTimings> getStationTimings() {
+        return stationTimings;
+    }
+
+    public void setStationTimings(List<StationTimings> stationTimings) {
+        this.stationTimings = stationTimings;
+    }
 
     public String getStationCode() {
         return stationCode;
