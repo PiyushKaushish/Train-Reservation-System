@@ -57,6 +57,10 @@ public class Ticket {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seat_availability_id", nullable = false)
     private SeatAvailability seatAvailability;
+
+    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL)
+    private List<Feedback> feedbackList;
+
     
     
     public Train getTrain() {

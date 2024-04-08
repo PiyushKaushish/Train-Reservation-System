@@ -1,5 +1,7 @@
 package com.bookonrails.ooad.Model;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -15,6 +17,12 @@ public class User {
     private String lastName;
     private String phoneNumber;
     private String address;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Feedback> feedbackList;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Passenger> passengers;
 
     public Long getId() {
         return id;
