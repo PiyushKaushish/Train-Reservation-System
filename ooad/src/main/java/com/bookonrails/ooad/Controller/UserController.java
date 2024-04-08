@@ -36,10 +36,11 @@ public class UserController {
     }
 
     // change password
-    @PostMapping(path="/changePassword")
+    @PostMapping(path="/change-password")
     public @ResponseBody boolean changePassword(@RequestBody User u){
-        User user = userService.login(u.getUsername(), u.getPassword());
+        User user = userService.viewUserDetails(u.getUsername());
         if (user == null) {
+            System.out.println("Invalid username");
             return false;
         }
 
