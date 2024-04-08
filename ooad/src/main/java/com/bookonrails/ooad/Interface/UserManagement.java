@@ -8,11 +8,10 @@ public interface UserManagement {
     public boolean addUser(User user);
     public boolean updateUser(User user);
     public boolean deleteUser(User user);
-    public boolean searchUser(User user);
-    public boolean searchUser(String email);
-    public boolean searchUser(String username, String password);
-    public boolean login(String username, String password);
-    public boolean signUp(User user);
+    public User searchUser(String username);
+    public User searchUser(String username, String password);
+    public User login(String username, String password);
+    public User signUp(User user);
     public boolean updateProfile(User user);
     public boolean changePassword(User user, String newPassword);
     public void logout();
