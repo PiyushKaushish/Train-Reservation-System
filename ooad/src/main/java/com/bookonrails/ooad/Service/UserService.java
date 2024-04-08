@@ -13,38 +13,65 @@ public class UserService implements UserManagement{
     UserRepository userRepository;
 
     public boolean addUser(User user){
-        return false;
+        try {
+            userRepository.save(user);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public boolean updateUser(User user){
+        if(userRepository.existsById(user.getId())){
+            User u= userRepository.findById(user.getId()).get();
+            if(u!=null){
+                u.setEmail(user.getEmail());
+                u.setFirstName(user.getFirstName());
+                u.setLastName(user.getLastName());
+                u.setPhoneNumber(user.getPhoneNumber());
+                u.setAddress(user.getAddress());
+                userRepository.save(u);
+                return true;
+            }
+        }
         return false;
     }
 
     public boolean deleteUser(User user){
+        if(userRepository.existsById(user.getId())){
+            userRepository.delete(user);
+            return true;
+        }
         return false;
     }
 
     public User searchUser(String username){
-        return new User();
+        return userRepository.findByUsername(username);
     }
 
     public User searchUser(String username, String password){
-        return new User();
+        return userRepository.findByUsernameAndPassword(username, password);
     }
 
     public User login(String username, String password){
-        return new User();
+        return userRepository.findByUsernameAndPassword(username, password);
     }
 
     public User signUp(User user){
-        return new User();
+        User u = userRepository.save(user);
+        return u;
     }
 
-    public boolean updateProfile(User user){
-        return false;
-    }
 
     public boolean changePassword(User user, String newPassword){
+        if(userRepository.existsById(user.getId())){
+            User u= userRepository.findById(user.getId()).get();
+            if (u!=null){
+                u.setPassword(newPassword);
+                userRepository.save(u);
+                return true;
+            }
+        }
         return false;
     }
 
@@ -52,17 +79,12 @@ public class UserService implements UserManagement{
     }
 
     public User viewUserDetails(String username){
-        return new User();
+        return userRepository.findByUsername(username);
     }
 
     public List<User> viewAllUsers(){
-        return null;
+        return userRepository.findAll();
     }
-
-
-
-
-
 
     
 }

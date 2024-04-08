@@ -12,7 +12,6 @@ public interface UserManagement {
     public User searchUser(String username, String password);
     public User login(String username, String password);
     public User signUp(User user);
-    public boolean updateProfile(User user);
     public boolean changePassword(User user, String newPassword);
     public void logout();
     public User viewUserDetails(String username);
