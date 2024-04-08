@@ -10,10 +10,10 @@ public class Station {
     private String stationCode;
     private String stationName;
 
-    @OneToMany(mappedBy = "station", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "SRC", cascade = CascadeType.ALL)
     private List<Ticket> sourceTickets;
 
-    @OneToMany(mappedBy = "station", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "DEST", cascade = CascadeType.ALL)
     private List<Ticket> destinationTickets;
 
     @OneToMany(mappedBy = "station",cascade = CascadeType.ALL)

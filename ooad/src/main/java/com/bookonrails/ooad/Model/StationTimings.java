@@ -6,6 +6,9 @@ import jakarta.persistence.*;
 
 @Entity
 public class StationTimings {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "route_id", nullable = false)

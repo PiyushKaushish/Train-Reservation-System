@@ -17,10 +17,10 @@ public class Train {
     // @ElementCollection
     // private List<DayOfWeek> operatingDays;
 
-    @OneToMany(mappedBy = "trainNo",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "train",fetch = FetchType.LAZY)
     private List<OperatingDay> operatingDays;
 
-    @OneToMany(mappedBy = "trainNo",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "train",fetch = FetchType.LAZY)
     private List<SeatAvailability> seatAvailability;
 
     @OneToMany(mappedBy = "train", cascade = CascadeType.ALL)

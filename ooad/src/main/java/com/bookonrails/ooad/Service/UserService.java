@@ -3,21 +3,26 @@ package com.bookonrails.ooad.Service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.bookonrails.ooad.Interface.UserManagement;
 import com.bookonrails.ooad.Model.*;
 import com.bookonrails.ooad.Repository.UserRepository;
 
-public class UserService implements UserManagement{
+@Service
+public class UserService implements UserManagement
+{
     @Autowired
     UserRepository userRepository;
 
-    public boolean addUser(User user){
+    public User addUser(User user){
         try {
-            userRepository.save(user);
-            return true;
+            User u=userRepository.save(user);
+            return u;
         } catch (Exception e) {
-            return false;
+            System.out.println("500: Internal Server Error");
+            System.out.println("Error while adding user: "+e.getMessage());
+            return null;
         }
     }
 
@@ -58,7 +63,7 @@ public class UserService implements UserManagement{
     }
 
     public User signUp(User user){
-        User u = userRepository.save(user);
+        User u = addUser(user);
         return u;
     }
 
@@ -74,10 +79,7 @@ public class UserService implements UserManagement{
         }
         return false;
     }
-
-    public void logout(){
-    }
-
+    
     public User viewUserDetails(String username){
         return userRepository.findByUsername(username);
     }
