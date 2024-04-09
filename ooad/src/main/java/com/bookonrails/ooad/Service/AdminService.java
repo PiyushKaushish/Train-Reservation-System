@@ -2,11 +2,14 @@ package com.bookonrails.ooad.Service;
 
 import com.bookonrails.ooad.Model.Admin;
 import com.bookonrails.ooad.Repository.AdminRepository;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AdminAuthenticationService {
+public class AdminService {
 
     @Autowired
     private AdminRepository adminRepository;
@@ -27,6 +30,10 @@ public class AdminAuthenticationService {
 
     public Admin getAdmin(Long id) {
         return adminRepository.findById(id).get();
+    }
+
+    public List<Admin> findAll() {
+        return adminRepository.findAll();
     }
 
 

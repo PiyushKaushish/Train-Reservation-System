@@ -26,16 +26,6 @@
             padding: 50px;
 
         }
-
-        .tab-pane {
-            padding-left: 100px;
-        }
-
-        .tab-btn {
-            width: 100%;
-            padding: 10px;
-            margin: 5px;
-        }
     </style>
 </head>
 
@@ -69,66 +59,31 @@
 
     <div class="content-body container-fluid">
         <!-- Block Content will be here -->
-        <h1 class="text-muted">Admin Dashboard</h1>
-        <div class="d-flex align-items-start">
-            <div class="nav flex-column nav-pills me-4" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <button class="nav-link active" id="v-pills-admin-tab" data-bs-toggle="pill"
-                    data-bs-target="#v-pills-admin" type="button" role="tab" aria-controls="v-pills-admin"
-                    aria-selected="true">Admin Management</button>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Admin Id</th>
+                    <th scope="col">Username</th>
+                    <!-- <th scope="col">Password</th> -->
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="admin: ${admins}">
+                    <td th:text="${admin.id}" scope="row"></td>
+                    <td th:text="${admin.username}"></td>
+                    <td>
+                        <form action="/admin/admin/delete" method="post">
+                            <input type="hidden" name="adminId" th:value="${admin.id}">
+                            <button type="submit" class="btn btn-danger"
+                                onclick="return confirm('Are you sure you want to delete this user?')">Delete </button>
+                        </form> 
+                    </td>
+                </tr>
 
-                <button class="nav-link" id="v-pills-user-tab" data-bs-toggle="pill"
-                    data-bs-target="#v-pills-user" type="button" role="tab" aria-controls="v-pills-user"
-                    aria-selected="false">User Management</button>
-                <button class="nav-link" id="v-pills-train-tab" data-bs-toggle="pill" data-bs-target="#v-pills-train"
-                    type="button" role="tab" aria-controls="v-pills-train" aria-selected="false">Train
-                    Management</button>
-                <button class="nav-link" id="v-pills-route-tab" data-bs-toggle="pill" data-bs-target="#v-pills-route"
-                    type="button" role="tab" aria-controls="v-pills-route" aria-selected="false">Route/Schedule
-                    Management</button>
-                <button class="nav-link" id="v-pills-ticket-tab" data-bs-toggle="pill" data-bs-target="#v-pills-ticket"
-                    type="button" role="tab" aria-controls="v-pills-ticket" aria-selected="false">Ticket
-                    Management</button>
-                <button class="nav-link" id="v-pills-seat-availibility-tab" data-bs-toggle="pill"
-                    data-bs-target="#v-pills-seat-availibility" type="button" role="tab"
-                    aria-controls="v-pills-seat-availibility" aria-selected="false">Seat Availibility
-                    Management</button>
-            </div>
-            <div class="tab-content container-fluid" id="v-pills-tabContent">
-                <div class="tab-pane fade show active" id="v-pills-admin" role="tabpanel"
-                    aria-labelledby="v-pills-admin-tab" tabindex="0">
-                    <a href="/admin/admin/add" class="tab-btn btn btn-success"> Add Admins </a>
-                    <a href="/admin/admin/show" class="tab-btn btn btn-success"> View Admins </a>
-                </div>
+            </tbody>
+        </table>
 
-
-                <div class="tab-pane fade" id="v-pills-user" role="tabpanel"
-                    aria-labelledby="v-pills-user-tab" tabindex="0">
-                    <a href="/admin/user/add" class="tab-btn btn btn-success"> Add Users </a>
-                    <a href="/admin/user/view" class="tab-btn btn btn-success"> View Users </a>
-
-                </div>
-                <div class="tab-pane fade" id="v-pills-train" role="tabpanel" aria-labelledby="v-pills-train-tab"
-                    tabindex="0">
-                    <a href="/admin/train/add" class="tab-btn btn btn-success"> Add Train </a>
-                    <a href="/admin/train/view" class="tab-btn btn btn-success"> View Train </a>
-                    <a href="/admin/train/delete" class="tab-btn btn btn-success"> Delete Train </a>
-                    <a href="admin/train/update" class="tab-btn btn btn-success"> Update Train </a>
-
-                </div>
-                <div class="tab-pane fade" id="v-pills-route" role="tabpanel" aria-labelledby="v-pills-route-tab"
-                    tabindex="0">
-
-                </div>
-                <div class="tab-pane fade" id="v-pills-ticket" role="tabpanel" aria-labelledby="v-pills-ticket-tab"
-                    tabindex="0">
-
-                </div>
-                <div class="tab-pane fade" id="v-pills-seat-availibility" role="tabpanel"
-                    aria-labelledby="v-pills-seat-availibility-tab" tabindex="0">
-
-                </div>
-            </div>
-        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

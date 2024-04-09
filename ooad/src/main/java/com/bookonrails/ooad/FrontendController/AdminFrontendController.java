@@ -1,7 +1,7 @@
 package com.bookonrails.ooad.FrontendController;
 
 import com.bookonrails.ooad.Model.Admin;
-import com.bookonrails.ooad.Service.AdminAuthenticationService;
+import com.bookonrails.ooad.Service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class AdminFrontendController {
 
     @Autowired
-    private AdminAuthenticationService adminAuthenticationService;
+    private AdminService adminAuthenticationService;
 
     @GetMapping("/login")
     public String showLoginForm(Model m) {
