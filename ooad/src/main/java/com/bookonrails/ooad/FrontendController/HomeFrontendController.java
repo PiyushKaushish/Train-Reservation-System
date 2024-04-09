@@ -23,18 +23,25 @@ public class HomeFrontendController {
     }
 
     // contact us
-    @GetMapping("/contact")
+    @GetMapping("/contact-us")
     public String contactPage(Model m){
         m.addAttribute("appname", appname);
         return "contact";
     }
 
-    // contact us post
-    @PostMapping("/contact")
-    public String contactPostPage(Model m){
-        m.addAttribute("appname", appname);
-        return "contact";
+    // // contact us post
+    // @PostMapping("/contact")
+    // public String contactPostPage(Model m){
+    //     m.addAttribute("appname", appname);
+    //     return "contact";
+    // }
+
+    //base
+    @GetMapping("/base")
+    public String basePage(Model m){
+        return "base";
     }
+
 
 
 }
