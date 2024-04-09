@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title>Form Example</title>
+    <title>Login Form</title>
 </head>
 <body>
-    <h1 th:text="${message}">Hello</h1>
-    <form action="/users/submitForm" method="post" th:object="${User}">
+    <h1 th:text="${message}"></h1>
+    
+    <!-- Display error message if the "error" parameter is present -->
+    <p th:if="${param.error}" th:text="${param.error}"></p>
+    
+    
+    <form action="/users/loginForm" method="post" th:object="${User}">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" th:field="*{username}" />
         <br/>
@@ -14,7 +19,7 @@
         <input type="password" id="password" name="password" th:field="*{password}" />
         <br/>
         
-        <button type="submit">Submit</button>
+        <button type="submit">Login</button>
     </form>
 </body>
 </html>
