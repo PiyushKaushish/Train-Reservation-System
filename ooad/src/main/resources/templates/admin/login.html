@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!-- Base for all html pages -->
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+
+    <title>Book On Rails</title>
+    <style>
+        body {
+            background-color: #f8f8f8;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        h1 {
+            color: #272727;
+            font-size: 24px;
+            font-weight: 300;
+        }
+
+        .content-body {
+            padding: 50px;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <section class="vh-100">
+            <div class="container-fluid h-custom">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-md-9 col-lg-6 col-xl-5">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                            class="img-fluid" alt="Sample image">
+                    </div>
+                    <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                        <!-- Display error message if the "error" parameter is present -->
+                        <p class="text-danger" th:if="${param.error}" th:text="${param.error}"></p>
+
+                        <form action="/admin/login" method="post" th:object="${Admin}">
+
+                            <!-- Email input -->
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <label class="form-label" for="username">Username</label>
+                                <input type="text" id="username" class="form-control form-control-lg"
+                                    placeholder="Enter username" name="username" th:field="*{username}" />
+                            </div>
+
+                            <!-- Password input -->
+                            <div data-mdb-input-init class="form-outline mb-3">
+                                <label class="form-label" for="password">Password</label>
+                                <input type="password" id="password" class="form-control form-control-lg"
+                                    placeholder="Enter password" name="password" th:field="*{password}" />
+                            </div>
+                            <div class="text-center text-lg-start mt-4 pt-2">
+                                <button style="width:100%" class="btn btn-primary" type="submit">Login</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>
