@@ -1,6 +1,6 @@
 // AdminController.java
 
-package com.bookonrails.ooad.Controller;
+package com.bookonrails.ooad.FrontendController;
 
 import com.bookonrails.ooad.Service.AdminAuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class AdminController {
+public class AdminFrontendController {
 
     @Autowired
     private AdminAuthenticationService adminAuthenticationService;
