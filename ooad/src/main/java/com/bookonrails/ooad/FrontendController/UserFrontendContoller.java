@@ -33,4 +33,19 @@ public class UserFrontendContoller {
         User u= userService.login(username, password);
         return u; // Return user for now
     }
+
+    @GetMapping(path="/signup")
+    public String showSignupForm(Model model) {
+        model.addAttribute("user", new User());
+        return "signup_user"; // Return the signup form page
+    }
+
+    @PostMapping(path="/signup")
+    public String signup(@ModelAttribute("user") User user, Model model) {
+        userService.signUp(user);
+        // You may add success message or redirect to login page here
+        return "redirect:/users/login"; // Redirect to login page after successful signup
+    }
+
+    
 }
