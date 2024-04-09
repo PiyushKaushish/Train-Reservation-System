@@ -70,11 +70,11 @@
     <form action="/users/loginForm" method="post" th:object="${User}">
       
       <label class="form-label" for="username">Username:</label>
-      <input class="form-control" type="text" id="username" name="username" th:field="*{username}" />
+      <input required class="form-control" type="text" id="username" name="username" th:field="*{username}" />
       <br />
 
       <label class="form-label" for="password">Password:</label>
-      <input class="form-control" type="password" id="password" name="password" th:field="*{password}" />
+      <input required class="form-control" type="password" id="password" name="password" th:field="*{password}" />
       <br />
 
       <button style="width:100%" class="btn btn-warning" type="submit">Login</button>

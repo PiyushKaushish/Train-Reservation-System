@@ -19,6 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class UserFrontendContoller {
     @Autowired
     UserService userService;
+    String errorMessage;
     
     @GetMapping(path="/login")
     public String login(Model m){
@@ -45,22 +46,37 @@ public class UserFrontendContoller {
             return "redirect:/"; // 
         } else {
             // If login fails, return an error message or redirect back to the login page
-            String errorMessage = "Invalid username or password. Please try again.";
+            errorMessage = "Invalid username or password. Please try again.";
             return "redirect:/users/login?error="+errorMessage;
         }
     }
 
     @GetMapping(path="/signup")
     public String showSignupForm(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("message", "Register Here...");
+        model.addAttribute("User", new User());
         return "signup"; // Return the signup form page
     }
 
+    @SuppressWarnings("unused")
     @PostMapping(path="/signup")
-    public String signup(@ModelAttribute("user") User user, Model model) {
-        userService.signUp(user);
-        // You may add success message or redirect to login page here
-        return "redirect:/"; // Redirect to login page after successful signup
+    public String signup(@ModelAttribute("user") User user, Model model, HttpServletResponse response) {
+        User u= userService.signUp(user);
+        String username= u.getUsername();
+        if (u != null) {
+            // If login is successful, set a cookie to maintain the login state
+            Cookie cookie = new Cookie("username", username);
+            cookie.setMaxAge(7 * 24 * 60 * 60); // Cookie expires in 7 days
+            cookie.setPath("/"); // Set cookie path to root
+            response.addCookie(cookie);
+            
+            // Redirect the user to home page or any other page
+            return "redirect:/"; // 
+        } 
+        
+        // If login fails, return an error message or redirect back to the login page
+        errorMessage = "Please fill all details properly";
+        return "redirect:/users/signup?error="+errorMessage;   
     }
 
     @GetMapping(path="/logout")
