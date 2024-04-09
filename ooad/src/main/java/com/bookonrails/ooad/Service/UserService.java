@@ -88,5 +88,11 @@ public class UserService implements UserManagement
         return userRepository.findAll();
     }
 
+    @Override
+    public boolean deleteUser(Long userId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deleteUser'");
+    }
+
     
 }
