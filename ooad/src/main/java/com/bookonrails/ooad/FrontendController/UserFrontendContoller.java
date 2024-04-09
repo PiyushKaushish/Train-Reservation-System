@@ -25,7 +25,7 @@ public class UserFrontendContoller {
     public String login(Model m){
         m.addAttribute("message", "Login Here...");
         m.addAttribute("User", new User());
-        return "login";
+        return "user/login";
     }
 
     @PostMapping(path="/loginForm")
@@ -55,7 +55,7 @@ public class UserFrontendContoller {
     public String showSignupForm(Model model) {
         model.addAttribute("message", "Register Here...");
         model.addAttribute("User", new User());
-        return "signup"; // Return the signup form page
+        return "user/signup"; // Return the signup form page
     }
 
     @SuppressWarnings("unused")
