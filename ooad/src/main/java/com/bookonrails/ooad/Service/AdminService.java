@@ -36,5 +36,9 @@ public class AdminService {
         return adminRepository.findAll();
     }
 
+    public Admin findByUsername(String username){
+        return adminRepository.findByUsername(username);
+    }
+
 
 }

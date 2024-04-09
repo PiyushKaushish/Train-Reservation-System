@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 import com.bookonrails.ooad.Model.Admin;
 import com.bookonrails.ooad.Service.AdminService;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @Controller
@@ -40,6 +43,25 @@ public class AdminStaffManagementFrontendController {
         adminService.deleteAdmin(adminId);
         return "redirect:/admin/admin/show";
     }
+
+    @GetMapping("/admin-details/{username}")
+    public String adminDetails(@RequestParam String username,Model m) {
+        Admin u = adminService.findByUsername(username);
+        m.addAttribute("Admin", u);
+        return "admin/admin/detail";
+    }
+    
+    @GetMapping("/search")
+    public String getSearch(Model m){
+        return "admin/admin/search";
+    }
+
+    @GetMapping("/search/{username}")
+    public String searchAdmin(@RequestParam String username, Model m) {
+        adminService.findByUsername(username);
+        return "redirect:admin/admin/admin-details/"+username;
+    }
+    
     
     
 

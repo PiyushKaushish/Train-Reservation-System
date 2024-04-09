@@ -58,6 +58,8 @@
 
     <div class="content-body container-fluid">
         <!-- Block Content will be here -->
+
+        <input class="form-control" type="text" id="searchInput" onkeyup="searchUser()" placeholder="Search by username, name, email, or phone number..."> <br>
         <table class="table">
             <thead>
                 <tr>
@@ -137,6 +139,38 @@
             d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
             var expires = "expires=" + d.toUTCString();
             document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        // Function to search users based on input
+        function searchUser() {
+            // Declare variables
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.querySelector("table");
+            tr = table.getElementsByTagName("tr");
+
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+                // Get the cells in the current row
+                td = tr[i].getElementsByTagName("td");
+                // Loop through all cells in the row
+                for (var j = 0; j < td.length; j++) {
+                    var cell = td[j];
+                    if (cell) {
+                        txtValue = cell.textContent || cell.innerText;
+                        // If the text content of the cell matches the search query, display the row
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                            // Break out of the inner loop (no need to check other cells in this row)
+                            break;
+                        } else {
+                            // If the text content doesn't match, hide the row
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
         }
 
     </script>

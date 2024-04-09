@@ -58,8 +58,9 @@
     </nav>
 
     <div class="content-body container-fluid">
+        <input class="form-control" type="text" id="searchInput" onkeyup="searchUser()" placeholder="Search for usernames..."><br>
         <!-- Block Content will be here -->
-        <table class="table">
+        <table id="userTable" class="table">
             <thead>
                 <tr>
                     <th scope="col">Admin Id</th>
@@ -133,6 +134,27 @@
             d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
             var expires = "expires=" + d.toUTCString();
             document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        function searchUser() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("userTable");
+            tr = table.getElementsByTagName("tr");
+            
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1]; // Index 1 corresponds to the Username column
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }       
+            }
         }
 
     </script>
