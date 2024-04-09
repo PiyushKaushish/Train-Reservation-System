@@ -7,7 +7,6 @@ import com.bookonrails.ooad.Model.*;
 
 public interface TicketBookingManagement {
     public String generateUniquePNR();
-    public boolean checkSeatAvailability(Train train,ClassType classType,Date date);
     public Ticket makeReservation(Train train,ClassType classType,Date date,User user,List<Passenger> passenger);
     public PaymentStatus initiatePayment(Ticket ticket,Payment payment);
     public boolean confirmBooking(Ticket ticket,Payment payment,PaymentStatus paymentStatus);
