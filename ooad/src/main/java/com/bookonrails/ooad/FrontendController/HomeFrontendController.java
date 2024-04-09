@@ -23,13 +23,13 @@ public class HomeFrontendController {
     @GetMapping("/")
     public String homePage(Model m){
         m.addAttribute("appname", appname);
-        return "home";
+        return "home/home";
     }
 
     @GetMapping("/about")
     public String aboutPage(Model m){
         m.addAttribute("appname", appname);
-        return "about";
+        return "home/about";
     }
 
     // contact us
@@ -37,7 +37,7 @@ public class HomeFrontendController {
     public String contactPage(Model m){
         m.addAttribute("title", "Contact us");
         m.addAttribute("Contact", new Contact());
-        return "contact";
+        return "home/contact";
     }
 
     // contact us post
@@ -53,7 +53,5 @@ public class HomeFrontendController {
     public String basePage(Model m, HttpServletRequest request){
         return "base";
     }
-
-
 
 }
