@@ -5,11 +5,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+
+import jakarta.servlet.http.*;
+
 @Controller
 @RequestMapping(path="/")
 @CrossOrigin(origins = "*")
 public class HomeFrontendController {
     private String appname="Book On Rails";
+    
     @GetMapping("/")
     public String homePage(Model m){
         m.addAttribute("appname", appname);
@@ -38,7 +42,7 @@ public class HomeFrontendController {
 
     //base
     @GetMapping("/base")
-    public String basePage(Model m){
+    public String basePage(Model m, HttpServletRequest request){
         return "base";
     }
 

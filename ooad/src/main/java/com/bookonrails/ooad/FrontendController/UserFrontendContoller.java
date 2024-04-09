@@ -53,15 +53,27 @@ public class UserFrontendContoller {
     @GetMapping(path="/signup")
     public String showSignupForm(Model model) {
         model.addAttribute("user", new User());
-        return "signup_user"; // Return the signup form page
+        return "signup"; // Return the signup form page
     }
 
     @PostMapping(path="/signup")
     public String signup(@ModelAttribute("user") User user, Model model) {
         userService.signUp(user);
         // You may add success message or redirect to login page here
-        return "redirect:/users/login"; // Redirect to login page after successful signup
+        return "redirect:/"; // Redirect to login page after successful signup
     }
 
+    @GetMapping(path="/logout")
+    public String logout(Model model, HttpServletResponse response) {
+        // Remove the username cookie to log the user out
+        Cookie cookie = new Cookie("username", "");
+        cookie.setMaxAge(0); // Expire immediately
+        cookie.setPath("/"); // Set cookie path to root
+        response.addCookie(cookie);
+        
+        // Redirect the user to the login page
+        return "redirect:/users/login";
+    }
+    
     
 }
