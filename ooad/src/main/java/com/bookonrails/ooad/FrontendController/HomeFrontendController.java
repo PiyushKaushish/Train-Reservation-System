@@ -53,5 +53,10 @@ public class HomeFrontendController {
     public String basePage(Model m, HttpServletRequest request){
         return "base";
     }
+    //search-train
+    @GetMapping("/search-train")
+    public String searchTrainPage(Model m, HttpServletRequest request){
+        return "search-train";
+    }
 
 }
