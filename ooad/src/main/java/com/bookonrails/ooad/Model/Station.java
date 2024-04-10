@@ -102,4 +102,9 @@ public class Station {
         this.destinationTickets.remove(t);
     }
 
+    @Override
+    public String toString(){
+        return stationCode+": "+ stationName;
+    }
+
 }

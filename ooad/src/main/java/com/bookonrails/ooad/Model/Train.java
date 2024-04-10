@@ -92,5 +92,9 @@ public class Train {
     // public List<String> getRouteList(){
         
     // }
+    @Override
+    public String toString(){
+        return trainNo+": "+trainName;
+    }
 
 }

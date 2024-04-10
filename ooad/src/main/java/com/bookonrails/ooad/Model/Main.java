@@ -66,7 +66,6 @@ public class Main {
         t1.setOperatingDays(Arrays.asList(od1,od2,od3));
 
         SeatAvailability sa1 = new SeatAvailability();
-        sa1.setAvailableSeats(100);
         sa1.setClasses(ClassType.Sleeper);
         sa1.setDate(java.sql.Date.valueOf("2024-10-01"));
         sa1.setFarePerKM(50);
@@ -75,7 +74,6 @@ public class Main {
         sa1.setTrain(t1);
 
         SeatAvailability sa2 =new SeatAvailability();
-        sa2.setAvailableSeats(100);
         sa2.setClasses(ClassType.AC2Tier);
         sa2.setDate(java.sql.Date.valueOf("2024-10-01"));
         sa2.setFarePerKM(100);

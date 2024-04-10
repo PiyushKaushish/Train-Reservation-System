@@ -44,6 +44,8 @@ public class SeatAvailability {
         this.setAvailableSeats();
         this.lastUnbookedLowerSeat=1; // next seat that is lower birth and is not booked
         this.lastUnbookedUpperSeat=2; // next seat that is upper birth and is not booked
+        setLastLowerSeat();
+        setLastUpperSeat();
     }
 
     
@@ -80,7 +82,7 @@ public class SeatAvailability {
     }
 
     public int getAvailableSeats() {
-        return availableSeats;
+        return availableSeats+CancelledSeats.size();
     }
 
     public void setAvailableSeats() {
@@ -128,9 +130,6 @@ public class SeatAvailability {
         this.id = id;
     }
 
-    public void setAvailableSeats(int availableSeats) {
-        this.availableSeats = availableSeats;
-    }
 
     public double getBasePrice() {
         return basePrice;
@@ -156,8 +155,32 @@ public class SeatAvailability {
         this.waitingList.remove(t);
     }
 
+    public void checkWaitingPassengers(){
+        if(waitingList.size()<=0){ // no waiting ticket
+            return;
+        }
+        for (Ticket t: waitingList){
+            List<Passenger> passengers = t.getPassengers();
+            allocatePassengerSeatNo(passengers);
+            Boolean waitingExistsInTicket=false;
+            for (Passenger p: passengers){
+                if(p.getSeatNo()==-1){
+                    waitingExistsInTicket = true;
+                }
+                else{
+                    p.setWaitingList(false);
+                }
+            }        
+            if(!waitingExistsInTicket){
+                // remove ticket from waiting list
+                System.out.println("Remove Ticket "+t.getId());
+                deleteTicketFromWaitingList(t);
+            }
+        } 
+    }
+
     public void addCancelledSeat(int c){
-        CancelledSeats.add(c);
+        CancelledSeats.add(c);        
     }
 
     
@@ -166,11 +189,8 @@ public class SeatAvailability {
     }
 
     public boolean isFull(){
-        if(availableSeats<=0){
+        if(getAvailableSeats()<=0){
             return true; // all coaches are full
-        }
-        else if (CancelledSeats.size()<=0){
-            return true;
         }
         else{
             return false; // seats are there
@@ -287,11 +307,13 @@ public class SeatAvailability {
                 p.setWaitingList(isFull());
             }
             if(seatNo>0){
+                p.setWaitingList(isFull());
                 p.setSeatNo(seatNo);
                 continue;
             }
             seatNo= allocateSeatNumber();
             if(seatNo>0){
+                p.setWaitingList(isFull());
                 p.setSeatNo(seatNo);
                 // continue;
             }

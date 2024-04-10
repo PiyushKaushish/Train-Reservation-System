@@ -2,6 +2,7 @@ package com.bookonrails.ooad.Model;
 
 import jakarta.persistence.*;
 import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 public class Route {
@@ -73,6 +74,73 @@ public class Route {
             route += st.toString() + "\n";
         }
         return route;
+    }
+    public List<Station> getStations() {
+        List<Station> stations = new ArrayList<>();
+        for(StationTimings st: stationTimings){
+            stations.add(st.getStation());
+        }
+        return stations;
+    }
+    
+    // to check if a particular station is present given station code from the list of all stations in the Route
+    public boolean isStationPresent(String stationCode){ 
+        for(StationTimings st: stationTimings){
+            if(st.getStation().getStationCode().equals(stationCode)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // to get the next station by station code from the list of all stations in the Route
+    public StationTimings getNextStation(String currentStationCode){
+        for(int i=0; i<stationTimings.size(); i++){
+            if(stationTimings.get(i).getStation().getStationCode().equals(currentStationCode)){
+                if(i+1 < stationTimings.size()){
+                    return stationTimings.get(i+1);
+                }
+            }
+        }
+        return null; // returns null if that is the last station
+    }
+
+    // to get the previous station by station code from the list of all stations in the Route
+    public StationTimings getPreviousStation(String currentStationCode){
+        for(int i=0; i<stationTimings.size(); i++){
+            if(stationTimings.get(i).getStation().getStationCode().equals(currentStationCode)){
+                if(i-1 >= 0){
+                    return stationTimings.get(i-1);
+                }
+            }
+        }
+        return null; // returns null if that is the first station
+    }
+
+    // to get the distance between two stations by station code from the list of all stations in the Route
+    public double getDistanceBetweenStations(String stationCode1, String stationCode2){
+        int distance = 0;
+        boolean flag = false;
+        for(StationTimings st: stationTimings){
+            if(st.getStation().getStationCode().equals(stationCode1) || st.getStation().getStationCode().equals(stationCode2)){
+                if(flag){
+                    distance += st.getDistanceFromNextStation();
+                    return distance;
+                }
+                flag = true;
+            }
+            if(flag){
+                distance += st.getDistanceFromNextStation();
+            }
+        }
+        return -1.0; // returns -1 if the stations are not present in the route
+    }
+
+    // checks if a route exists in a particular train or not
+    public boolean isRoutePresent(Station src, Station dest){
+        boolean s= isStationPresent(src.getStationCode());
+        boolean d=isStationPresent(dest.getStationCode());
+        return s && d; // both should be present to create a route
     }
 
 }
