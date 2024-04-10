@@ -87,5 +87,10 @@ public class Train {
     public void setRoute(Route route) {
         this.route = route;
     }
+    
+    // returns a list of stations that the train passes through with arrival time and departure time
+    // public List<String> getRouteList(){
+        
+    // }
 
 }

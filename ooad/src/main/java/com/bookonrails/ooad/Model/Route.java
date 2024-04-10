@@ -46,5 +46,33 @@ public class Route {
     public void deleteStationTimings(StationTimings st){
         this.stationTimings.remove(st);
     }
+    
+    // get List of Stops
+    public List<String> getAllStops(){
+        List<String> stops = new java.util.ArrayList<String>();
+        for(StationTimings st: stationTimings){
+            stops.add(st.toString());
+        }
+        return stops;
+    }
+
+    // get StationTimings by StationCode
+    public StationTimings getStationTimingsByStationCode(String stationCode){
+        for(StationTimings st: stationTimings){
+            if(st.getStation().getStationCode().equals(stationCode)){
+                return st;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        String route = new String();
+        for(StationTimings st: stationTimings){
+            route += st.toString() + "\n";
+        }
+        return route;
+    }
 
 }

@@ -51,6 +51,11 @@ public class StationTimings {
     public void setRoute(Route route) {
         this.route = route;
     }
+
+    @Override
+    public String toString() {
+        return "Station Code:"+station.getStationCode()+" Station:"+station.getStationName()+" Arrival:"+arrivalTime.toString()+" Departure:"+departureTime.toString();
+    }
     
 
 }

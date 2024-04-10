@@ -12,8 +12,8 @@ import com.bookonrails.ooad.Model.Station;
 public interface StationRepository extends JpaRepository<Station,String>{
     public Station findByStationCode(String stationCode);   
     @Query("SELECT s FROM Station s WHERE s.stationName LIKE %:stationName%")
-    public List<Station> findByStationName(String stationName);
-    
+    public List<Station> findByStationNameContaining(String stationName);
+
 
 }
 
