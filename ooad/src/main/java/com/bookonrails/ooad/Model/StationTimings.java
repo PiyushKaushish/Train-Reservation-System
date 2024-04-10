@@ -20,7 +20,14 @@ public class StationTimings {
 
     private Time arrivalTime;
     private Time departureTime;
+    private double distanceFromNextStation;
 
+    public double getDistanceFromNextStation() {
+        return distanceFromNextStation;
+    }
+    public void setDistanceFromNextStation(double distanceFromNextStation) {
+        this.distanceFromNextStation = distanceFromNextStation;
+    }
     public Station getStation() {
         return station;
     }
