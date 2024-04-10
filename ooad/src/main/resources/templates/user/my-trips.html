@@ -18,33 +18,47 @@
 
     <div class="content-body container-fluid">
         <div class="container mt-5">
-
             <!-- Add content here -->
             <h1 class="text-muted" th:text="${message}">Current tickets:</h1>
             <p class="text-danger" th:if="${param.error}" th:text="${param.error}"></p>
 
-            <div class="card bg-light text-dark" style="margin: 10px;background-color: white;padding: 20px; display: flex; flex-direction: column;">
-                <div style="display: flex; justify-content: space-around;">
-                    <span>
-                        <span style="font-weight: 200;font-size:30px;">Sbc Tlgp Exp</span>
-                        <span style="display: block; font-size: 18px; text-align: center;">#45678</span>
-                    </span>
-                    <div style="text-align: center; padding-top: 10px; display: flex;">
-                        <span>
-                            <span style="font-weight: 600; font-size: 20px;">3:12 PM, Thu</span>
-                            <span style="display: block;">Yesvantpur Jn (YPR)</span>
-                        </span>
-                        <span
-                            style="font-weight: 600; font-size: 20px;">---------&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4hrs
-                            2mins&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---------&gt;</span>
-                        <span>
-                            <span style="font-weight: 600; font-size: 20px;">7:14 PM, Thu</span>
-                            <span style="display: block;">Shivamogga H (SME)</span>
-                        </span>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <h4 class="card-title mb-2">Sbc Tlgp Exp</h4>
+                            <p class="card-text mb-0">Train No :#45678</p>
+                            <p class="card-text mb-0">PNR: 1234567890</p>
+                            <p class="card-text mb-0">Class: 2A</p>
+                            <p class="card-text mb-0">Date of Journey : 12/12/2021</p>
+                            <p class="card-text mb-0">Number Of Passengers : 5</p>
+                            <p class="card-text mb-0">Total Fare: 2500.00</p>
+
+                        </div>
+                        <div class="col-6 text-justify">
+                            <p class="card-text mb-0">
+                                <a href="#" style="width: 100%;" class="btn btn-warning">View</a>
+                                <a href="#" style="width: 100%;" class="btn btn-danger">Cancel</a>
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center mt-4">
+                                <div>
+                                    <p class="mb-0"><strong>3:12 PM, Thu</strong></p>
+                                    <p class="mb-0">Yesvantpur Jn (YPR)</p>
+                                </div>
+                                <div>
+                                    <span class="mb-0">---------</span>
+                                    <span class="mb-0">4hrs 2mins</span>
+                                    <span class="mb-0">---------&gt;</span>
+                                </div>
+                                <div>
+                                    <p class="mb-0"><strong>7:14 PM, Thu</strong></p>
+                                    <p class="mb-0">Shivamogga H (SME)</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            
         </div>
     </div>
 
