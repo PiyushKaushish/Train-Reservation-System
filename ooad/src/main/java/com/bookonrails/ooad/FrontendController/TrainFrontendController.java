@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 // import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import com.bookonrails.ooad.Model.ClassType;
+// import com.bookonrails.ooad.Model.ClassType;
 
 @Controller
 @RequestMapping(path="/train")
