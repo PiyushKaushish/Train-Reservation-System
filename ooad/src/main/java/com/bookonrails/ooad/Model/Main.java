@@ -3,6 +3,8 @@ package com.bookonrails.ooad.Model;
 import java.sql.Time;
 import java.util.Arrays;
 
+// Test file for train models
+
 public class Main {
     public static void main (String[] args) {
         StationTimings st1= new StationTimings();
@@ -82,7 +84,35 @@ public class Main {
         sa2.setTrain(t1);
 
         t1.setSeatAvailability(Arrays.asList(sa1,sa2));
+
+        System.out.println(t1.getTrainName());
+        System.out.println(t1.getTrainNo());
+        System.out.println(t1.getTraintype());
+        //Station
+        System.out.println(t1.getRoute().getStationTimings().get(0).getStation().getStationName());
+        //Arrival time
+        System.out.println(t1.getRoute().getStationTimings().get(0).getArrivalTime());
+        // departure time
+        System.out.println(t1.getRoute().getStationTimings().get(0).getDepartureTime());
         
+        System.out.println(t1.getRoute().getStationTimings().get(1).getStation().getStationName());
+        System.out.println(t1.getRoute().getStationTimings().get(1).getArrivalTime());
+        System.out.println(t1.getRoute().getStationTimings().get(1).getDepartureTime());
+        System.out.println(t1.getRoute().getStationTimings().get(2).getStation().getStationName());
+        System.out.println(t1.getRoute().getStationTimings().get(2).getArrivalTime());
+        System.out.println(t1.getRoute().getStationTimings().get(2).getDepartureTime());
+        // operating days
+        System.out.println(t1.getOperatingDays().get(0).getDayOfWeek());
+        System.out.println(t1.getOperatingDays().get(1).getDayOfWeek());
+        System.out.println(t1.getOperatingDays().get(2).getDayOfWeek());
+        // Seat Availibility
+        System.out.println(t1.getSeatAvailability().get(0).getAvailableSeats());
+        System.out.println(t1.getSeatAvailability().get(0).getNo_of_coaches());
+        System.out.println(t1.getSeatAvailability().get(0).getBasePrice());
+        System.out.println(t1.getSeatAvailability().get(0).getFarePerKM());
+        System.out.println(t1.getSeatAvailability().get(0).getClasses());
+
+
 
 
 

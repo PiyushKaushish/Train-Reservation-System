@@ -39,6 +39,18 @@ public class StationTimings {
     public void setDepartureTime(Time departureTime) {
         this.departureTime = departureTime;
     }
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public Route getRoute() {
+        return route;
+    }
+    public void setRoute(Route route) {
+        this.route = route;
+    }
     
 
 }

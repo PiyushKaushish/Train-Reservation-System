@@ -1,5 +1,6 @@
 package com.bookonrails.ooad.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -19,7 +20,16 @@ public class Station {
     @OneToMany(mappedBy = "station",cascade = CascadeType.ALL)
     private List<StationTimings> stationTimings;
 
-    public List<StationTimings> getStationTimings() {
+    public Station() {
+        super();
+    }
+
+    public Station(String stationcode,String stationname) {
+        this.stationCode = stationcode;
+        this.stationName = stationname;
+    }
+
+    public List<StationTimings> getStationTimings() { // List of Route that pass this station
         return stationTimings;
     }
 
@@ -59,4 +69,37 @@ public class Station {
     public void setDestinationTickets(List<Ticket> destinationTickets) {
         this.destinationTickets = destinationTickets;
     }
+
+    public List<Train> getTrains() { // returns list of trains that pass through this station
+        List<Train> trains = new ArrayList<>();
+        for (StationTimings st : stationTimings) {
+            trains.add(st.getRoute().getTrain());
+        }
+        return trains;
+    }
+
+    public void addStationTimings(StationTimings st) {
+        this.stationTimings.add(st);
+    }
+
+    public void addSourceTicket(Ticket t) {
+        this.sourceTickets.add(t);
+    }
+
+    public void addDestinationTicket(Ticket t) {
+        this.destinationTickets.add(t);
+    }
+
+    public void removeStationTimings(StationTimings st) {
+        this.stationTimings.remove(st);
+    }
+
+    public void removeSourceTicket(Ticket t) {
+        this.sourceTickets.remove(t);
+    }
+
+    public void removeDestinationTicket(Ticket t) {
+        this.destinationTickets.remove(t);
+    }
+
 }

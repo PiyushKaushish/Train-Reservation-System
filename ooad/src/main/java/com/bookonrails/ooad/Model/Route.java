@@ -39,4 +39,12 @@ public class Route {
         this.train = train;
     }
 
+    public void addStationTimings(StationTimings st){
+        this.stationTimings.add(st);
+    }
+
+    public void deleteStationTimings(StationTimings st){
+        this.stationTimings.remove(st);
+    }
+
 }
