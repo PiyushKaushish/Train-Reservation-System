@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TrainRepository extends JpaRepository<Train, String> {
-    public List<Train> findByTrainNo(String trainNo);
+    public Train findByTrainNo(String trainNo);
     @Query("SELECT t FROM Train t WHERE t.traintype LIKE %:trainType%")
     public List<Train> findByTrainTypeContaining(String trainType);
     @Query("SELECT t FROM Train t WHERE t.trainName LIKE %:trainName%")

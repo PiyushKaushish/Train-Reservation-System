@@ -10,7 +10,7 @@ import com.bookonrails.ooad.Service.StationTimingsService;
 @Controller
 @RequestMapping("/admin/station-timings")
 @CrossOrigin(origins = "*")
-public class StationTimingManagementFrontendController {
+public class AdminStationTimingManagementFrontendController {
     
     @Autowired
     private StationTimingsService stationTimingsService;

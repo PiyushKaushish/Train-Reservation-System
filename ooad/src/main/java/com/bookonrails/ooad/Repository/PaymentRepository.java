@@ -7,6 +7,6 @@ import com.bookonrails.ooad.Model.Payment;
 import com.bookonrails.ooad.Model.Ticket;
 
 @Repository
-public interface PaymentRepository extends JpaRepository<Payment, Integer> {
+public interface PaymentRepository extends JpaRepository<Payment, Long> {
     Payment findByTicket(Ticket ticket);
 }
