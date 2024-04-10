@@ -5,112 +5,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{main.css}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
 
     <title>Book On Rails</title>
-    <style>
-        body {
-            background-color: #f8f8f8;
-            font-family: 'Roboto', sans-serif;
-        }
-
-        h1 {
-            color: #272727;
-            font-size: 24px;
-            font-weight: 300;
-        }
-        .content-body {
-            padding: 50px;
-        
-        }
-    </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-warning fixed-top ">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">Book On Rails</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Home</a>
-                    </li>
-                    <li id="login-btn" class="nav-item">
-                        <a class="nav-link" href="/users/login">Login</a>
-                      </li>
-                      <li id="logout-btn" class="nav-item">
-                        <a class="nav-link" href="/users/logout">Logout</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/about">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/contact-us">Contact Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/search-train">Search Train</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <header th:insert="~{base :: header}"></header>
 
     <div class="content-body container-fluid">
-        <img style="width:100%;" src="https://wallpapercave.com/wp/wp4740891.jpg" alt="Src: Wallpaper Cave" />
+        <img style="width:100%;border-radius:5%" src="https://wallpapercave.com/wp/wp4740891.jpg" alt="Src: Wallpaper Cave" />
         <h1>Welcome to Book on Rails</h1>
-        <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum veniam, totam ipsam autem ut maiores officia quis rerum ad quo eaque mollitia! Ea quas consequatur nisi, nesciunt quis possimus id iste accusamus commodi incidunt vero voluptatum eum assumenda ad veritatis sit praesentium asperiores nam ipsam doloremque est iusto minus enim? Reiciendis, corrupti! Sint voluptas nulla quis beatae cum aperiam. Dolores laboriosam delectus itaque! Voluptatem quae debitis nihil dignissimos laboriosam. Porro ex esse consequuntur itaque soluta, neque quidem at cum, ratione corporis officia eveniet animi? Autem ea a possimus amet asperiores. Rerum, quis provident nemo consectetur in aliquam, rem minima numquam quisquam animi laborum voluptas cumque molestias doloremque. Autem fugiat maiores deleniti iste nobis esse impedit doloremque! Eum aliquid tenetur dolores, dolorum magnam ratione nesciunt earum nobis aperiam libero. Ut, provident incidunt? Quia molestias hic aperiam eius saepe laboriosam vel, doloribus laborum, pariatur assumenda expedita facilis dolorum nisi voluptate, rem libero rerum! Debitis nisi quos officiis culpa, mollitia possimus reiciendis magnam voluptas perspiciatis similique? Quo doloribus voluptatem pariatur fugit nesciunt, quam at temporibus sequi, velit repudiandae ut atque id consequuntur repellat sunt voluptatibus praesentium sint. Dignissimos dolores dolore cupiditate omnis dolorum minus placeat earum, facere repellendus laudantium possimus voluptate distinctio quibusdam!</p>
+        <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum veniam, totam ipsam
+            autem ut maiores officia quis rerum ad quo eaque mollitia! Ea quas consequatur nisi, nesciunt quis possimus
+            id iste accusamus commodi incidunt vero voluptatum eum assumenda ad veritatis sit praesentium asperiores nam
+            ipsam doloremque est iusto minus enim? Reiciendis, corrupti! Sint voluptas nulla quis beatae cum aperiam.
+            Dolores laboriosam delectus itaque! Voluptatem quae debitis nihil dignissimos laboriosam. Porro ex esse
+            consequuntur itaque soluta, neque quidem at cum, ratione corporis officia eveniet animi? Autem ea a possimus
+            amet asperiores. Rerum, quis provident nemo consectetur in aliquam, rem minima numquam quisquam animi
+            laborum voluptas cumque molestias doloremque. Autem fugiat maiores deleniti iste nobis esse impedit
+            doloremque! Eum aliquid tenetur dolores, dolorum magnam ratione nesciunt earum nobis aperiam libero. Ut,
+            provident incidunt? Quia molestias hic aperiam eius saepe laboriosam vel, doloribus laborum, pariatur
+            assumenda expedita facilis dolorum nisi voluptate, rem libero rerum! Debitis nisi quos officiis culpa,
+            mollitia possimus reiciendis magnam voluptas perspiciatis similique? Quo doloribus voluptatem pariatur fugit
+            nesciunt, quam at temporibus sequi, velit repudiandae ut atque id consequuntur repellat sunt voluptatibus
+            praesentium sint. Dignissimos dolores dolore cupiditate omnis dolorum minus placeat earum, facere
+            repellendus laudantium possimus voluptate distinctio quibusdam!</p>
     </div>
-
+    <script th:src="@{user.js}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-        <script>
-            // get username cookie
-            var username = getCookie("username");
-            console.log(username);
-            
-            if (username!=""){
-              document.getElementById("logout-btn").style.display = "block";
-              document.getElementById("login-btn").style.display = "none";
-              // window.location.href='/';
-            }
-            else{
-              document.getElementById("login-btn").style.display = "block";
-              document.getElementById("logout-btn").style.display = "none";
-            }
-            // get cookie
-            function getCookie(cname) {
-              var name = cname + "=";
-              var decodedCookie = decodeURIComponent(document.cookie);
-              var ca = decodedCookie.split(';');
-              for (var i = 0; i < ca.length; i++) {
-                var c = ca[i];
-                while (c.charAt(0) == ' ') {
-                  c = c.substring(1);
-                }
-                if (c.indexOf(name) == 0) {
-                  return c.substring(name.length, c.length);
-                }
-              }
-              return "";
-            }
-        
-            // set cookie
-            function setCookie(cname, cvalue, exdays) {
-              var d = new Date();
-              d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-              var expires = "expires=" + d.toUTCString();
-              document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-            }
-            
-    </script>
-
+    
 </body>
 
 </html>
