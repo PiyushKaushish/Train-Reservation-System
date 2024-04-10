@@ -84,13 +84,14 @@ public class Route {
     }
     
     // to check if a particular station is present given station code from the list of all stations in the Route
-    public boolean isStationPresent(String stationCode){ 
+    // returns index; -1 if not present
+    public int isStationPresent(String stationCode){ 
         for(StationTimings st: stationTimings){
             if(st.getStation().getStationCode().equals(stationCode)){
-                return true;
+                return stationTimings.indexOf(st);
             }
         }
-        return false;
+        return -1;
     }
 
     // to get the next station by station code from the list of all stations in the Route
@@ -138,9 +139,9 @@ public class Route {
 
     // checks if a route exists in a particular train or not
     public boolean isRoutePresent(Station src, Station dest){
-        boolean s= isStationPresent(src.getStationCode());
-        boolean d=isStationPresent(dest.getStationCode());
-        return s && d; // both should be present to create a route
+        int s= isStationPresent(src.getStationCode());
+        int d=isStationPresent(dest.getStationCode());
+        return s>=0 && d>=0 && s<d; // both should be present to create a route
     }
-
+    
 }

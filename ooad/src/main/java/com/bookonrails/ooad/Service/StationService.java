@@ -10,12 +10,8 @@ import java.util.List;
 @Service
 public class StationService {
 
-    private final StationRepository stationRepository;
-
     @Autowired
-    public StationService(StationRepository stationRepository) {
-        this.stationRepository = stationRepository;
-    }
+    private StationRepository stationRepository;
 
     
     public Station addStation(Station station) {
