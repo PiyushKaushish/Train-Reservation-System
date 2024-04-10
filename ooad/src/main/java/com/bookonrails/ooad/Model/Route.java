@@ -121,17 +121,23 @@ public class Route {
     // to get the distance between two stations by station code from the list of all stations in the Route
     public double getDistanceBetweenStations(String stationCode1, String stationCode2){
         int distance = 0;
-        boolean flag = false;
+        boolean sourceFlag=false;
+        boolean destFlag=false;
         for(StationTimings st: stationTimings){
-            if(st.getStation().getStationCode().equals(stationCode1) || st.getStation().getStationCode().equals(stationCode2)){
-                if(flag){
-                    distance += st.getDistanceFromNextStation();
-                    return distance;
-                }
-                flag = true;
+            if(st.getStation().getStationCode().equals(stationCode1)){
+                sourceFlag=true;
             }
-            if(flag){
+            if(st.getStation().getStationCode().equals(stationCode2)){
+                destFlag=true;
+            }
+            if(sourceFlag && !destFlag){
+                System.out.print(st.getStation().getStationCode());
+                System.out.println(st.getDistanceFromNextStation());
+
                 distance += st.getDistanceFromNextStation();
+            }
+            if(sourceFlag && destFlag){
+                return distance;
             }
         }
         return -1.0; // returns -1 if the stations are not present in the route

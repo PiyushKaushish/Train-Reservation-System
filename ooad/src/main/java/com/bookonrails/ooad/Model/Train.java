@@ -1,5 +1,6 @@
 package com.bookonrails.ooad.Model;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -149,6 +150,35 @@ public class Train {
 
     public boolean doesPathExist(Station SRC, Station DEST){
         return route.isRoutePresent(SRC,DEST);
+    }
+
+    public Time getArrivalTime(Station station){
+        return route.getStationTimingsByStationCode(station.getStationCode()).getArrivalTime();
+    }
+
+    public Time getDepartureTime(Station station){
+        return route.getStationTimingsByStationCode(station.getStationCode()).getDepartureTime();
+    }
+
+    public List<StationTimings> getStationTimings(){
+        return route.getStationTimings();
+    }
+
+    public boolean willTrainRunOnDayOfWeek(DayOfWeek d){
+        for (OperatingDay od:operatingDays){
+            if (od.getDayOfWeek().equals(d)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public double getFare(Station SRC, Station DEST, ClassType classes){
+        return getSeatAvailabilityClasswise(classes).getFare(SRC, DEST);
+    }
+
+    public double getDistanceBetweenStations(Station SRC, Station DEST){
+        return route.getDistanceBetweenStations(SRC.getStationCode(), DEST.getStationCode());
     }
 
     
