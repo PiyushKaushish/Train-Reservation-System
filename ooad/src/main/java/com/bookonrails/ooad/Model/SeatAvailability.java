@@ -31,8 +31,10 @@ public class SeatAvailability {
     @Column(name = "seat_number")
     private List<Integer> CancelledSeats; // check n%2 = 1 -> Lower, n%2 = 0 -> Upper
 
-    private int lastBookedLowerSeat;
-    private int lastBookedUpperSeat;
+    private int lastUnbookedLowerSeat;
+    private int lastUnbookedUpperSeat;
+    private int lastLowerSeat;
+    private int lastUpperSeat;
 
     private double basePrice;
     private double farePerKM;
@@ -40,10 +42,11 @@ public class SeatAvailability {
     
     public SeatAvailability(){
         this.setAvailableSeats();
-        this.lastBookedLowerSeat=1;
-        this.lastBookedUpperSeat=2;
+        this.lastUnbookedLowerSeat=1; // next seat that is lower birth and is not booked
+        this.lastUnbookedUpperSeat=2; // next seat that is upper birth and is not booked
     }
 
+    
     public Train getTrain() {
         return train;
     }
@@ -101,20 +104,20 @@ public class SeatAvailability {
         CancelledSeats = cancelledSeats;
     }
 
-    public int getLastBookedLowerSeat() {
-        return lastBookedLowerSeat;
+    public int getLastUnbookedLowerSeat() {
+        return lastUnbookedLowerSeat;
     }
 
-    public void setLastBookedLowerSeat(int lastBookedLowerSeat) {
-        this.lastBookedLowerSeat = lastBookedLowerSeat;
+    public void setLastUnbookedLowerSeat(int lastUnbookedLowerSeat) {
+        this.lastUnbookedLowerSeat = lastUnbookedLowerSeat;
     }
 
-    public int getLastBookedUpperSeat() {
-        return lastBookedUpperSeat;
+    public int getLastUnbookedUpperSeat() {
+        return lastUnbookedUpperSeat;
     }
 
-    public void setLastBookedUpperSeat(int lastBookedUpperSeat) {
-        this.lastBookedUpperSeat = lastBookedUpperSeat;
+    public void setLastUnbookedUpperSeat(int lastUnbookedUpperSeat) {
+        this.lastUnbookedUpperSeat = lastUnbookedUpperSeat;
     }
 
     public Long getId() {
@@ -145,5 +148,170 @@ public class SeatAvailability {
         this.farePerKM = farePerKM;
     }
 
+    public void addTicketToWaitingList(Ticket t){
+        this.waitingList.add(t);
+    }
 
+    public void deleteTicketFromWaitingList(Ticket t){
+        this.waitingList.remove(t);
+    }
+
+    public void addCancelledSeat(int c){
+        CancelledSeats.add(c);
+    }
+
+    
+    public void deleteCancelledSeat(int c){
+        CancelledSeats.remove(c);
+    }
+
+    public boolean isFull(){
+        if(availableSeats<=0){
+            return true; // all coaches are full
+        }
+        else if (CancelledSeats.size()<=0){
+            return true;
+        }
+        else{
+            return false; // seats are there
+        }
+    }
+
+
+    // DO NOT use this function just to check if seats are available
+    public int allocateSeatNumber(Birth b){ // checks if seat is available in train with birth preference b
+        if(isFull()){
+            return -1;
+        }
+        if(b==Birth.Lower){
+            if(lastUnbookedLowerSeat<=availableSeats){ // seats are empty
+                int seatNo= lastUnbookedLowerSeat;
+                availableSeats--;
+                lastUnbookedLowerSeat+=2;
+                return seatNo;
+            }
+            else if(CancelledSeats.size() > 0){
+                // check for any cancelled seat which is lower
+                for(int c:CancelledSeats){
+                    if(c%2==1){
+                        deleteCancelledSeat(c);
+                        return c;
+                    }
+                }
+                return -1;
+            } 
+        }
+        else if (b== Birth.Upper){
+            if(lastUnbookedUpperSeat<=availableSeats){ // seats are empty
+                int seatNo= lastUnbookedUpperSeat;
+                lastUnbookedUpperSeat+=2;
+                availableSeats--;
+                return seatNo;
+            }
+            else if(CancelledSeats.size() > 0){
+                // check for any cancelled seat which is lower
+                for(int c:CancelledSeats){
+                    if(c%2==0){
+                        deleteCancelledSeat(c);
+                        return c;
+                    }
+                }
+                return -1;
+            } 
+        }
+        return -1;
+    }
+    
+    // DO NOT use this function just to check if seats are available
+    // if seat availability is not available according to preference, then use this function
+    // as we know that we cannot allocate user the seat preference they have
+    public int allocateSeatNumber(){
+        if(isFull()){
+            return -1; // train is full for this coach
+        }
+        if(lastUnbookedLowerSeat<=lastLowerSeat){
+            int seatNo= lastUnbookedLowerSeat;
+            lastUnbookedLowerSeat+=2;
+            availableSeats--;
+            return seatNo;
+        }
+        else if (lastUnbookedUpperSeat<=lastUpperSeat){
+            int seatNo= lastUnbookedLowerSeat;
+            lastUnbookedUpperSeat+=2;
+            availableSeats--;
+            return seatNo;
+        }
+        else if (CancelledSeats.size()>=0){
+            int seatNo = CancelledSeats.get(0);
+            deleteCancelledSeat(seatNo);
+            return seatNo;
+        }
+        return -1;
+    }
+
+
+
+
+    public int getLastLowerSeat() {
+        return lastLowerSeat;
+    }
+
+
+    public void setLastLowerSeat() {
+        if (availableSeats%2==1){
+            this.lastLowerSeat= availableSeats;
+        }
+        else{
+            this.lastLowerSeat = availableSeats -1;
+        }
+    }
+
+
+    public int getLastUpperSeat() {
+        return lastUpperSeat;
+    }
+
+
+    public void setLastUpperSeat() {
+        if(availableSeats%2==0){
+            this.lastUpperSeat= availableSeats;
+        }
+        this.lastUpperSeat= availableSeats-1;
+    }
+
+    public void allocatePassengerSeatNo(List<Passenger> passengers){ // allocate seatNo for Passengers present in a ticket
+        for (Passenger p: passengers){
+            Birth b=p.getBirthpreference();
+            int seatNo= allocateSeatNumber(b);
+            if (isFull()){
+                p.setWaitingList(isFull());
+            }
+            if(seatNo>0){
+                p.setSeatNo(seatNo);
+                continue;
+            }
+            seatNo= allocateSeatNumber();
+            if(seatNo>0){
+                p.setSeatNo(seatNo);
+                // continue;
+            }
+        }
+    }
+
+    // this function checks if there is any passenger which has a waiting list seat in a ticket 
+    public boolean checkWaitingPassengers(List<Passenger> passengers){
+        if(passengers.get(0).isWaitingList()){ // ticket should be added to waiting list
+            return true;
+        }
+        else{
+            for(Passenger p: passengers){
+                if(p.isWaitingList()){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    
 }

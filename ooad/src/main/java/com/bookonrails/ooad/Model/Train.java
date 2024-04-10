@@ -10,7 +10,7 @@ public class Train {
     @Id
     private String trainNo;
     private String trainName;
-    private String traintype;
+    private String trainType;
 
     // enum
     // @ElementCollection
@@ -49,11 +49,11 @@ public class Train {
     }
 
     public String getTraintype() {
-        return traintype;
+        return trainType;
     }
 
     public void setTraintype(String traintype) {
-        this.traintype = traintype;
+        this.trainType = traintype;
     }
 
     public List<OperatingDay> getOperatingDays() {

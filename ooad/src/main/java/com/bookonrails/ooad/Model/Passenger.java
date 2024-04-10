@@ -16,6 +16,7 @@ public class Passenger {
     @Enumerated(EnumType.STRING)
     private Gender gender;
     private boolean isSeniorCitizen;
+    private boolean isWaitingList; // true- means present in WL
     @Enumerated(EnumType.STRING)
     private Birth birthpreference;
     private int seatNo; 
@@ -23,6 +24,12 @@ public class Passenger {
     @ManyToOne
     @JoinColumn(name = "ticket_id", nullable = false)
     private Ticket ticket;
+
+    Passenger(){
+        this.isWaitingList = false;
+        this.isSeniorCitizen = false;
+        this.seatNo = -1;
+    }
 
     public Ticket getTicket() {
         return ticket;
@@ -96,5 +103,14 @@ public class Passenger {
         this.seatNo = seatNo;
     }
 
+    public boolean isWaitingList() {
+        return isWaitingList;
+    }
+
+    public void setWaitingList(boolean isWaitingList) {
+        this.isWaitingList = isWaitingList;
+    }
+
+    
     
 }
