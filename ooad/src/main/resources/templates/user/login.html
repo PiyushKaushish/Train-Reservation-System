@@ -11,7 +11,7 @@
 
 
   <title>Book On Rails</title>
-  
+
 </head>
 
 <body>
@@ -20,31 +20,34 @@
 
   <div class="content-body container-fluid">
     <!-- Block Content will be here -->
-    <h1 class="text-muted" th:text="${message}">Hello</h1>
+    <div class="container mt-5">
 
-     <!-- Display error message if the "error" parameter is present -->
-     <p class="text-danger" th:if="${param.error}" th:text="${param.error}"></p>
+      <h1 class="text-muted" th:text="${message}">Hello</h1>
 
-    <form action="/users/loginForm" method="post" th:object="${User}">
-      
-      <label class="form-label" for="username">Username:</label>
-      <input required class="form-control" type="text" id="username" name="username" th:field="*{username}" />
-      <br />
+      <!-- Display error message if the "error" parameter is present -->
+      <p class="text-danger" th:if="${param.error}" th:text="${param.error}"></p>
 
-      <label class="form-label" for="password">Password:</label>
-      <input required class="form-control" type="password" id="password" name="password" th:field="*{password}" />
-      <br />
+      <form action="/users/loginForm" method="post" th:object="${User}">
 
-      <button style="width:100%" class="btn btn-warning" type="submit">Login</button>
-    </form>
-    <span class="text-center">Don't have an account with us? <a href="/users/signup"> Register here </a> </span>
+        <label class="form-label" for="username">Username:</label>
+        <input required class="form-control" type="text" id="username" name="username" th:field="*{username}" />
+        <br />
+
+        <label class="form-label" for="password">Password:</label>
+        <input required class="form-control" type="password" id="password" name="password" th:field="*{password}" />
+        <br />
+
+        <button style="width:100%" class="btn btn-warning" type="submit">Login</button>
+      </form>
+      <span class="text-center">Don't have an account with us? <a href="/users/signup"> Register here </a> </span>
+    </div>
   </div>
 
   <script th:src="@{/user.js}"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
-  
+
 </body>
 
 </html>

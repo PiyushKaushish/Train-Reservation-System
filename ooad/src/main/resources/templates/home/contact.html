@@ -18,29 +18,32 @@
   <header th:insert="~{base :: header}"></header>
 
   <div class="content-body container-fluid">
-    <!-- Block Content will be here -->
+    <div class="container mt-5">
 
-    <h1 th:text="${title}">Contact</h1>
+      <!-- Block Content will be here -->
 
-    <!-- Display error message if the "error" parameter is present -->
-    <p class="text-danger" th:if="${param.error}" th:text="${param.error}"></p>
+      <h1 th:text="${title}">Contact</h1>
 
-    <form action="/contact-us" method="post" th:object="${Contact}">
+      <!-- Display error message if the "error" parameter is present -->
+      <p class="text-danger" th:if="${param.error}" th:text="${param.error}"></p>
 
-      <label class="form-label" for="name">Name:</label>
-      <input required class="form-control" type="text" id="name" name="name" th:field="*{name}" />
-      <br />
+      <form action="/contact-us" method="post" th:object="${Contact}">
 
-      <label class="form-label" for="email">Email:</label>
-      <input required class="form-control" type="email" id="email" name="email" th:field="*{email}" />
-      <br />
+        <label class="form-label" for="name">Name:</label>
+        <input required class="form-control" type="text" id="name" name="name" th:field="*{name}" />
+        <br />
 
-      <label class="form-label" for="message">Message:</label>
-      <textarea required class="form-control" rows="5" id="message" name="message" th:field="*{message}"></textarea>
-      <br />
+        <label class="form-label" for="email">Email:</label>
+        <input required class="form-control" type="email" id="email" name="email" th:field="*{email}" />
+        <br />
 
-      <button style="width:100%" class="btn btn-warning" type="submit">Contact Us</button>
-    </form>
+        <label class="form-label" for="message">Message:</label>
+        <textarea required class="form-control" rows="5" id="message" name="message" th:field="*{message}"></textarea>
+        <br />
+
+        <button style="width:100%" class="btn btn-warning" type="submit">Contact Us</button>
+      </form>
+    </div>
   </div>
   <script th:src="@{user.js}"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
