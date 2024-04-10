@@ -91,8 +91,18 @@ public class Ticket {
         return totalAmount;
     }
     
-    public void setTotalAmount(double totalAmount) {
-        this.totalAmount= totalAmount;
+    public void setTotalAmount() {
+        SeatAvailability s= train.getSeatAvailabilityClasswise(classes);
+        if (s == null ){
+            // seat for such classType is not available
+            this.totalAmount=0;    
+        }
+        this.totalAmount= s.getFare(SRC, DEST, passengers);
+    }
+
+    public double getCancellationCharge(){
+        SeatAvailability s= train.getSeatAvailabilityClasswise(classes);
+        return s.getCancellationCharge();
     }
     
     public String getPNR() {
@@ -233,7 +243,6 @@ public class Ticket {
         this.foodprice = p;
 
     }
-
     
     public void setFoodprice(double foodprice) {
         this.foodprice = foodprice;

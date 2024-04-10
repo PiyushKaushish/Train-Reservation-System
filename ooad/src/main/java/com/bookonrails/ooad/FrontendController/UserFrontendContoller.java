@@ -43,7 +43,7 @@ public class UserFrontendContoller {
             response.addCookie(cookie);
             
             // Redirect the user to home page or any other page
-            return "redirect:/search-train"; // 
+            return "redirect:/"; // 
         } else {
             // If login fails, return an error message or redirect back to the login page
             errorMessage = "Invalid username or password. Please try again.";
@@ -71,7 +71,7 @@ public class UserFrontendContoller {
             response.addCookie(cookie);
             
             // Redirect the user to home page or any other page
-            return "redirect:/search-train"; // 
+            return "redirect:/"; // 
         } 
         
         // If login fails, return an error message or redirect back to the login page

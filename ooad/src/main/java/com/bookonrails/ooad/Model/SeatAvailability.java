@@ -38,6 +38,8 @@ public class SeatAvailability {
 
     private double basePrice;
     private double farePerKM;
+    private double seniorCitizenDiscount;
+    private double cancellationCharge;
 
     
     public SeatAvailability(){
@@ -270,8 +272,6 @@ public class SeatAvailability {
     }
 
 
-
-
     public int getLastLowerSeat() {
         return lastLowerSeat;
     }
@@ -334,6 +334,42 @@ public class SeatAvailability {
         }
         return false;
     }
+
+    public int checkSeniorCitizenCount(List<Passenger> passengers){ // return no of senior citizen
+        int c=0;
+        for(Passenger p:passengers){
+            if(p.isSeniorCitizen()){
+                c++;
+            }
+        }
+        return c;
+    }
+
+    public double getFare(Station src, Station dest,List<Passenger> passengers){
+        int numOfTravelers=passengers.size();
+        Route r=train.getRoute();
+        double distance= r.getDistanceBetweenStations(src.getStationCode(), dest.getStationCode());
+        return (this.farePerKM *distance + this.basePrice)* numOfTravelers - (getSeniorCitizenDiscount()*checkSeniorCitizenCount(passengers));
+    }
+
+
+
+    public double getSeniorCitizenDiscount() { // senior citizen get tickets at a lower price
+        return seniorCitizenDiscount;
+    }
+
+    public void setSeniorCitizenDiscount(double seniorCitizenDiscount) {
+        this.seniorCitizenDiscount = seniorCitizenDiscount;
+    }
+
+
+    public double getCancellationCharge() { // cancellation charge for ticket per class 
+        return cancellationCharge;
+    }
+
+    public void setCancellationCharge(double cancellationCharge) {
+        this.cancellationCharge = cancellationCharge;
+    }    
 
     
 }
