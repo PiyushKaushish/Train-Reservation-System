@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Train Reservation Form</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+form label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+form input[type="text"],
+form input[type="number"],
+form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+form input[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+form input[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+.passenger-details {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px;
+}
+</style>
+<script>
+function generatePassengerFields() {
+  var numPassengers = document.getElementById("numPassengers").value;
+  var container = document.getElementById("passengerDetails");
+  container.innerHTML = ""; // Clear previous fields
+  
+  for (var i = 1; i <= numPassengers; i++) {
+    container.innerHTML += `
+      <div class="passenger-details">
+        <h2>Passenger ${i} Details</h2>
+        <label for="passengerName${i}">Name:</label>
+        <input type="text" id="passengerName${i}" name="passengerName${i}" required>
+        <label for="passengerAge${i}">Age:</label>
+        <input type="number" id="passengerAge${i}" name="passengerAge${i}" required>
+        <label for="passengerGender${i}">Gender:</label>
+        <select id="passengerGender${i}" name="passengerGender${i}" required>
+          <option value="">Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+        <label for="passengerBirth${i}">Birth Preference:</label>
+        <select id="passengerBirth${i}" name="passengerBirth${i}" required>
+          <option value="">Select Birth Preference</option>
+          <option value="Lower">Lower</option>
+          <option value="Middle">Middle</option>
+          <option value="Upper">Upper</option>
+          <option value="SideLower">Side Lower</option>
+          <option value="SideUpper">Side Upper</option>
+        </select>
+      </div>
+    `;
+  }
+}
+
+function generateTrainNumber() {
+  var min = 10000;
+  var max = 99999;
+  var trainNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+  document.getElementById("trainNumber").value = trainNumber;
+}
+</script>
+</head>
+<body>
+  
+
+   
+<div class="container">
+  <h1>Train Reservation Form</h1>
+  <form action="reservation_process.php" method="post">
+    <label for="trainNumber">Train Number:</label>
+    <input type="text" id="trainNumber" name="trainNumber" readonly>
+    
+    <label for="journeyDate">Date of Journey:</label>
+    <input type="date" id="journeyDate" name="journeyDate" required>
+    
+    <label for="numPassengers">Number of Passengers:</label>
+    <input type="number" id="numPassengers" name="numPassengers" min="1" max="10" onchange="generatePassengerFields()" required>
+    
+    <div id="passengerDetails">
+      
+    </div>
+    
+    <input type="submit" value="Submit Reservation">
+  </form>
+</div>
+<script>generateTrainNumber();</script>
+</body>
+</html>
