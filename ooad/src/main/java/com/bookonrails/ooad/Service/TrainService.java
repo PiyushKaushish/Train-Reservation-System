@@ -109,9 +109,9 @@ import java.util.Optional;
 @Service
 public class TrainService {
 
+    @Autowired
     private final TrainRepository trainRepository;
 
-    @Autowired
     public TrainService(TrainRepository trainRepository) {
         this.trainRepository = trainRepository;
     }
@@ -139,7 +139,7 @@ public class TrainService {
             Train existingTrain = existingTrainOptional.get();
             existingTrain.setTrainName(updatedTrain.getTrainName());
             existingTrain.setTraintype(updatedTrain.getTraintype());
-            existingTrain.setTotalSeats(updatedTrain.getTotalSeats());
+            // existingTrain.setTotalSeats(updatedTrain.getTotalSeats());
             // Update other properties as needed
 
             return trainRepository.save(existingTrain);

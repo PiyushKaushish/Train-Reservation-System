@@ -31,4 +31,12 @@ public class Route {
         this.stationTimings = stationTimings;
     }
 
+    public Train getTrain() {
+        return train;
+    }
+
+    public void setTrain(Train train) {
+        this.train = train;
+    }
+
 }

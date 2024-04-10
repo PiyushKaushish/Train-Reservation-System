@@ -40,6 +40,8 @@ public class SeatAvailability {
     
     public SeatAvailability(){
         this.setAvailableSeats();
+        this.lastBookedLowerSeat=1;
+        this.lastBookedUpperSeat=2;
     }
 
     public Train getTrain() {

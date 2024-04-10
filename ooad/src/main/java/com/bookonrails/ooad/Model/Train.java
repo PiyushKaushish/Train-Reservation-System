@@ -11,7 +11,6 @@ public class Train {
     private String trainNo;
     private String trainName;
     private String traintype;
-    private int totalSeats;
 
     // enum
     // @ElementCollection
@@ -56,15 +55,6 @@ public class Train {
     public void setTraintype(String traintype) {
         this.traintype = traintype;
     }
-
-    public int getTotalSeats() {
-        return totalSeats;
-    }
-
-    public void setTotalSeats(int totalSeats) {
-        this.totalSeats = totalSeats;
-    }
-
 
     public List<OperatingDay> getOperatingDays() {
         return operatingDays;

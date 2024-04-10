@@ -31,5 +31,13 @@ public class OperatingDay {
         this.dayOfWeek = dayOfWeek;
     }
 
+    public Train getTrain() {
+        return train;
+    }
+
+    public void setTrain(Train train) {
+        this.train = train;
+    }
+
     // Constructors, getters, and setters
 }
