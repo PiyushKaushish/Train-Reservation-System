@@ -4,12 +4,14 @@ console.log(username);
 
 if (username != "") {
     document.getElementById("logout-btn").style.display = "block";
+    document.getElementById("dashboard-btn").style.display = "block";
     document.getElementById("login-btn").style.display = "none";
     // window.location.href='/';
 }
 else {
     document.getElementById("login-btn").style.display = "block";
     document.getElementById("logout-btn").style.display = "none";
+    document.getElementById("dashboard-btn").style.display = "none";
 }
 // get cookie
 function getCookie(cname) {
