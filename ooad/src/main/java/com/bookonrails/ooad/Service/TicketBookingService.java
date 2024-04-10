@@ -213,7 +213,7 @@ public class TicketBookingService implements TicketBookingManagement {
     @Override
     public Ticket makeReservation(Train train, ClassType classType, java.util.Date date, User user,
             List<Passenger> passenger) {
-        // TODO Auto-generated method stub
+            // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'makeReservation'");
     }
 }
