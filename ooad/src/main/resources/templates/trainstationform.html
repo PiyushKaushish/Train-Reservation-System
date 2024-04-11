@@ -106,12 +106,12 @@
       // Function to fetch stations from database and populate dropdown
       $(document).ready(function () {
         // AJAX request to fetch stations data from the server
-        $.get("/stations", function (data) {
-          var stations = data; // Assuming data is an array of station objects
-
-          // Populate the source station dropdown
-          var sourceStationDropdown = $("#sourceStationCode");
-          sourceStationDropdown.empty(); // Clear existing options
+        $.get("/station/getAll", function(data) {
+            var stations = data; // Assuming data is an array of station objects
+            console.log(stations)
+            // Populate the source station dropdown
+            var sourceStationDropdown = $('#sourceStationCode');
+            sourceStationDropdown.empty(); // Clear existing options
 
           // Add a default option
           sourceStationDropdown.append(
