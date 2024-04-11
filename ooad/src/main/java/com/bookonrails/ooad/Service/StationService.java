@@ -48,4 +48,8 @@ public class StationService {
         }
         stationRepository.delete(station);
     }
+
+    public List<Station> findAll(){
+        return stationRepository.findAll();
+    }
 }
