@@ -60,13 +60,12 @@ public class RouteService {
         return routes;
     }
 
-
-
-
-
-
-
-
+    public List<Route> getRoutesByTrain(String trainName){
+        return routeRepository.findByTrainTrainName(trainName);
+    }
     
-    
+    public List<Route> getRoutesPassingThroughStation(String stationCode) {
+        return routeRepository.findByStationTimingsStationStationCode(stationCode);
+    }
+
 }

@@ -10,8 +10,8 @@ public interface StationTimingsManagement {
 
     public StationTimings addStationTimings(StationTimings stationTiming);
     public List<StationTimings> getAllStationTimings();
-    public StationTimings getStationTimingById(Long id);
-    public StationTimings updateStationTimings(StationTimings stationTiming);
+    public StationTimings getStationTimingsById(Long id);
+    public StationTimings updateStationTimings(Long id,StationTimings stationTiming);
     public void deleteStationTimings(Long id);
     public StationTimings getStationTimingsByRoute(Route route);
     public StationTimings getStationTimingsByStation(Station station);
