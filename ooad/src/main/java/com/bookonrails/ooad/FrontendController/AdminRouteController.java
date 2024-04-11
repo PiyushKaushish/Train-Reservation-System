@@ -19,7 +19,7 @@ public class AdminRouteController {
     @GetMapping("/add")
     public String showAddRouteForm(Model model) {
         model.addAttribute("route", new Route());
-        return "add-route"; // This will render the add_route.html template
+        return "admin/route/add"; // This will render the add_route.html template
     }
     @PostMapping("/add")
     public String addRoute(@ModelAttribute("route") Route route, Model model) {
@@ -27,8 +27,8 @@ public class AdminRouteController {
         Route existingRoute = routeService.getRouteByRouteCode(routeCode);
         
         if (existingRoute != null) {
-            model.addAttribute("errorMessage", "Route with code " + routeCode + " already exists.");
-            return "error"; // Render an error page
+            model.addAttribute("message", "Route with code " + routeCode + " already exists.");
+            return "message"; // Render an error page
         }
         
         // If the route does not exist, add it
@@ -39,7 +39,7 @@ public class AdminRouteController {
     }
     @GetMapping("/show")
     public ModelAndView showRoutes() {
-        ModelAndView modelAndView = new ModelAndView("view-routes");
+        ModelAndView modelAndView = new ModelAndView("admin/route/show");
         modelAndView.addObject("routes", routeService.getAllRoutes()); // Change "route" to "routes"
         return modelAndView;
     }

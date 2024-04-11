@@ -1,72 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Train Name Sorter</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-
-<body>
-    <div class="container mt-5">
-        <h2>Train Name Sorter</h2>
-        <div class="form-group mt-3">
-            <label for="sortSelect">Sort By:</label>
-            <select id="sortSelect" class="form-control" onchange="sortTrains()">
-                <option value="nameAsc">Name (A-Z)</option>
-                <option value="nameDesc">Name (Z-A)</option>
-                 Add more options for other sorting criteria -->
-            <!-- </select>
-        </div>
-
-        <table class="table mt-4">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Train Name</th>
-                </tr>
-            </thead>
-            <tbody id="trainList">
-                <Train names will be dynamically added here -->
-                
-            <!-- </tbody>
-        </table>
-    </div>
-
-    <script th:inline="javascript">
-        /*<![CDATA[*/
-        // Thymeleaf inline script for dynamically populating train names
-        var trainNames = /*[[${trainNames}]]*/ [];
-
-        function sortTrains() {
-            var sortOption = document.getElementById("sortSelect").value;
-            if (sortOption === "nameAsc") {
-                trainNames.sort();
-            } else if (sortOption === "nameDesc") {
-                trainNames.sort().reverse();
-            }
-            displayTrains();
-        }
-
-        function displayTrains() {
-            var trainListElement = document.getElementById("trainList");
-            trainListElement.innerHTML = ""; // Clear existing list
-
-            trainNames.forEach(function (train, index) {
-                var row = document.createElement("tr");
-                row.innerHTML = "<td>" + (index + 1) + "</td><td>" + train + "</td>";
-                trainListElement.appendChild(row);
-            });
-        }
-
-        displayTrains(); // Initial display of trains on page load
-        /*]]>*/
-    </script>
-</body>
-
-</html> --> 
-
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
@@ -86,7 +17,6 @@
                     <th>Train Number</th>
                     <th>Train Name</th>
                     <th>Train Type</th>
-                    <th>Total Seats</th>
                 </tr>
             </thead>
             <tbody>
@@ -94,7 +24,6 @@
                     <td th:text="${train.trainNo}"></td>
                     <td th:text="${train.trainName}"></td>
                     <td th:text="${train.trainType}"></td>
-                    <td th:text="${train.totalSeats}"></td>
                 </tr>
             </tbody>
         </table>

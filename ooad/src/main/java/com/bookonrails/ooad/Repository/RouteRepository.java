@@ -19,7 +19,7 @@ import com.bookonrails.ooad.Model.Route;
 public interface RouteRepository extends JpaRepository<Route, Long> {
     Route findByRouteCode(String routeCode);
 
-    @Procedure(name = "FindRouteBetweenStation")
+    @Procedure(name = "FindRouteBetweenStations")
     public List<String> findRouteBetweenStation(@Param("stationCode1") String stationCode1, @Param("stationCode2") String stationCode2);
 
 }

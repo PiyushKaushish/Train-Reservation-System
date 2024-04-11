@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bookonrails.ooad.Model.Route;
 import com.bookonrails.ooad.Repository.RouteRepository;
@@ -43,6 +44,7 @@ public class RouteService {
         routeRepository.delete(route);
     }
 
+    @Transactional
     public List<String> getRouteBetweenStations(String stationCode1, String stationCode2) {
         return routeRepository.findRouteBetweenStation(stationCode1, stationCode2);
     }
@@ -51,6 +53,7 @@ public class RouteService {
         return routeRepository.findAll();
     }
 
+    @Transactional 
     public List<Route> getRoutesBetweenStations(String SRC,String DEST) {
         List<Route> routes = new ArrayList<>();
         List<String> routeCodes = routeRepository.findRouteBetweenStation(SRC, DEST);

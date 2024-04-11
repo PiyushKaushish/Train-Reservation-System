@@ -3,12 +3,17 @@ package com.bookonrails.ooad.FrontendController;
 
 
 import java.sql.Date;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 // import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import com.bookonrails.ooad.Model.Train;
+import com.bookonrails.ooad.Service.TrainService;
 
 // import com.bookonrails.ooad.Model.ClassType;
 
@@ -16,18 +21,25 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path="/train")
 @CrossOrigin(origins = "*")
 public class TrainFrontendController {
+    @Autowired
+    private TrainService trainService;
+
     @GetMapping(path="/search")
     public String searchTrain() {
         return "train/search_train";
     }
 
-    @PostMapping(path="/search")
+    @PostMapping(path="/view")
     public String searchTrain(@RequestParam("date") String date, @RequestParam("fromStation") String source, @RequestParam("toStation") String destination,@RequestParam("classType") String classType, Model model) {
-        Date d= Date.valueOf(date);
+        // Date d= Date.valueOf(date);
         System.out.println(date+ " "+ source + " "+ destination+" "+ classType);
-        System.out.println(d);
+        List<Train> t= trainService.searchTrainBySrcAndDest(source, destination);
+        System.out.println(t.size());
+        System.out.println(t.get(0).getTrainName());
+        System.out.println(t.get(1).getTrainName());
+        model.addAttribute("trains",t );
         // fix input format and then send the trains
-        return "train/search_train";
+        return "train/view-train";
     }
 
 
