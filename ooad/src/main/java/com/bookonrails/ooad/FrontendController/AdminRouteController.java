@@ -1,5 +1,6 @@
 package com.bookonrails.ooad.FrontendController;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,4 +52,10 @@ public class AdminRouteController {
         return "redirect:/admin/route/show"; // Redirect to the show route page after deletion
     }
     
+    @GetMapping("/getRoutesBetweenStations")
+    public String getRoutesBetweenStations(@RequestParam("src") String src, @RequestParam("dest") String dest, Model model) {
+        List<Route> routes = routeService.getRoutesBetweenStations(src, dest);
+        model.addAttribute("routes", routes);
+        return "view-routes"; // Render the view-routes.html template
+    }
 }
