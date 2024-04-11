@@ -12,12 +12,11 @@ import com.bookonrails.ooad.Service.StationService;
 @Controller
 @RequestMapping(path="/admin/station")
 @CrossOrigin(origins = "*")
-
-public class StationManagementFrontendController {
+public class AdminStationManagementFrontendController {
     @Autowired
     private StationService stationService;
 
-     @GetMapping("/add")
+    @GetMapping("/add")
     public String addStation(Model m) {
         m.addAttribute("Station",new Station());
         return "admin/station/add";

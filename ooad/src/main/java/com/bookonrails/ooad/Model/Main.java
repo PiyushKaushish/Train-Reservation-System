@@ -14,18 +14,23 @@ public class Main {
         Station s1 = new Station();
         s1.setStationCode("HTE");
         s1.setStationName("Hatia");
+        
 
         st1.setStation(s1);
         st1.setArrivalTime(Time.valueOf("09:00:00"));
         st1.setDepartureTime(Time.valueOf("09:15:00"));
+        st1.setDistanceFromNextStation(2); // in km
 
         Station s2 = new Station();
         s2.setStationCode("RNC");
         s2.setStationName("Ranchi");
+        st2.setDistanceFromNextStation(20); // in km
+
         
         st2.setStation(s2);
         st2.setArrivalTime(Time.valueOf("09:30:00"));
         st2.setDepartureTime(Time.valueOf("09:45:00"));
+        st3.setDistanceFromNextStation(0); // in km
 
         Station s3 = new Station();
         s3.setStationCode("MURI");
@@ -109,6 +114,7 @@ public class Main {
         System.out.println(t1.getSeatAvailability().get(0).getBasePrice());
         System.out.println(t1.getSeatAvailability().get(0).getFarePerKM());
         System.out.println(t1.getSeatAvailability().get(0).getClasses());
+        System.out.println(t1.getFare(s2, s3, ClassType.AC2Tier));
 
 
 

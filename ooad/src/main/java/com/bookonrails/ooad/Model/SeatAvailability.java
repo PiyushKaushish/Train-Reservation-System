@@ -1,6 +1,7 @@
 package com.bookonrails.ooad.Model;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -43,6 +44,9 @@ public class SeatAvailability {
 
     
     public SeatAvailability(){
+        this.waitingList = new ArrayList<>();
+        this.CancelledSeats = new ArrayList<>();
+
         this.setAvailableSeats();
         this.lastUnbookedLowerSeat=1; // next seat that is lower birth and is not booked
         this.lastUnbookedUpperSeat=2; // next seat that is upper birth and is not booked
@@ -350,6 +354,12 @@ public class SeatAvailability {
         Route r=train.getRoute();
         double distance= r.getDistanceBetweenStations(src.getStationCode(), dest.getStationCode());
         return (this.farePerKM *distance + this.basePrice)* numOfTravelers - (getSeniorCitizenDiscount()*checkSeniorCitizenCount(passengers));
+    }
+    public double getFare(Station src, Station dest){ // get fare for one passenger
+        Route r=train.getRoute();
+        double distance= r.getDistanceBetweenStations(src.getStationCode(), dest.getStationCode());
+        System.err.println("Distance: "+distance);
+        return (this.farePerKM *distance + this.basePrice);
     }
 
 

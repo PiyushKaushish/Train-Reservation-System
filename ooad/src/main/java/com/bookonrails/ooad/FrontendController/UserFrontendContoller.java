@@ -10,6 +10,7 @@ import com.bookonrails.ooad.Model.User;
 import com.bookonrails.ooad.Service.UserService;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 
@@ -43,7 +44,7 @@ public class UserFrontendContoller {
             response.addCookie(cookie);
             
             // Redirect the user to home page or any other page
-            return "redirect:/"; // 
+            return "redirect:/users/dashboard"; // 
         } else {
             // If login fails, return an error message or redirect back to the login page
             errorMessage = "Invalid username or password. Please try again.";
@@ -71,7 +72,7 @@ public class UserFrontendContoller {
             response.addCookie(cookie);
             
             // Redirect the user to home page or any other page
-            return "redirect:/"; // 
+            return "redirect:/users/dashboard"; // 
         } 
         
         // If login fails, return an error message or redirect back to the login page
@@ -90,6 +91,123 @@ public class UserFrontendContoller {
         // Redirect the user to the login page
         return "redirect:/users/login";
     }
+
+    @GetMapping(path="/dashboard")
+    public String dashboard(Model model,HttpServletRequest request) {
+        // Return the user dashboard page
+        // Request username Cookie
+        Cookie[] cookies = request.getCookies();
+        String username = "";
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("username")) {
+                    username = cookie.getValue();
+                }
+            }
+        }
+        User u= userService.getUserByUsername(username);
+        if(u == null){
+            return "redirect:/users/login";
+        }
+        model.addAttribute("user", u);
+        model.addAttribute("message",u.getFirstName()+"'s Dashboard");
+        return "user/dashboard";
+    }
+
+    @PostMapping(path="/update")
+    public String update(@ModelAttribute("user") User user, Model model,HttpServletRequest request) {
+        // Update the user details
+        // Request username Cookie
+        Cookie[] cookies = request.getCookies();
+        String username = "";
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("username")) {
+                    username = cookie.getValue();
+                }
+            }
+        }
+        User u= userService.getUserByUsername(username);
+        if(u == null){
+            return "redirect:/users/login";
+        }
+        u.setFirstName(user.getFirstName());
+        u.setLastName(user.getLastName());
+        u.setEmail(user.getEmail());
+        u.setPhoneNumber(user.getPhoneNumber());
+        u.setAddress(user.getAddress());
+        userService.updateUser(u);
+        return "redirect:/users/dashboard";
+    }  
     
+    // change-password
+    @GetMapping(path="/change-password")
+    public String changePassword(Model model,HttpServletRequest request) {
+        model.addAttribute("message", "Change Password Here...");
+        Cookie[] cookies = request.getCookies();
+        String username = "";
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("username")) {
+                    username = cookie.getValue();
+                }
+            }
+        }
+        User u= userService.getUserByUsername(username);
+        if(u == null){
+            return "redirect:/users/login";
+        }
+
+        return "user/change-password";
+    }
+
+    @PostMapping(path="/change-password")
+    public String changePassword(@RequestParam("oldPassword") String oldPassword, @RequestParam("newPassword") String newPassword,@RequestParam("confirmPassword") String confirmPassword ,Model model,HttpServletRequest request) {
+        
+        Cookie[] cookies = request.getCookies();
+        String username = "";
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("username")) {
+                    username = cookie.getValue();
+                }
+            }
+        }
+        User u= userService.getUserByUsername(username);
+        if(u == null){
+            return "redirect:/users/login";
+        }
+        if(u.getPassword().equals(oldPassword)){
+            if(newPassword.equals(confirmPassword)){
+            userService.changePassword(u, newPassword);
+            return "redirect:/users/dashboard";
+            }else{
+                return "redirect:/users/change-password?error=Password%20Mismatch";
+            }
+        }
+        return "redirect:/users/change-password?error=Invalid%20Password";
+    }
+
+    @GetMapping(path="/my-trips")
+    public String myTrips(Model model,HttpServletRequest request) {
+        // Return the user dashboard page
+        // Request username Cookie
+        Cookie[] cookies = request.getCookies();
+        String username = "";
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("username")) {
+                    username = cookie.getValue();
+                }
+            }
+        }
+        User u= userService.getUserByUsername(username);
+        if(u == null){
+            return "redirect:/users/login";
+        }
+        model.addAttribute("user", u);
+        model.addAttribute("message",u.getFirstName()+"'s Trips");
+        return "user/my-trips";
+    }
     
 }

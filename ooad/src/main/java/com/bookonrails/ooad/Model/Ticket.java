@@ -1,6 +1,6 @@
 package com.bookonrails.ooad.Model;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import jakarta.persistence.*;

@@ -96,4 +96,8 @@ public class UserService implements UserManagement {
         }
     }
 
+    public User getUserByUsername(String username){
+        return userRepository.findByUsername(username);
+    }
+
 }

@@ -15,5 +15,6 @@ public interface UserManagement {
     public boolean changePassword(User user, String newPassword);
     public User viewUserDetails(String username);
     public List<User> viewAllUsers();
+    public User getUserByUsername(String username);
     
 }
