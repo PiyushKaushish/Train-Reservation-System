@@ -18,8 +18,25 @@
 
     <div class="content-body container-fluid">
         <div class="container mt-5">
-
-            <!-- Block Content will be here -->
+            <!-- Add Station Form -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Add Station</h5>
+                </div>
+                <div class="card-body">
+                    <form action="/admin/station/add" method="post">
+                        <div class="mb-3">
+                            <label for="stationCode" class="form-label">Station Code</label>
+                            <input type="text" class="form-control" id="stationCode" name="stationCode" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="stationName" class="form-label">Station Name</label>
+                            <input type="text" class="form-control" id="stationName" name="stationName" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Station</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 

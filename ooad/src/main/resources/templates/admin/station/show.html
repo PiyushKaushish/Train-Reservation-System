@@ -18,8 +18,31 @@
 
     <div class="content-body container-fluid">
         <div class="container mt-5">
-
-            <!-- Block Content will be here -->
+            <!-- Display Station Section -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Stations</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Station Code</th>
+                                <th>Station Name</th>
+                                <!-- Add more columns if needed -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Use Thymeleaf to iterate over stations -->
+                            <tr th:each="station : ${stations}">
+                                <td th:text="${station.stationCode}"></td>
+                                <td th:text="${station.stationName}"></td>
+                                <!-- Add more columns if needed -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
