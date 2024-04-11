@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Train Station Form</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Train Station Details</h2>
+    <form th:action="@{/submit}" method="post" id="trainForm">
+
+        <!-- Train Number -->
+        <div class="form-group">
+            <label for="trainNumber">Train Number:</label>
+            <input type="text" class="form-control" id="trainNumber" name="trainNumber" required>
+        </div>
+
+        <!-- Source Station Dropdown -->
+        <div class="form-group">
+            <label for="sourceStationCode">Source Station:</label>
+            <select class="form-control" id="sourceStationCode" name="sourceStationCode" required>
+                <option value="">Select Source Station</option>
+                <!-- Options will be populated dynamically using JavaScript -->
+            </select>
+        </div>
+
+        <!-- Dynamic Stops Container -->
+        <div id="dynamicStopsContainer">
+            <!-- Initial Stop Fields (for the first stop) -->
+            <div class="form-row mb-3">
+                <div class="col">
+                    <input type="text" class="form-control" name="stationCodes" placeholder="Station Code" required>
+                </div>
+                <div class="col">
+                    <input type="time" class="form-control" name="arrivalTimes" required>
+                </div>
+                <div class="col">
+                    <input type="time" class="form-control" name="departureTimes" required>
+                </div>
+            </div>
+        </div>
+
+        <!-- Button to Add New Stop -->
+        <button type="button" class="btn btn-secondary" onclick="addStop()">Add Stop</button>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    // Function to fetch stations from database and populate dropdown
+    $(document).ready(function() {
+        // AJAX request to fetch stations data from the server
+        $.get("/stations", function(data) {
+            var stations = data; // Assuming data is an array of station objects
+
+            // Populate the source station dropdown
+            var sourceStationDropdown = $('#sourceStationCode');
+            sourceStationDropdown.empty(); // Clear existing options
+
+            // Add a default option
+            sourceStationDropdown.append('<option value="">Select Source Station</option>');
+
+            // Loop through stations data and add options to dropdown
+            stations.forEach(function(station) {
+                sourceStationDropdown.append(`<option value="${station.code}:${station.name}">${station.code}:${station.name}</option>`);
+            });
+        });
+    });
+
+    // Function to dynamically add new stop fields
+    function addStop() {
+        // Create new stop fields
+        var newStopFields = `
+            <div class="form-row">
+                <div class="col">
+                    <input type="text" class="form-control" name="stationCodes" placeholder="Station Code" required>
+                </div>
+                <div class="col">
+                    <input type="time" class="form-control" name="arrivalTimes" required>
+                </div>
+                <div class="col">
+                    <input type="time" class="form-control" name="departureTimes" required>
+                </div>
+            </div>
+        `;
+
+        // Append new stop fields to the dynamicStopsContainer
+        $('#dynamicStopsContainer').append(newStopFields);
+    }
+</script>
+
+</body>
+</html>
