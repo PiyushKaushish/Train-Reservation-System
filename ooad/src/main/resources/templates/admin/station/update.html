@@ -18,8 +18,24 @@
 
     <div class="content-body container-fluid">
         <div class="container mt-5">
+            <!-- Update station  form -->
+            <form method="post" th:action="@{'/admin/station/update/' + ${station.stationCode}}" th:object="${station}">
+                <!-- station name -->
+                <label class="form-label" for="stationName"> Station Name: </label>
+                <input class="form-control" type="text" id="stationName" name="stationName" placeholder="Station Name"
+                    th:value="${station.stationName}">
+                <br />
+                <!-- station code -->
+                <label class="form-label" for="stationCode"> Station Code: </label>
+                <input class="form-control" type="text" id="stationCode" name="stationCode" placeholder="Station Code"
+                    th:value="${station.stationCode}">
+                <br />
 
-            <!-- Block Content will be here -->
+                <button type="submit" class="btn btn-warning">Update Station</button>
+
+
+            </form>
+
         </div>
     </div>
 

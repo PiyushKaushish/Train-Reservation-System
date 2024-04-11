@@ -37,8 +37,8 @@ public class Main {
         s3.setStationName("Muri");
 
         st3.setStation(s3);
-        st3.setArrivalTime(Time.valueOf("10:00:00"));
-        st3.setDepartureTime(Time.valueOf("10:15:00"));
+        st3.setArrivalTime(Time.valueOf("8:00:00"));
+        st3.setDepartureTime(Time.valueOf("8:15:00"));
 
         s1.setStationTimings(Arrays.asList (st1));
         s2.setStationTimings(Arrays.asList (st2));
@@ -115,6 +115,7 @@ public class Main {
         System.out.println(t1.getSeatAvailability().get(0).getFarePerKM());
         System.out.println(t1.getSeatAvailability().get(0).getClasses());
         System.out.println(t1.getFare(s2, s3, ClassType.AC2Tier));
+        r1.calculateDurationBetweenStations(s1, s3);
 
 
 

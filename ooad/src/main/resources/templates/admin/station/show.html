@@ -18,7 +18,14 @@
 
     <div class="content-body container-fluid">
         <div class="container mt-5">
+            <div class="mb-3 justify-content-end">
+                <a href="/admin/station/add"  class="btn btn-warning" style="width:100%;">Add Station</a>
+            </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="searchInput" placeholder="Search">
+            </div>
             <!-- Display Station Section -->
+
             <div class="card">
                 <div class="card-header">
                     <h5 class="card-title">Stations</h5>
@@ -29,15 +36,29 @@
                             <tr>
                                 <th>Station Code</th>
                                 <th>Station Name</th>
+                                <th>Actions</th>
                                 <!-- Add more columns if needed -->
                             </tr>
                         </thead>
                         <tbody>
                             <!-- Use Thymeleaf to iterate over stations -->
-                            <tr th:each="station : ${stations}">
+                            <tr th:each="station : ${stations}" class="stationRow">
                                 <td th:text="${station.stationCode}"></td>
                                 <td th:text="${station.stationName}"></td>
                                 <!-- Add more columns if needed -->
+                                <td>
+                                    <a th:href="@{'/admin/station/update/' + ${station.stationCode}}"><button type="button" class="btn btn-warning"
+                                        data-station-code="${station.stationCode}" data-station-name="${station.stationName}">
+                                        Update
+                                    </button></a>
+                                    <form action="/admin/station/delete" method="post" class="d-inline">
+                                        <input type="hidden" name="stationCode" th:value="${station.stationCode}">
+                                        <button type="submit" class="btn btn-danger"
+                                            onclick="return confirm('Are you sure you want to delete this station?')">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -50,6 +71,34 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+
+        <script>
+            // JavaScript for search functionality
+            document.getElementById('searchInput').addEventListener('keyup', function () {
+                var searchText = this.value.toLowerCase();
+                var rows = document.querySelectorAll('.stationRow');
+    
+                rows.forEach(function (row) {
+                    var stationCode = row.querySelector('td:nth-child(1)').innerText.toLowerCase();
+                    var stationName = row.querySelector('td:nth-child(2)').innerText.toLowerCase();
+                    if (stationCode.includes(searchText) || stationName.includes(searchText)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+    
+            // JavaScript for update button click
+            var updateButtons = document.querySelectorAll('.updateBtn');
+            updateButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    var stationCode = this.getAttribute('data-station-code');
+                    var stationName = this.getAttribute('data-station-name');
+                    // Redirect to update page or trigger update modal with stationCode and stationName values
+                });
+            });
+        </script>
 </body>
 
 </html>

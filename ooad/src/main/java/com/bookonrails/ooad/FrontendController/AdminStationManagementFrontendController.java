@@ -49,6 +49,7 @@ public class AdminStationManagementFrontendController {
 
     @PostMapping("/update/{stationCode}")
     public String updateStation(@PathVariable String stationCode, @ModelAttribute("station") Station updatedStation) {
+        System.out.println(updatedStation);
         stationService.updateStation(stationCode, updatedStation);
         return "redirect:/admin/station/show";
     }
