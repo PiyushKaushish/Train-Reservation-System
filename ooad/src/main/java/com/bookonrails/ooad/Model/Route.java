@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import java.util.List;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 @Entity
 public class Route {
@@ -197,12 +198,12 @@ public class Route {
         if (t2 > t1) {
             return t2 - t1;
         } else {
-            return (Time.valueOf("24:00:00").getTime() - t1) + (t2 - Time.valueOf("00:00:00").getTime());
+            return (t1-Time.valueOf("00:00:00").getTime() ) + (t2 - Time.valueOf("00:00:00").getTime());
         }
     }
 
     // Calculate the duration between two stations
-    private long calculateTime(List<StationTimings> subList) {
+    public long calculateTime(List<StationTimings> subList) {
         long totalDuration = 0;
         // Time prevDepartureTime = null;
         for (int i = 0; i < subList.size() - 2; i++) {
@@ -224,23 +225,36 @@ public class Route {
 
     }
 
-    public void calculateDurationBetweenStations(Station SRC, Station DEST) {
-        if (isRoutePresent(SRC, DEST)) {
-            List<StationTimings> subList = findSubRoute(SRC, DEST);
-
-            long totalDuration = calculateTime(subList);
-
-            // Convert total duration to days, hours, and minutes
-            long days = totalDuration / (24 * 60 * 60 * 1000);
-            long hours = (totalDuration % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000);
-            long minutes = ((totalDuration % (24 * 60 * 60 * 1000)) % (60 * 60 * 1000)) / (60 * 1000);
-
-            // Output the total duration in the format "1 day 2 hours 45 minutes"
-            System.out
-                    .println("Total Duration between " + SRC.getStationName() + " and " + DEST.getStationName() + ": " +
-                            days + " day(s) " + hours + " hour(s) " + minutes + " minute(s)");
-
+    public Long calculateDuration(List<StationTimings> timings) {
+        long totalMilliseconds = 0;
+        for (int i = 0; i < timings.size() - 1; i++) {
+            StationTimings currentTiming = timings.get(i);
+            StationTimings nextTiming = timings.get(i+1);
+            long milliseconds = Math.abs(nextTiming.getDepartureTime().getTime() - currentTiming.getArrivalTime().getTime());
+            totalMilliseconds += milliseconds;
+            // If departure time is earlier than arrival time, it means it's on the next day
+            if (nextTiming.getDepartureTime().before(currentTiming.getArrivalTime())) {
+                totalMilliseconds += TimeUnit.DAYS.toMillis(1); // Add a day
+            }
         }
+        return totalMilliseconds;
+    }
+
+    public String formatTime(Long milliseconds) {
+        long days = TimeUnit.MILLISECONDS.toDays(milliseconds);
+        long hours = TimeUnit.MILLISECONDS.toHours(milliseconds) % 24;
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(milliseconds) % 60;
+        return String.format("%d days %02d hours %02d minutes", days, hours,minutes);
+    }
+
+    public String calculateJourneyTime(Station src, Station dest) {
+        if (isRoutePresent(src, dest)) {
+            List<StationTimings> subList = findSubRoute(src, dest);
+            Long journeyTimeInMills = calculateDuration(subList);
+            return formatTime(journeyTimeInMills);
+            // return calculateDuration(subList);
+        }
+        return "Route does not exist";
     }
 
 	

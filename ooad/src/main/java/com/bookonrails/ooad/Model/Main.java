@@ -115,7 +115,7 @@ public class Main {
         System.out.println(t1.getSeatAvailability().get(0).getFarePerKM());
         System.out.println(t1.getSeatAvailability().get(0).getClasses());
         System.out.println(t1.getFare(s2, s3, ClassType.AC2Tier));
-        r1.calculateDurationBetweenStations(s1, s3);
+        System.out.println(r1.calculateJourneyTime(s1, s3));
 
 
 

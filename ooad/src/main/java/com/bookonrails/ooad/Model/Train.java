@@ -182,7 +182,7 @@ public class Train {
     }
 
     public void getDurationBetweenStations(Station SRC, Station DEST){
-        route.calculateDurationBetweenStations(SRC,DEST);
+        route.calculateJourneyTime(SRC,DEST);
     }
 
     
