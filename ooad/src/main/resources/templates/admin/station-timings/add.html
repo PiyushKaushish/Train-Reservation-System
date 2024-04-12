@@ -33,22 +33,21 @@
                     <!-- Initial Stop Fields (for the first stop) -->
                     <div class="form-row mb-3">
                         <label for="addStopstationCode1">Add Stop Station:</label>
-                        <select class="form-control" id="addStopstationCode1" name="addStopstationCode1" required>
-                            <option value="">Add stop Station</option>
-                        </select>
-                        <!-- Options will be populated dynamically using JavaScript -->
+                        <select class="form-control" id="addStopstationCode1" name="addStopstationCode[]" required>
+                            <option disabled value="">Add stop Station</option>
+                            <option th:each="station : ${stations}" th:value="${station}" th:text="${station}"></option>
                         </select>
                         <div class="col" style="margin-top: 5px;">
                             <!-- add label -->
                             <label for="arrivalTimes1">Arrival Time:</label>
-                            <input type="time" class="form-control" name="arrivalTimes1" required>
+                            <input type="time" class="form-control" name="arrivalTimes[]" required>
                         </div>
                         <div class="col" style="margin-top: 5px;">
                             <label for="departureTimes1">Departure Time:</label>
-                            <input type="time" class="form-control" name="departureTimes1" required>
+                            <input type="time" class="form-control" name="departureTimes[]" required>
                         </div>
                         <div class="col" style="margin-top: 5px;">
-                            <input type="number" class="form-control" name="distance1"
+                            <input type="number" step="0.01" class="form-control" name="distance[]"
                                 placeholder="Distance to travel to Next Station(in km)" required>
                         </div>
                     </div>
@@ -70,36 +69,35 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
-        // Function to fetch stations from database and populate dropdown
-        $(document).ready(function () {
-            // AJAX request to fetch stations data from the server
-            $.ajax({
-                url: "/station/getAll",
-                method: "GET",
-                success: function (data) {
-                    var stations = data; // Assuming data is an array of station objects
-
-                    // Populate the source station dropdown
-                    var sourceStationDropdown = $('#sourceStationCode');
-                    sourceStationDropdown.empty(); // Clear existing options
-
-                    // Add a default option
-                    sourceStationDropdown.append('<option value="">Select Source Station</option>');
-
-                    // Loop through stations data and add options to dropdown
-                    stations.forEach(function (station) {
-                        sourceStationDropdown.append(`<option value="${station.code}">${station.code}:${station.name}</option>`);
-                    });
-                },
-                error: function (xhr, status, error) {
+        var stations;
+        function fetchStations() {
+            fetch("/station/getAll")
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    stations = data; // Assuming data is an array of station objects
+                    console.log(stations);
+                })
+                .catch(error => {
                     console.error("Error fetching stations:", error);
-                }
-            });
-        });
-        
+                });
+        }
+
+        window.onload = function () {
+            fetchStations();
+        };
+
         var i = 2;
         // Function to dynamically add new stop fields
         function addStop() {
+            if (!stations) {
+                fetchStations();
+            }
+            console.log(stations);
             // Create new stop fields HTML
             var newStopFields = `
             <!-- Dynamic Stops Container -->
@@ -107,30 +105,37 @@
                     <!-- Initial Stop Fields (for the first stop) -->
                     <div class="form-row mb-3">
                         <label for="addStopstationCode${i}">Add Stop Station:</label>
-                        <select class="form-control" id="addStopstationCode${i}" name="addStopstationCode${i}" required>
-                            <option value="">Add stop Station</option>
-                        </select>
-                        <!-- Options will be populated dynamically using JavaScript -->
+                        <select class="form-control" id="addStopstationCode${i}" name="addStopstationCode[]" required>
+                            <option disabled value="">Add stop Station</option>`
+
+            // Populate dropdown options using stations data
+            stations.forEach(function (station) {
+                console.log(station.stationCode);
+                newStopFields += `<option value="${station.stationCode}">${station.stationCode}: ${station.stationName}</option>`;
+            });
+
+            newStopFields += `
                         </select>
                         <div class="col" style="margin-top: 5px;">
                             <!-- add label -->
                             <label for="arrivalTimes${i}">Arrival Time:</label>
-                            <input type="time" class="form-control" name="arrivalTimes${i}" required>
+                            <input type="time" class="form-control" name="arrivalTimes[]" required>
                         </div>
                         <div class="col" style="margin-top: 5px;">
                             <label for="departureTimes${i}">Departure Time:</label>
-                            <input type="time" class="form-control" name="departureTimes${i}" required>
+                            <input type="time" class="form-control" name="departureTimes[]" required>
                         </div>
                         <div class="col" style="margin-top: 5px;">
-                            <input type="number" class="form-control" name="distance${i}"
+                            <input type="number" step="0.01" class="form-control" name="distance[]"
                                 placeholder="Distance to travel to Next Station(in km)" required>
                         </div>
                     </div>
                 </div>
-    `;
+                `;
 
             // Append new stop fields to the dynamicStopsContainer
             $("#dynamicStopsContainer").append(newStopFields);
+            i++;
         }
 
     </script>
