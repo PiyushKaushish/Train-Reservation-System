@@ -76,8 +76,6 @@ public class PaymentService {
         Optional<Payment> optionalPayment = paymentRepository.findById(paymentId);
         if (optionalPayment.isPresent()) {
             Payment payment = optionalPayment.get();
-            payment.setPrebooked(prebooked);
-            payment.setVeg(isVeg);
             return paymentRepository.save(payment);
         }
         return null; 
