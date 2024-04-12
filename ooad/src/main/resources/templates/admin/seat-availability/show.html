@@ -20,6 +20,45 @@
         <div class="container mt-5">
 
             <!-- Block Content will be here -->
+            <div class="mb-3 justify-content-end">
+                <a href="/admin/seat-availability/add" class="btn btn-warning" style="width:100%;">Add Seat Availability</a>
+            </div>
+
+            <!-- Block Content will be here -->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Seat Availability ID</th>
+                        <th scope="col">Train No</th>
+                        <th scope="col">Train Name</th>
+                        <th scope="col">Class Type</th>
+                        <th scope="col">No of Coaches</th>
+                        <th scope="col">Available Seats</th>
+                        <th scope="col">Waiting List count</th>
+                        <th scope="col">Base Price</th>
+                        <th scope="col">Fare per Km Price</th>
+                        <th scope="col">Senior Citizen Discount</th>
+                        <th scope="col">Cancellation Charge</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="sa: ${seatAvailability}">
+                        <td th:text="${sa.id}" scope="row"></td>
+                        <td th:text="${sa.train.trainNo}"></td>
+                        <td th:text="${sa.train.trainName}"></td>
+                        <td th:text="${sa.classes}"></td>
+                        <td th:text="${sa.no_of_coaches}"></td>
+                        <td th:text="${sa.getAvailableSeats()}"></td>
+                        <td th:text="${sa.getWaitingList().size()}"></td>
+                        <td th:text="${sa.basePrice}"></td>
+                        <td th:text="${sa.farePerKM}"></td>
+                        <td th:text="${sa.seniorCitizenDiscount}"></td>
+                        <td th:text="${sa.cancellationCharge}"></td>
+                        
+                    </tr>
+                </tbody>
+            </table>
+
         </div>
     </div>
 
