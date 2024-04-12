@@ -12,7 +12,7 @@ public class Train {
     @Id
     private String trainNo;
     private String trainName;
-    private String trainType;
+    public String trainType;
 
     @OneToMany(mappedBy = "train",fetch = FetchType.LAZY)
     private List<OperatingDay> operatingDays;
@@ -72,8 +72,8 @@ public class Train {
         return trainType;
     }
 
-    public void setTraintype(String traintype) {
-        this.trainType = traintype;
+    public void setTraintype(String trainType) {
+        this.trainType = trainType;
     }
 
     public List<OperatingDay> getOperatingDays() {
