@@ -36,10 +36,10 @@ public class TrainFrontendController {
         List<Train> t= trainService.searchTrainBySrcAndDest(source, destination);
         System.out.println(t.size());
         System.out.println(t.get(0).getTrainName());
-        System.out.println(t.get(1).getTrainName());
+        // System.out.println(t.get(1).getTrainName());
         model.addAttribute("trains",t );
         // fix input format and then send the trains
-        return "train/view-train";
+        return "train/search_results";
     }
     
 

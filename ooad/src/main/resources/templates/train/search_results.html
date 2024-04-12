@@ -27,8 +27,8 @@
                 <tr th:each="train : ${trains}">
                     <td th:text="${train.trainNo}"></td>
                     <td th:text="${train.trainName}"></td>
-                    <td th:text="${train.operatingDays}"></td>
-                    <td th:text="${train.availableSeats}"></td>
+                    <!-- <td th:text="${train.operatingDays}"></td> -->
+                    <!-- <td th:text="${train.availableSeats}"></td> -->
                     <td>
                         <a th:href="@{'/book?trainNo=' + ${train.trainNo}}" class="btn btn-primary">Book Now</a>
                     </td>
