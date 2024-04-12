@@ -18,33 +18,35 @@
 
     <div class="content-body container-fluid">
         <div class="container mt-5">
-
-            <!-- Block Content will be here -->
-            <form th:action="@{/admin/station-timings/update/{id}(id=${stationTiming.Id})}" method="post" id="stationTimingForm">
+            <form th:action="@{/admin/station-timings/single-add/{id}(id=${route.Id})}" method="post"
+                id="stationTimingForm">
                 <div class="form-row mb-3">
-                    <h2 th:text="${stationTiming.station.stationCode}"></h2>
                     <label for="addStopstationCode1">Add Stop Station:</label>
                     <select class="form-control" id="addStopstationCode1" name="stationCode" required>
                         <option disabled value="">Add stop Station</option>
-                        <option th:each="station : ${stations}" th:value="${station.stationCode}" th:text="${station}" th:selected="${station.stationCode eq stationTiming.station.stationCode}"></option>
+                        <option th:each="station : ${stations}" th:value="${station.stationCode}" th:text="${station}">
+                        </option>
                     </select>
-                    
                     <div class="col" style="margin-top: 5px;">
                         <!-- add label -->
                         <label for="arrivalTimes1">Arrival Time:</label>
-                        <input type="time" class="form-control" name="arrivalTime" th:value="${stationTiming.arrivalTime}" required>
+                        <input type="time" class="form-control" name="arrivalTime" required>
                     </div>
                     <div class="col" style="margin-top: 5px;">
                         <label for="departureTimes1">Departure Time:</label>
-                        <input type="time" class="form-control" name="departureTime" th:value="${stationTiming.departureTime}" required>
+                        <input type="time" class="form-control" name="departureTime" required>
                     </div>
                     <div class="col" style="margin-top: 5px;">
                         <input type="number" step="0.01" class="form-control" name="distance"
-                            placeholder="Distance to travel to Next Station(in km)" th:value="${stationTiming.distanceFromNextStation}" required>
+                            placeholder="Distance to travel to Next Station(in km)" required>
                     </div>
-                </div>    
-                <button type="submit" class="btn btn-primary">Update</button>                           
+                    <button type="submit" class="btn btn-primary">Submit</button>
+
+                </div>
+
+
             </form>
+
 
         </div>
     </div>

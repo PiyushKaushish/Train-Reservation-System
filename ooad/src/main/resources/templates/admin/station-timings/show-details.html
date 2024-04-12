@@ -59,6 +59,9 @@
                 </tbody>
             </table>
 
+            <form  style="display: inline;" th:action="@{/admin/station-timings/single-add/{id}(id=${route.Id})}" method="get">
+                <button type="submit" class="btn btn-danger">Add New Stop</button>
+            </form> 
 
         </div>
     </div>
