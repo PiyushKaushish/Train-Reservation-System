@@ -65,9 +65,11 @@ public class AdminStationTimingManagementFrontendController {
         return "redirect:/admin/station-timings/show";
     }
 
-    @GetMapping("/single-add")
-    public String addSingleStationTimingForm(@ModelAttribute("stationTiming") StationTimings stationTiming) {
-                stationTimingsService.addStationTimings(stationTiming);
+    @GetMapping("/single-add/{id}")
+    public String addSingleStationTimingForm(@PathVariable Long id, @ModelAttribute("stationTiming") StationTimings stationTiming) {
+        Route route = routeService.getRouteById(id);
+        stationTiming.setRoute(route);
+        stationTimingsService.addStationTimings(stationTiming);
         return "admin/station-timings/show";
     }
 
@@ -97,9 +99,19 @@ public class AdminStationTimingManagementFrontendController {
     }
 
     @PostMapping("/update/{id}")
-    public String updateStationTiming(@PathVariable Long id,
-            @ModelAttribute("stationTiming") StationTimings updatedStationTiming) {
-        updatedStationTiming.setId(id);
+    public String updateStationTiming(@PathVariable Long id, @RequestParam("stationCode") String stationCode, @RequestParam("arrivalTime") String arrivalTime, @RequestParam("departureTime") String departureTime, @RequestParam("distance") Double distance) {
+        StationTimings updatedStationTiming = new StationTimings();
+        StationTimings st= stationTimingsService.getStationTimingsById(id);
+        updatedStationTiming.setRoute(st.getRoute());
+        Station s = stationService.getStationByCode(stationCode);
+        updatedStationTiming.setStation(s);
+        LocalTime localTime = LocalTime.parse(arrivalTime);
+        Time arrivalTime1 = Time.valueOf(localTime);
+        updatedStationTiming.setArrivalTime(arrivalTime1);
+        localTime = LocalTime.parse(departureTime);
+        Time departureTime1 = Time.valueOf(localTime);
+        updatedStationTiming.setDepartureTime(departureTime1);
+        updatedStationTiming.setDistanceFromNextStation(distance);
         stationTimingsService.updateStationTimings(id, updatedStationTiming);
         return "redirect:/admin/station-timings/show";
     }
