@@ -41,4 +41,8 @@ public class OperatingDayService {
     public List<OperatingDay> getOperatingDaysByTrain(Train train){
         return operatingDayRepository.findByTrain(train);
     }
+
+    public List<OperatingDay> getAllOperatingDays() {
+        return operatingDayRepository.findAll();
+    }
 }
