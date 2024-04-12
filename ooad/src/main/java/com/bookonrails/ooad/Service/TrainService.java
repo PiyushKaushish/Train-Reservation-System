@@ -30,8 +30,8 @@ public class TrainService {
     }
 
     // Method to retrieve a train by train number
-    public Optional<Train> getTrainByTrainNo(String trainNo) {
-        return trainRepository.findById(trainNo);
+    public Train getTrainByTrainNo(String trainNo) {
+        return trainRepository.findByTrainNo(trainNo);
     }
 
     // Method to save a train
