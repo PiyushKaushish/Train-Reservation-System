@@ -30,8 +30,15 @@
                     <!-- <td th:text="${train.operatingDays}"></td> -->
                     <!-- <td th:text="${train.availableSeats}"></td> -->
                     <td>
-                        <a th:href="@{'/book?trainNo=' + ${train.trainNo}}" class="btn btn-primary">Book Now</a>
+                        <form action="#" th:action="@{/train/book}" method="get">
+                            <input type="hidden" name="trainNo" th:value="${train.trainNo}">
+                            <button type="submit" class="btn btn-primary">Book Now</button>
+                        </form>
                     </td>
+                    
+                    
+
+                    
                 </tr>
             </tbody>
         </table>

@@ -71,8 +71,8 @@ public class RouteService {
         return routeRepository.findByStationTimingsStationStationCode(stationCode);
     }
 
-    public Route getRouteByTrainNo(String trainNo){
-        return  routeRepository.findByTrainTrainNo(trainNo);
+    public Route getRouteByTrainNo(String trainNo) {
+        return routeRepository.findByTrainTrainNo(trainNo);
     }
 
 }

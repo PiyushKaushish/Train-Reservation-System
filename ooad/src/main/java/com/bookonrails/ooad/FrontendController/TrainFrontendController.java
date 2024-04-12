@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.*;
 import com.bookonrails.ooad.Model.Train;
 import com.bookonrails.ooad.Model.Station;
 import com.bookonrails.ooad.Service.TrainService;
+
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+
 import com.bookonrails.ooad.Service.StationService;
 
 import com.bookonrails.ooad.Model.ClassType;
@@ -48,6 +52,24 @@ public class TrainFrontendController {
         // fix input format and then send the trains
         return "train/search_results";
     }
+
+    @GetMapping("/book")
+    public String bookTrain(@RequestParam("trainNo") String trainNo, Model model, HttpServletResponse response) {
+        // Set the train number in a cookie
+        Cookie trainNoCookie = new Cookie("trainNo", trainNo);
+        trainNoCookie.setMaxAge(7 * 24 * 60 * 60); // Cookie expires in 7 days
+        trainNoCookie.setPath("/"); // Set cookie path to root
+        response.addCookie(trainNoCookie);
+        
+        // Add the train number to the model
+        model.addAttribute("trainNo", trainNo);
+        
+        // Return the name of the HTML page to display train number details
+        return "ticket/trainreserve";
+    }
+    
+    
+    
 
     
     
