@@ -1,6 +1,6 @@
 package com.bookonrails.ooad.Interface;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import com.bookonrails.ooad.Model.*;
