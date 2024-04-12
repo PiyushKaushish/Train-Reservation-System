@@ -65,12 +65,30 @@ public class AdminStationTimingManagementFrontendController {
         return "redirect:/admin/station-timings/show";
     }
 
-    @GetMapping("/single-add/{id}")
-    public String addSingleStationTimingForm(@PathVariable Long id, @ModelAttribute("stationTiming") StationTimings stationTiming) {
+    @PostMapping("/single-add/{id}")
+    public String addSingleStationTimingForm(@PathVariable Long id,  @RequestParam("stationCode") String stationCode, @RequestParam("arrivalTime") String arrivalTime, @RequestParam("departureTime") String departureTime, @RequestParam("distance") Double distance) {
         Route route = routeService.getRouteById(id);
+        StationTimings stationTiming = new StationTimings();
         stationTiming.setRoute(route);
+        Station s = stationService.getStationByCode(stationCode);
+        stationTiming.setStation(s);
+        LocalTime localTime = LocalTime.parse(arrivalTime);
+        Time arrivalTime1 = Time.valueOf(localTime);
+        stationTiming.setArrivalTime(arrivalTime1);
+        localTime = LocalTime.parse(departureTime);
+        Time departureTime1 = Time.valueOf(localTime);
+        stationTiming.setDepartureTime(departureTime1);
+        stationTiming.setDistanceFromNextStation(distance);
         stationTimingsService.addStationTimings(stationTiming);
-        return "admin/station-timings/show";
+        return "redirect: /admin/station-timings/show";
+    }
+
+    @GetMapping("/single-add/{id}")
+    public String showSingleStationTimingForm(@PathVariable Long id, Model model) {
+        Route route = routeService.getRouteById(id);
+        model.addAttribute("route", route);
+        model.addAttribute("stations", stationService.getAllStations());
+        return "admin/station-timings/add-single";
     }
 
     @GetMapping("/show")
