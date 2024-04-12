@@ -1,134 +1,102 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8">
     <title>Train Station Form</title>
     <!-- Bootstrap CSS -->
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Custom CSS -->
     <style>
-      body {
-        padding: 20px;
-      }
+        body {
+            padding: 20px;
+        }
     </style>
-  </head>
-  <body>
-    <div class="container">
-      <h2>Train Station Details</h2>
-      <form th:action="@{/submit}" method="post" id="trainForm">
+</head>
+<body>
+
+<div class="container">
+    <h2>Train Station Details</h2>
+    <form th:action="@{/submit}" method="post" id="trainForm">
+
         <!-- Train Number -->
         <div class="form-group">
-          <label for="trainNumber">Train Number:</label>
-          <input
-            type="text"
-            class="form-control"
-            id="trainNumber"
-            name="trainNumber"
-            required
-          />
+            <label for="trainNumber">Train Number:</label>
+            <input type="text" class="form-control" id="trainNumber" name="trainNumber" required>
         </div>
 
         <!-- Source Station Dropdown -->
         <div class="form-group">
-          <label for="sourceStationCode">Source Station:</label>
-          <select
-            class="form-control"
-            id="sourceStationCode"
-            name="sourceStationCode"
-            required
-          >
-            <option value="">Select Source Station</option>
-            <!-- Options will be populated dynamically using JavaScript -->
-          </select>
+            <label for="sourceStationCode">Source Station:</label>
+            <select class="form-control" id="sourceStationCode" name="sourceStationCode" required>
+                <option value="">Select Source Station</option>
+                <!-- Options will be populated dynamically using JavaScript -->
+            </select>
         </div>
 
         <!-- Dynamic Stops Container -->
         <div id="dynamicStopsContainer">
-          <!-- Initial Stop Fields (for the first stop) -->
-          <div class="form-row mb-3">
-            <label for="addStopstationCode">Add Stop Station:</label>
-            <select
-              class="form-control"
-              id="addStopstationCode"
-              name="addStopstationCode"
-              required
-            >
-              <option value="">Add stop Station</option>
-              <!-- Options will be populated dynamically using JavaScript -->
-            </select>
-            <div class="col" style="margin-top: 5px">
-              <input
-                type="time"
-                class="form-control"
-                name="arrivalTimes"
-                required
-              />
+            <!-- Initial Stop Fields (for the first stop) -->
+            <div class="form-row mb-3">
+                <label for="addStopstationCode">Add Stop Station:</label>
+                <select class="form-control" id="addStopstationCode" name="addStopstationCode" required>
+                    <option value="">Add stop Station</option>
+                    <!-- Options will be populated dynamically using JavaScript -->
+                </select>
+                <div class="col" style="margin-top: 5px;">
+                    <input type="time" class="form-control" name="arrivalTimes" required>
+                </div>
+                <div class="col" style="margin-top: 5px;">
+                    <input type="time" class="form-control" name="departureTimes" required>
+                </div>
+                <div class="col" style="margin-top: 5px;">
+                    <input type="number" class="form-control" name="distance" placeholder="Distance from source (in km)" required>
+                </div>
             </div>
-            <div class="col" style="margin-top: 5px">
-              <input
-                type="time"
-                class="form-control"
-                name="departureTimes"
-                required
-              />
-            </div>
-            <div class="col" style="margin-top: 5px">
-              <input
-                type="number"
-                class="form-control"
-                name="distance"
-                placeholder="Distance from source (in km)"
-                required
-              />
-            </div>
-          </div>
         </div>
 
         <!-- Button to Add New Stop -->
-        <button type="button" class="btn btn-secondary" onclick="addStop()">
-          Add Stop
-        </button>
+        <button type="button" class="btn btn-secondary" onclick="addStop()">Add Stop</button>
 
         <!-- Submit Button -->
         <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
-    </div>
+    </form>
+</div>
 
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <script>
-      // Function to fetch stations from database and populate dropdown
-      $(document).ready(function () {
+<script>
+    // Function to fetch stations from database and populate dropdown
+    $(document).ready(function() {
         // AJAX request to fetch stations data from the server
-        $.get("/station/getAll", function(data) {
-            var stations = data; // Assuming data is an array of station objects
-            console.log(stations)
-            // Populate the source station dropdown
-            var sourceStationDropdown = $('#sourceStationCode');
-            sourceStationDropdown.empty(); // Clear existing options
+        $.ajax({
+            url: "/station/getAll",
+            method: "GET",
+            success: function(data) {
+                var stations = data; // Assuming data is an array of station objects
 
-          // Add a default option
-          sourceStationDropdown.append(
-            '<option value="">Select Source Station</option>'
-          );
+                // Populate the source station dropdown
+                var sourceStationDropdown = $('#sourceStationCode');
+                sourceStationDropdown.empty(); // Clear existing options
 
-          // Loop through stations data and add options to dropdown
-          stations.forEach(function (station) {
-            sourceStationDropdown.append(
-              `<option value="${station.code}:${station.name}">${station.code}:${station.name}</option>`
-            );
-          });
+                // Add a default option
+                sourceStationDropdown.append('<option value="">Select Source Station</option>');
+
+                // Loop through stations data and add options to dropdown
+                stations.forEach(function(station) {
+                    sourceStationDropdown.append(`<option value="${station.code}:${station.name}">${station.code}:${station.name}</option>`);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error("Error fetching stations:", error);
+            }
         });
-      });
+    });
 
-      // Function to dynamically add new stop fields
-      function addStop() {
+    // Function to dynamically add new stop fields
+    function addStop() {
         // Create new stop fields HTML
         var newStopFields = `
             <div class="form-row mb-3">
@@ -150,31 +118,30 @@
 
         // Append new stop fields to the dynamicStopsContainer
         $("#dynamicStopsContainer").append(newStopFields);
-      }
-    </script>
+    }
 
-    <script>
-      // Function to calculate total distance
-      function calculateTotalDistance() {
+    // Function to calculate total distance
+    function calculateTotalDistance() {
         var stops = $("#dynamicStopsContainer").find(".form-row");
 
         var totalDistance = 0;
-        stops.each(function (index, stop) {
-          var distanceInput = $(stop).find('input[name="distance"]');
-          if (distanceInput.length > 0) {
-            var distance = parseFloat(distanceInput.val());
-            if (!isNaN(distance)) {
-              totalDistance += distance;
+        stops.each(function(index, stop) {
+            var distanceInput = $(stop).find('input[name="distance"]');
+            if (distanceInput.length > 0) {
+                var distance = parseFloat(distanceInput.val());
+                if (!isNaN(distance)) {
+                    totalDistance += distance;
+                }
             }
-          }
         });
 
         return totalDistance;
-      }
+    }
 
-      // Example usage:
-      var totalDistance = calculateTotalDistance();
-      console.log("Total Distance: " + totalDistance + " km");
-    </script>
-  </body>
+    // Example usage:
+    var totalDistance = calculateTotalDistance();
+    console.log("Total Distance: " + totalDistance + " km");
+</script>
+
+</body>
 </html>
