@@ -157,8 +157,8 @@ public class Ticket {
         return date;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDate(java.util.Date newDate) {
+        this.date = newDate;
     }
 
     public ClassType getClasses() {
