@@ -28,9 +28,9 @@ public class TrainFrontendController {
         System.out.println(date+ " "+ source + " "+ destination+" "+ classType);
         System.out.println(d);
         // fix input format and then send the trains
-        return "train/search_train";
+        return "train/search_results";
     }
-
+    
 
 
     
