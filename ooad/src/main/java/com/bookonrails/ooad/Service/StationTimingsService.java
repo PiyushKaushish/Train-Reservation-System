@@ -1,5 +1,6 @@
 package com.bookonrails.ooad.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import com.bookonrails.ooad.Model.StationTimings;
 import com.bookonrails.ooad.Repository.StationTimingsRepository;
 
 @Service
-public class StationTimingsService implements StationTimingsManagement{
+public class StationTimingsService implements StationTimingsManagement {
 
     @Autowired
     private StationTimingsRepository stationTimingsRepository;
@@ -37,6 +38,14 @@ public class StationTimingsService implements StationTimingsManagement{
         return stationTimingsRepository.save(stationTimings);
     }
 
+    public List<StationTimings> addStationTimingsList(List<StationTimings> s) {
+        List<StationTimings> n = new ArrayList<>();
+        for (StationTimings st : s) {
+            n.add(addStationTimings(st));
+        }
+        return n;
+    }
+
     public StationTimings updateStationTimings(Long id, StationTimings updatedStationTimings) {
         StationTimings existingStationTimings = stationTimingsRepository.findById(id).orElse(null);
         if (existingStationTimings != null) {
@@ -47,7 +56,7 @@ public class StationTimingsService implements StationTimingsManagement{
             existingStationTimings.setDistanceFromNextStation(updatedStationTimings.getDistanceFromNextStation());
             return stationTimingsRepository.save(existingStationTimings);
         }
-        return null; 
+        return null;
     }
 
     public void deleteStationTimings(Long id) {

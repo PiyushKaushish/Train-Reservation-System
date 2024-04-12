@@ -23,6 +23,7 @@ public interface RouteRepository extends JpaRepository<Route, Long> {
     public List<String> findRouteBetweenStation(@Param("stationCode1") String stationCode1, @Param("stationCode2") String stationCode2);
 
     List<Route> findByTrainTrainName(String trainName);
+    Route findByTrainTrainNo(String trainNo);
 
     List<Route> findByStationTimingsStationStationCode(@Param("stationCode") String stationCode);
 
