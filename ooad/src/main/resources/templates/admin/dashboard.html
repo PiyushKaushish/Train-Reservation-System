@@ -77,6 +77,9 @@
                     data-bs-target="#v-pills-station-timings" type="button" role="tab"
                     aria-controls="v-pills-station-timings" aria-selected="false">Stops and Time Management for a
                     Route</button>
+                <button class="nav-link" id="v-pills-operating-day-tab" data-bs-toggle="pill"
+                    data-bs-target="#v-pills-operating-day" type="button" role="tab"
+                    aria-controls="v-pills-operating-day" aria-selected="false">Train's Operating Day Management</button>
             </div>
             <div class="tab-content container-fluid" id="v-pills-tabContent">
                 <div class="tab-pane fade show active" id="v-pills-admin" role="tabpanel"
@@ -127,6 +130,11 @@
                     aria-labelledby="v-pills-station-timings-tab" tabindex="0">
                     <a href="/admin/station-timings/add" class="tab-btn btn btn-success"> Add Station and Timing for a Route </a>
                     <a href="/admin/station-timings/show" class="tab-btn btn btn-success"> View Station and Timings Availibile </a>
+                </div>
+                <div class="tab-pane fade" id="v-pills-operating-day" role="tabpanel"
+                    aria-labelledby="v-pills-operating-day-tab" tabindex="0">
+                    <a href="/admin/operating-day/add" class="tab-btn btn btn-success"> Add Operating days for a train </a>
+                    <a href="/admin/operating-day/show" class="tab-btn btn btn-success"> View Operating days for trains </a>
                 </div>
 
 

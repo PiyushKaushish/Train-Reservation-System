@@ -22,6 +22,9 @@
             <div class="mb-3 justify-content-end">
                 <a href="/admin/route/add" class="btn btn-warning" style="width:100%;">Add Route</a>
             </div>
+             <!-- Add the input field for search -->
+             <input class="form-control" type="text" id="searchInput" onkeyup="searchRoute()"
+             placeholder="Search for Route Code...">
 
             <!-- Block Content will be here -->
             <table class="table">
@@ -53,6 +56,29 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+
+        <script>
+            function searchRoute() {
+                var input, filter, table, tr, td, i, txtValue;
+                input = document.getElementById("searchInput");
+                filter = input.value.toUpperCase();
+                table = document.querySelector("table");
+                tr = table.getElementsByTagName("tr");
+    
+                // Loop through all table rows, and hide those who don't match the search query
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[1]; // Index 1 corresponds to the Route Code column
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+        </script>
 </body>
 
 </html>

@@ -46,7 +46,7 @@ public class TrainService {
         if (existingTrainOptional.isPresent()) {
             Train existingTrain = existingTrainOptional.get();
             existingTrain.setTrainName(updatedTrain.getTrainName());
-            existingTrain.setTraintype(updatedTrain.getTraintype());
+            existingTrain.setTrainType(updatedTrain.getTrainType());
 
             return trainRepository.save(existingTrain);
         } 

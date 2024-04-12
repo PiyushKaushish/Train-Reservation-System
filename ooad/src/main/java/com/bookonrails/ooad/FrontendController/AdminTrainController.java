@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.bookonrails.ooad.Model.Train;
+import com.bookonrails.ooad.Service.RouteService;
 import com.bookonrails.ooad.Service.TrainService;
 
 @Controller
@@ -15,9 +16,13 @@ public class AdminTrainController {
     @Autowired
     private TrainService trainService;
 
+    @Autowired
+    private RouteService routeService;
+
     @GetMapping("/add")
     public String addTrain(Model m) {
         m.addAttribute("train", new Train());
+        m.addAttribute("routes", routeService.getAllRoutes());
         return "admin/train/add";
     }
 

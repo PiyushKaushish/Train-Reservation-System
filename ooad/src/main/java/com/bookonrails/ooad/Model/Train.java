@@ -68,11 +68,11 @@ public class Train {
         this.trainName = trainName;
     }
 
-    public String getTraintype() {
+    public String getTrainType() { // Getter method for trainType
         return trainType;
     }
 
-    public void setTraintype(String trainType) {
+    public void setTrainType(String trainType) { // Setter method for trainType
         this.trainType = trainType;
     }
 
