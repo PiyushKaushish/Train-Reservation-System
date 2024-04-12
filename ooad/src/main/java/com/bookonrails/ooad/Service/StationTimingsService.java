@@ -30,7 +30,7 @@ public class StationTimingsService implements StationTimingsManagement {
         return stationTimingsRepository.findByStation(station);
     }
 
-    public StationTimings getStationTimingsByRoute(Route route) {
+    public List<StationTimings> getStationTimingsByRoute(Route route) {
         return stationTimingsRepository.findByRoute(route);
     }
 

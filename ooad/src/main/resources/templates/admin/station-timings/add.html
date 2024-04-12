@@ -19,8 +19,11 @@
     <div class="content-body container-fluid">
         <div class="container mt-5">
 
+
             <!-- Block Content will be here -->
             <h2 class="text-muted">Train Station Details</h2>
+            <p class="text-danger" th:if="${param.error}" th:text="${param.error}"></p>
+
             <form th:action="@{/admin/station-timings/add}" method="post" id="trainForm">
                 <!-- Train Number -->
                 <div class="form-group">
@@ -33,9 +36,9 @@
                     <!-- Initial Stop Fields (for the first stop) -->
                     <div class="form-row mb-3">
                         <label for="addStopstationCode1">Add Stop Station:</label>
-                        <select class="form-control" id="addStopstationCode1" name="addStopstationCode[]" required>
+                        <select class="form-control" id="addStopstationCode1" name="stationCode[]" required>
                             <option disabled value="">Add stop Station</option>
-                            <option th:each="station : ${stations}" th:value="${station}" th:text="${station}"></option>
+                            <option th:each="station : ${stations}" th:value="${station.stationCode}" th:text="${station}"></option>
                         </select>
                         <div class="col" style="margin-top: 5px;">
                             <!-- add label -->
@@ -69,35 +72,12 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
-        var stations;
-        function fetchStations() {
-            fetch("/station/getAll")
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    stations = data; // Assuming data is an array of station objects
-                    console.log(stations);
-                })
-                .catch(error => {
-                    console.error("Error fetching stations:", error);
-                });
-        }
-
-        window.onload = function () {
-            fetchStations();
-        };
+        var optionBody = document.getElementById("addStopstationCode1").innerHTML;
+        console.log(optionBody);
 
         var i = 2;
         // Function to dynamically add new stop fields
         function addStop() {
-            if (!stations) {
-                fetchStations();
-            }
-            console.log(stations);
             // Create new stop fields HTML
             var newStopFields = `
             <!-- Dynamic Stops Container -->
@@ -105,15 +85,8 @@
                     <!-- Initial Stop Fields (for the first stop) -->
                     <div class="form-row mb-3">
                         <label for="addStopstationCode${i}">Add Stop Station:</label>
-                        <select class="form-control" id="addStopstationCode${i}" name="addStopstationCode[]" required>
-                            <option disabled value="">Add stop Station</option>`
-
-            // Populate dropdown options using stations data
-            stations.forEach(function (station) {
-                console.log(station.stationCode);
-                newStopFields += `<option value="${station.stationCode}">${station.stationCode}: ${station.stationName}</option>`;
-            });
-
+                        <select class="form-control" id="addStopstationCode${i}" name="stationCode[]" required>`
+            newStopFields += optionBody;
             newStopFields += `
                         </select>
                         <div class="col" style="margin-top: 5px;">

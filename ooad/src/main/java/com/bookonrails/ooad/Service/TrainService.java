@@ -67,6 +67,7 @@ public class TrainService {
         for(String s:r){
             Route route= routeRepository.findByRouteCode(s);
             t.add(trainRepository.findByRoute(route));
+            System.out.println(route.getRouteCode());
 
         }
         return t;

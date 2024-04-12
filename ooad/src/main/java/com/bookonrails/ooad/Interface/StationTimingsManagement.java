@@ -13,7 +13,7 @@ public interface StationTimingsManagement {
     public StationTimings getStationTimingsById(Long id);
     public StationTimings updateStationTimings(Long id,StationTimings stationTiming);
     public void deleteStationTimings(Long id);
-    public StationTimings getStationTimingsByRoute(Route route);
+    public List<StationTimings> getStationTimingsByRoute(Route route);
     public StationTimings getStationTimingsByStation(Station station);
     
 }

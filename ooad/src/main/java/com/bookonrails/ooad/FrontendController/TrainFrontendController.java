@@ -42,7 +42,7 @@ public class TrainFrontendController {
         System.out.println(date+ " "+ source + " "+ destination+" "+ classType);
         List<Train> t= trainService.searchTrainBySrcAndDest(source, destination);
         System.out.println(t.size());
-        System.out.println(t.get(0).getTrainName());
+        // System.out.println(t.get(0).getTrainName());
         // System.out.println(t.get(1).getTrainName());
         model.addAttribute("trains",t );
         // fix input format and then send the trains

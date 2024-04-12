@@ -18,8 +18,36 @@
 
     <div class="content-body container-fluid">
         <div class="container mt-5">
+            <div class="mb-3 justify-content-end">
+                <a href="/admin/station-timings/add"  class="btn btn-warning" style="width:100%;">Add Stops and Timings for a train</a>
+            </div>
 
             <!-- Block Content will be here -->
+            <table id="routeTrainTable" class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Train Number</th>
+                        <th scope="col">Train Name</th>
+                        <th scope="col">Route Code</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="train: ${trains}">
+                        <td th:text="${train.trainNo}" scope="row"></td>
+                        <td th:text="${train.trainName}"></td>
+                        <td th:text="${train.route.routeCode}"></td>
+                        <td>
+                            <form th:action="@{/admin/station-timings/show/{id}(id=${train.route.id})}" method="get">
+                                <input type="hidden" name="adminId" th:value="${train.route.id}">
+                                <button type="submit" class="btn btn-primary">View Complete Route</button>
+                            </form>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
         </div>
     </div>
 
