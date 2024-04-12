@@ -20,8 +20,120 @@
         <div class="container mt-5">
 
             <!-- Block Content will be here -->
+            <h2 class="text-muted">Train Station Details</h2>
+            <form th:action="@{/admin/station-timings/add}" method="post" id="trainForm">
+                <!-- Train Number -->
+                <div class="form-group">
+                    <label for="trainNumber">Train Number:</label>
+                    <input type="text" class="form-control" id="trainNumber" name="trainNumber" required>
+                </div>
+
+                <!-- Dynamic Stops Container -->
+                <div id="dynamicStopsContainer">
+                    <!-- Initial Stop Fields (for the first stop) -->
+                    <div class="form-row mb-3">
+                        <label for="addStopstationCode1">Add Stop Station:</label>
+                        <select class="form-control" id="addStopstationCode1" name="addStopstationCode1" required>
+                            <option value="">Add stop Station</option>
+                        </select>
+                        <!-- Options will be populated dynamically using JavaScript -->
+                        </select>
+                        <div class="col" style="margin-top: 5px;">
+                            <!-- add label -->
+                            <label for="arrivalTimes1">Arrival Time:</label>
+                            <input type="time" class="form-control" name="arrivalTimes1" required>
+                        </div>
+                        <div class="col" style="margin-top: 5px;">
+                            <label for="departureTimes1">Departure Time:</label>
+                            <input type="time" class="form-control" name="departureTimes1" required>
+                        </div>
+                        <div class="col" style="margin-top: 5px;">
+                            <input type="number" class="form-control" name="distance1"
+                                placeholder="Distance to travel to Next Station(in km)" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Button to Add New Stop -->
+                <button type="button" class="btn btn-secondary" onclick="addStop()">Add Stop</button>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
         </div>
     </div>
+
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Function to fetch stations from database and populate dropdown
+        $(document).ready(function () {
+            // AJAX request to fetch stations data from the server
+            $.ajax({
+                url: "/station/getAll",
+                method: "GET",
+                success: function (data) {
+                    var stations = data; // Assuming data is an array of station objects
+
+                    // Populate the source station dropdown
+                    var sourceStationDropdown = $('#sourceStationCode');
+                    sourceStationDropdown.empty(); // Clear existing options
+
+                    // Add a default option
+                    sourceStationDropdown.append('<option value="">Select Source Station</option>');
+
+                    // Loop through stations data and add options to dropdown
+                    stations.forEach(function (station) {
+                        sourceStationDropdown.append(`<option value="${station.code}">${station.code}:${station.name}</option>`);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching stations:", error);
+                }
+            });
+        });
+        
+        var i = 2;
+        // Function to dynamically add new stop fields
+        function addStop() {
+            // Create new stop fields HTML
+            var newStopFields = `
+            <!-- Dynamic Stops Container -->
+                <div id="dynamicStopsContainer">
+                    <!-- Initial Stop Fields (for the first stop) -->
+                    <div class="form-row mb-3">
+                        <label for="addStopstationCode${i}">Add Stop Station:</label>
+                        <select class="form-control" id="addStopstationCode${i}" name="addStopstationCode${i}" required>
+                            <option value="">Add stop Station</option>
+                        </select>
+                        <!-- Options will be populated dynamically using JavaScript -->
+                        </select>
+                        <div class="col" style="margin-top: 5px;">
+                            <!-- add label -->
+                            <label for="arrivalTimes${i}">Arrival Time:</label>
+                            <input type="time" class="form-control" name="arrivalTimes${i}" required>
+                        </div>
+                        <div class="col" style="margin-top: 5px;">
+                            <label for="departureTimes${i}">Departure Time:</label>
+                            <input type="time" class="form-control" name="departureTimes${i}" required>
+                        </div>
+                        <div class="col" style="margin-top: 5px;">
+                            <input type="number" class="form-control" name="distance${i}"
+                                placeholder="Distance to travel to Next Station(in km)" required>
+                        </div>
+                    </div>
+                </div>
+    `;
+
+            // Append new stop fields to the dynamicStopsContainer
+            $("#dynamicStopsContainer").append(newStopFields);
+        }
+
+    </script>
 
     <script th:src="@{/admin.js}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

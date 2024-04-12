@@ -18,6 +18,7 @@ public class AdminStationTimingManagementFrontendController {
     @GetMapping("/add")
     public String addStationTimingForm(Model model) {
         model.addAttribute("stationTiming", new StationTimings());
+
         return "admin/station-timings/add"; 
     }
 
