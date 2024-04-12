@@ -11,6 +11,9 @@
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
 
     <title>Book On Rails</title>
+    <style>
+
+    </style>
 </head>
 
 <body>
@@ -18,8 +21,36 @@
 
     <div class="content-body container-fluid">
         <div class="container mt-5">
-
             <!-- Block Content will be here -->
+            <form>
+                <label class="form-label">Enter train number:</label>
+                <input required type="text" id="username" class="form-control form-control-lg"
+                placeholder="" name="train_no"/>
+                <label class="form-label" style="margin-top: 20px;">Select which days of the week the train will run:</label>
+                <br>
+                <input type="checkbox" id="Monday" name="Monday" value="Monday"/>
+                <label for="Monday">Monday</label>
+                <br>
+                <input type="checkbox" id="Tuesday" name="Tuesday" value="Tuesday"/>
+                <label for="Tuesday">Tuesday</label>
+                <br>
+                <input type="checkbox" id="Wednesday" name="Wednesday" value="Wednesday"/>
+                <label for="Wednesday">Wednesday</label>
+                <br>
+                <input type="checkbox" id="Thursday" name="Thursday" value="Thursday"/>
+                <label for="Thursday">Thursday</label>
+                <br>
+                <input type="checkbox" id="Friday" name="Friday" value="Friday"/>
+                <label for="Friday">Friday</label>
+                <br>
+                <input type="checkbox" id="Saturday" name="Saturday" value="Saturday"/>
+                <label for="Saturday">Saturday</label>
+                <br>
+                <input type="checkbox" id="Sunday" name="Sunday" value="Sunday"/>
+                <label for="Sunday">Sunday</label>
+                <br>
+                <button style="width:100%" class="btn btn-warning" type="submit">Add</button>
+            </form>
         </div>
     </div>
 
