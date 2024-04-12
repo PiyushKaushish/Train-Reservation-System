@@ -22,34 +22,11 @@ public class Payment {
     private double ticketPrice; // Attribute for ticket price
 
     private double foodPrice; // Attribute for food price
-
-    private boolean prebooked; // Flag to indicate if food is precooked
-    
-    private boolean isVeg; // Flag to indicate if food is veg (true) or non-veg (false)
-
     
     private String paytmTransactionId; // Attribute for Paytm Transaction ID
     @Enumerated(EnumType.STRING)
     private PaymentStatus status;
 
-    public double getTotalPrice() {
-        if (prebooked) {
-            return ticketPrice + foodPrice;
-        } else {
-            return ticketPrice;
-        }
-    }
-
-    public void calculateTotalPrice(boolean isPrebooked, boolean isVeg) {
-        this.prebooked = isPrebooked;
-        this.isVeg = isVeg;
-        if (isPrebooked) {
-            FoodPrice foodPrice = new FoodPrice(); // Create an instance of FoodPrice
-            this.foodPrice = isVeg ? foodPrice.getVegprice() : foodPrice.getNonvegprice();
-        } else {
-            this.foodPrice = 0.0; // No food price if not precooked
-        }
-    }
 
     public Long getId() {
         return id;
@@ -66,15 +43,6 @@ public class Payment {
     public void setTicket(Ticket ticket) {
         this.ticket = ticket;
     }
-
-    /*public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-    */
 
     public PaymentStatus getStatus() {
         return status;
@@ -138,22 +106,6 @@ public class Payment {
 
     public void setFoodPrice(double foodPrice) {
         this.foodPrice = foodPrice;
-    }
-
-    public boolean isPrebooked() {
-        return prebooked;
-    }
-
-    public void setPrebooked(boolean prebooked) {
-        this.prebooked = prebooked;
-    }
-
-    public boolean isVeg() {
-        return isVeg;
-    }
-
-    public void setVeg(boolean isVeg) {
-        this.isVeg = isVeg;
     }
 
 }
