@@ -42,3 +42,26 @@ cd ooad
 ```bash
 http://localhost:4000
 ```
+
+Procedure to trigger finding of routes containing src and dest
+```sql
+DELIMITER //
+
+CREATE PROCEDURE FindRouteBetweenStations(
+    IN source_station_code VARCHAR(255),
+    IN destination_station_code VARCHAR(255)
+)
+BEGIN
+    SELECT r.route_code
+    FROM route r
+    JOIN station_timings st1 ON r.id = st1.route_id
+    JOIN station_timings st2 ON r.id = st2.route_id
+    WHERE st1.station_code = source_station_code
+    AND st2.station_code = destination_station_code;
+END //
+
+DELIMITER ;
+
+CALL FindRouteBetweenStations("HTE","MURI");
+
+```

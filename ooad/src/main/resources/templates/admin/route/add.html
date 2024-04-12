@@ -16,28 +16,27 @@
 <body>
     <header th:insert="~{admin-base :: header}"></header>
 
+
     <div class="content-body container-fluid">
+        <!-- Block Content will be here -->
         <div class="container mt-5">
-            <!-- Update station  form -->
-            <form method="post" th:action="@{'/admin/station/update/' + ${station.stationCode}}" th:object="${station}">
-                <!-- station name -->
-                <label class="form-label" for="stationName"> Station Name: </label>
-                <input class="form-control" type="text" id="stationName" name="stationName" placeholder="Station Name"
-                    th:value="${station.stationName}">
-                <br />
-                <!-- station code -->
-                <label class="form-label" for="stationCode"> Station Code: </label>
-                <input class="form-control" type="text" id="stationCode" name="stationCode" placeholder="Station Code"
-                    th:value="${station.stationCode}">
-                <br />
 
-                <button type="submit" class="btn btn-warning">Update Station</button>
+            <h1 class="text-muted">Add Route</h1>
+            <form action="/admin/route/add" method="post">
 
+                <div data-mdb-input-init class="form-outline mb-4">
+                    <label class="form-label" for="routeCode">Route Code</label>
+                    <input required type="text" id="routeCode" class="form-control form-control-lg"
+                        placeholder="Enter route code" name="routeCode" />
+                </div>
 
+                <div class="text-center text-lg-start mt-4 pt-2">
+                    <button style="width:100%" class="btn btn-warning" type="submit">Add Route</button>
+                </div>
             </form>
-
         </div>
     </div>
+
 
     <script th:src="@{/admin.js}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

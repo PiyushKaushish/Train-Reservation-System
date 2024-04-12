@@ -5,13 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bookonrails.ooad.Interface.StationTimingsManagement;
 import com.bookonrails.ooad.Model.Route;
 import com.bookonrails.ooad.Model.Station;
 import com.bookonrails.ooad.Model.StationTimings;
 import com.bookonrails.ooad.Repository.StationTimingsRepository;
 
 @Service
-public class StationTimingsService {
+public class StationTimingsService implements StationTimingsManagement{
 
     @Autowired
     private StationTimingsRepository stationTimingsRepository;
@@ -52,4 +53,5 @@ public class StationTimingsService {
     public void deleteStationTimings(Long id) {
         stationTimingsRepository.deleteById(id);
     }
+
 }

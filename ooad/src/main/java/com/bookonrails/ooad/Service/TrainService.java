@@ -1,108 +1,15 @@
-// package com.bookonrails.ooad.Service;
-
-// import com.bookonrails.ooad.Model.Train;
-// import com.bookonrails.ooad.Repository.TrainRepository;
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.stereotype.Service;
-
-// import java.util.List;
-
-// @Service
-// public class TrainService {
-
-//     private final TrainRepository trainRepository;
-
-//     @Autowired
-//     public TrainService(TrainRepository trainRepository) {
-//         this.trainRepository = trainRepository;
-//     }
-
-//     public List<Train> getAllTrains() {
-//         return trainRepository.findAllTrains();
-//     }
-// }
-
-
-// package com.bookonrails.ooad.Service;
-
-// import com.bookonrails.ooad.Model.Train;
-// import com.bookonrails.ooad.Repository.TrainRepository;
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.stereotype.Service;
-
-// import java.util.Arrays;
-// import java.util.List;
-
-// @Service
-// public class TrainService {
-
-//     private final TrainRepository trainRepository;
-
-//     @Autowired
-//     public TrainService(TrainRepository trainRepository) {
-//         this.trainRepository = trainRepository;
-//     }
-
-//     public List<Train> getAllTrains() {
-//         // Sample trains
-//         List<Train> trains = Arrays.asList(
-//                 new Train("101", "Express 101", "Express", 200),
-//                 new Train("202", "Superfast 202", "Superfast", 150),
-//                 new Train("303", "Local 303", "Local", 100),
-//                 new Train("404", "Bullet Train 404", "Bullet Train", 300)
-//         );
-
-//         // Save sample trains to the database (not necessary for this example)
-//         trainRepository.saveAll(trains);
-
-//         return trains;
-//     }
-// }
-
-
-// package com.bookonrails.ooad.Service;
-
-// import com.bookonrails.ooad.Model.Train;
-// import com.bookonrails.ooad.Repository.TrainRepository;
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.stereotype.Service;
-
-// import java.util.ArrayList;
-// import java.util.List;
-
-// @Service
-// public class TrainService {
-
-//     private final TrainRepository trainRepository;
-
-//     @Autowired
-//     public TrainService(TrainRepository trainRepository) {
-//         this.trainRepository = trainRepository;
-//     }
-
-//     public List<Train> getAllTrains() {
-//         // Sample trains
-//         List<Train> trains = new ArrayList<>();
-//         trains.add(new Train("101", "Express 101", "Express", 200));
-//         trains.add(new Train("202", "Superfast 202", "Superfast", 150));
-//         trains.add(new Train("303", "Local 303", "Local", 100));
-//         trains.add(new Train("404", "Bullet Train 404", "Bullet Train", 300));
-
-//         // Save sample trains to the database (not necessary for this example)
-//         trainRepository.saveAll(trains);
-
-//         return trains;
-//     }
-// }
-
-
 package com.bookonrails.ooad.Service;
 
-import com.bookonrails.ooad.Model.Train;
+import com.bookonrails.ooad.Model.*;
+import com.bookonrails.ooad.Repository.RouteRepository;
 import com.bookonrails.ooad.Repository.TrainRepository;
+import org.springframework.transaction.annotation.Transactional;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -110,11 +17,12 @@ import java.util.Optional;
 public class TrainService {
 
     @Autowired
-    private final TrainRepository trainRepository;
+    private TrainRepository trainRepository;
 
-    public TrainService(TrainRepository trainRepository) {
-        this.trainRepository = trainRepository;
-    }
+    @Autowired
+    private RouteRepository routeRepository;
+
+    
 
     // Method to retrieve all trains
     public List<Train> getAllTrains() {
@@ -139,12 +47,10 @@ public class TrainService {
             Train existingTrain = existingTrainOptional.get();
             existingTrain.setTrainName(updatedTrain.getTrainName());
             existingTrain.setTraintype(updatedTrain.getTraintype());
-            // existingTrain.setTotalSeats(updatedTrain.getTotalSeats());
-            // Update other properties as needed
 
             return trainRepository.save(existingTrain);
-        } else {
-            // Train with the given trainNo not found
+        } 
+        else{
             return null;
         }
     }
@@ -153,4 +59,20 @@ public class TrainService {
     public void deleteTrain(String trainNo) {
         trainRepository.deleteById(trainNo);
     }
+
+    @Transactional
+    public List<Train> searchTrainBySrcAndDest(String SRC,String DEST){
+        List<Train> t = new ArrayList<>();
+        List<String> r= routeRepository.findRouteBetweenStation(SRC,DEST );
+        for(String s:r){
+            Route route= routeRepository.findByRouteCode(s);
+            t.add(trainRepository.findByRoute(route));
+
+        }
+        return t;
+    }
+
+
+
+
 }

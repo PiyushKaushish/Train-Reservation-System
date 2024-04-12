@@ -181,6 +181,10 @@ public class Train {
         return route.getDistanceBetweenStations(SRC.getStationCode(), DEST.getStationCode());
     }
 
+    public void getDurationBetweenStations(Station SRC, Station DEST){
+        route.calculateJourneyTime(SRC,DEST);
+    }
+
     
 
 }
