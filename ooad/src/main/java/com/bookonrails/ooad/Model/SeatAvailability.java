@@ -53,6 +53,18 @@ public class SeatAvailability {
         setLastLowerSeat();
         setLastUpperSeat();
     }
+    
+    public SeatAvailability(int no_of_coaches){
+        this.no_of_coaches = no_of_coaches;
+        this.waitingList = new ArrayList<>();
+        this.CancelledSeats = new ArrayList<>();
+
+        this.setAvailableSeats();
+        this.lastUnbookedLowerSeat=1; // next seat that is lower birth and is not booked
+        this.lastUnbookedUpperSeat=2; // next seat that is upper birth and is not booked
+        setLastLowerSeat();
+        setLastUpperSeat();
+    }
 
     
     public Train getTrain() {

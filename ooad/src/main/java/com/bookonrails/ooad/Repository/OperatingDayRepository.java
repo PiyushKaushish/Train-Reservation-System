@@ -12,4 +12,5 @@ import com.bookonrails.ooad.Model.Train;
 @Repository
 public interface OperatingDayRepository extends JpaRepository<OperatingDay, Long> {
     public List<OperatingDay> findByTrain(Train t);    
+    public List<OperatingDay> findByTrainTrainNo(String trainNo);
 }
