@@ -32,6 +32,7 @@
                     <td>
                         <form action="#" th:action="@{/train/book}" method="get">
                             <input type="hidden" name="trainNo" th:value="${sa.train.trainNo}">
+                            <input type="hidden" name="seatAvailabilityId" th:value="${sa.getId()}">
                             <button type="submit" class="btn btn-primary">Book Now</button>
                         </form>
                     </td>

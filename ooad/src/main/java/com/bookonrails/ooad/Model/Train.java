@@ -141,6 +141,32 @@ public class Train {
         return availableSeats;
     }
 
+    private String convertDayOfWeekEnum(DayOfWeek d){
+        switch (d) {
+            case DayOfWeek.Monday:return "Monday";        
+            case DayOfWeek.Tuesday:return "Tuesday";        
+            case DayOfWeek.Wednesday:return "Wednesday";        
+            case DayOfWeek.Thursday:return "Thursday";        
+            case DayOfWeek.Friday:return "Monday";        
+            case DayOfWeek.Saturday:return "Saturday";        
+            case DayOfWeek.Sunday:return "Sunday";        
+            default: return "invalid";
+        }
+    }
+
+
+    public String getDaysRunning(){
+        List<OperatingDay> od= getOperatingDays();
+        String s = "";
+        for (OperatingDay o: od){
+            s+= convertDayOfWeekEnum(o.getDayOfWeek());
+            s+=" ";
+        }
+        return s;
+        
+
+    }
+
     public int getAvailableSeats(ClassType ct) {
         return getSeatAvailabilityClasswise(ct).getAvailableSeats();
     }

@@ -20,6 +20,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import com.bookonrails.ooad.Service.StationService;
 
 import com.bookonrails.ooad.Model.ClassType;
+import com.bookonrails.ooad.Model.Route;
 import com.bookonrails.ooad.Model.SeatAvailability;
 
 @Controller
@@ -38,8 +39,25 @@ public class TrainFrontendController {
         return "train/search_train";
     }
 
+    @GetMapping("/view-train-route")
+    public String viewTrainRoute(Model model){
+        model.addAttribute("train",trainService.getAllTrains());
+        return "train/show_routes";
+    }
+
+    @PostMapping("/view-train-route")
+    public String showTrainRoute(@RequestParam("trainNo") String trainNo, Model m){
+        // get train 
+        Train t= trainService.getTrainByTrainNo(trainNo);
+        Route r= t.getRoute();
+        m.addAttribute("train",t);
+
+        m.addAttribute("stationTimings",r.getStationTimings());
+        return "train/schedule";
+    }
+
     @PostMapping(path = "/search")
-    public String searchTrain(@RequestParam("date") String date, @RequestParam("fromStation") String source,
+    public String searchTrainForm(@RequestParam("date") String date, @RequestParam("fromStation") String source,
             @RequestParam("toStation") String destination, @RequestParam("classType") String classType, Model model) {
         Date d = Date.valueOf(date);
         System.out.println(classType);
@@ -67,15 +85,21 @@ public class TrainFrontendController {
     }
 
     @GetMapping("/book")
-    public String bookTrain(@RequestParam("trainNo") String trainNo, Model model, HttpServletResponse response) {
+    public String bookTrain(@RequestParam("trainNo") String trainNo,@RequestParam("seatAvailabilityId") String seatAvailabilityId ,Model model, HttpServletResponse response) {
         // Set the train number in a cookie
         Cookie trainNoCookie = new Cookie("trainNo", trainNo);
         trainNoCookie.setMaxAge(7 * 24 * 60 * 60); // Cookie expires in 7 days
         trainNoCookie.setPath("/"); // Set cookie path to root
         response.addCookie(trainNoCookie);
 
+        Cookie seatAvailabilityIdCookie = new Cookie("seatAvailabilityId", seatAvailabilityId);
+        seatAvailabilityIdCookie.setMaxAge(7*24*60*60);
+        seatAvailabilityIdCookie.setPath("/");
+        response.addCookie(seatAvailabilityIdCookie);
+
         // Add the train number to the model
         model.addAttribute("trainNo", trainNo);
+        model.addAttribute("seatAvailabilityId", seatAvailabilityId);
 
         // Return the name of the HTML page to display train number details
         return "ticket/trainreserve";
