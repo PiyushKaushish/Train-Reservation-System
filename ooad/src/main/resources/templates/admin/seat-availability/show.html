@@ -29,7 +29,7 @@
                 <input class="form-control" type="text" id="trainNoInput" placeholder="Search by Train No..."
                     onkeyup="searchSeatAvailability()">
                 <input class="form-control mt-3" type="text" id="classTypeInput" placeholder="Search by Class Type..."
-                    onkeyup="searchSeatAvailability()">
+                    onkeyup="searchSeatAvailabilityOfClassType()">
             </div>
 
             <!-- Block Content will be here -->
@@ -99,6 +99,29 @@
         
 
     </script>
+
+    <script>
+        function searchSeatAvailabilityOfClassType() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("classTypeInput");
+            filter = input.value.toUpperCase();
+            table = document.querySelector("table");
+            tr = table.getElementsByTagName("tr");
+        
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[4]; // index 4 corresponds to the Class Type column
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+    
 
 
 </body>

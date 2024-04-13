@@ -9,7 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,6 +73,20 @@ public class TrainService {
 
         }
         return t;
+    }
+
+    @Transactional
+    public List<SeatAvailability> searchTrain(String SRC,String DEST, ClassType classes, Date date){
+        List<Train> t=searchTrainBySrcAndDest(SRC,DEST);
+        // now we need to filter trains based on if they run on the given date
+        // and then filter them based on class type
+        List<SeatAvailability> newList= new ArrayList<>();
+        for(int i=0;i<t.size();i++){
+            if(t.get(i).doesDateAndClassExist(date,classes)){
+                newList.add(t.get(i).getSeatAvailabilityBasedOnClassAndDate(date, classes));
+            }
+        }
+        return newList;
     }
 
 

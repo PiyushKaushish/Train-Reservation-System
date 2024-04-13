@@ -1,5 +1,6 @@
 package com.bookonrails.ooad.Model;
 
+import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
@@ -185,6 +186,22 @@ public class Train {
         route.calculateJourneyTime(SRC,DEST);
     }
 
-    
 
+    public boolean doesDateAndClassExist(Date date,ClassType c){
+        for(SeatAvailability s:seatAvailability){
+            if(s.getDate().equals(date) && s.getClasses()==c){return true;}
+        }
+        return false;
+    }
+
+    public SeatAvailability getSeatAvailabilityBasedOnClassAndDate(Date date,ClassType classType){
+        if(doesDateAndClassExist(date, classType)){
+            for (SeatAvailability s:seatAvailability){
+                if(s.getDate().equals(date) && s.getClasses()==classType){
+                    return s;
+                }
+            }
+        }
+        return null;
+    }
 }
