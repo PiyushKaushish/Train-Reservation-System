@@ -187,6 +187,32 @@ public class TicketService {
         return ticketRepository.findByStatus(TicketStatus.Waiting);
     }
 
+    public void  cancelTicket(Ticket t){
+        SeatAvailability sa= t.getSeatAvailability();
+        sa.cancelTicket(t);
+        // Get Waiting List tickets
+        List<Ticket> wlTick= sa.getWaitingList();
+        for (Ticket tk :wlTick) {
+            if(sa.getAvailableSeats()>0){
+                // Move from waiting list passenger and allocate seat
+                allocateSeats(tk);
+                if(tk.isPassengersWaiting()){
+                    sa.addTicketToWaitingList(t);
+                    tk.setStatus(TicketStatus.Waiting);
+                }
+                else{
+                    tk.setStatus(TicketStatus.Confirmed);
+                    sa.deleteTicketFromWaitingList(tk);
+                }
+                ticketRepository.save(tk);
+            }
+            else{
+                break;
+            }
+        }
+        seatAvailabilityService.updateSeatAvailibity(sa);
+        ticketRepository.save(t);
+    }
 
 
 

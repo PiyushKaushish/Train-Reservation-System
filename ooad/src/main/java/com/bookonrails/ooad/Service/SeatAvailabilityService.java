@@ -91,10 +91,6 @@ public class SeatAvailabilityService // extends TrainSeatAvailibilityManagement
 
     }
 
-    public void assignSeats(SeatAvailability seatAvailability,Ticket ticket){
-        // TO DO : after ticket, passenger is defined
-    }
-
 
 
    

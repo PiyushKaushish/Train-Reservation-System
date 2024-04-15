@@ -274,5 +274,4 @@ public class Ticket {
     public double calculateFinalPrice(){
         return foodprice+totalAmount;
     }
-
 }

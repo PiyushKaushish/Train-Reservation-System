@@ -421,7 +421,23 @@ public class SeatAvailability {
 
     public void setCancellationCharge(double cancellationCharge) {
         this.cancellationCharge = cancellationCharge;
-    }    
+    }  
+    
+    public List<Integer> getPassengerSeats(List<Passenger> p){
+        List<Integer> seats=new ArrayList<>();
+        for(Passenger pa:p){
+            seats.add(pa.getSeatNo());
+        }
+        return seats;
+    }
+    
+    public void cancelTicket(Ticket t){
+        List<Integer> seat= getPassengerSeats(t.getPassengers());
+        for(int s:seat){
+            addCancelledSeat(s);
+        }
+        t.setStatus(TicketStatus.Cancelled);
+    }
 
     
 }
