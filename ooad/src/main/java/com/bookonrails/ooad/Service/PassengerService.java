@@ -19,9 +19,6 @@ public class PassengerService {
         return passengerRepository.findByTicket(ticket);
     }
 
-    public List<Passenger> getPassengersByTicketId(Long ticketId){
-        return passengerRepository.findByTicketTicketId(ticketId);
-    }
 
     public void savePassenger(Passenger passenger){
         passengerRepository.save(passenger);

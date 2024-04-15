@@ -14,7 +14,5 @@ import com.bookonrails.ooad.Model.User;
 public interface PassengerRepository extends JpaRepository<Passenger, Long>{
     List<Passenger> findByTicket(Ticket ticket);
     List<Passenger> findByUser(User user);
-    List<Passenger> findByTicketTicketId(Long ticketId);
 
-    
 }
