@@ -30,8 +30,8 @@
                 <tbody>
                     <!-- Insert data from database using Thymeleaf expression language -->
                     <tr th:each="contact : ${contactQueries}">
-                        <td th:text="${contact.email}"></td>
                         <td th:text="${contact.name}"></td>
+                        <td th:text="${contact.email}"></td>
                         <td th:text="${contact.message}"></td>
                 </tbody>
             </table>
