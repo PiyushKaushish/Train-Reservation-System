@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<!-- Base for all html pages -->
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/main.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+
+    <title>Book On Rails</title>
+</head>
+
+<body>
+    <header th:insert="~{base :: header}"></header>
+
+    <div class="content-body container-fluid">
+        <div class="container mt-5">
+            <!-- Ticket details -->
+            <h4 class="text-muted">Ticket Details</h4>
+            <table class="table">
+                <tr>
+                    <th>PNR </th>
+                    <td>: <span th:text="${ticket.PNR}"></td>
+                </tr>
+                <tr>
+                    <th>Ticket Id </th>
+                    <td>: <span th:text="${ticket.ticket_id}"></td>
+                </tr>
+                <tr>
+                    <th>Train No </th>
+                    <td>: <span th:text="${ticket.train.trainNo}"></td>
+                </tr>                
+                <tr>
+                    <th>Train Name </th>
+                    <td>: <span th:text="${ticket.train.trainName}"></td>
+                </tr>
+                <tr>
+                    <th>SRC </th>
+                    <td>: <span th:text="${ticket.SRC}"></td>
+                </tr>
+                <tr>
+                    <th>DEST </th>
+                    <td>: <span th:text="${ticket.DEST}"></td>
+                </tr>
+                <tr>
+                    <th>Date </th>
+                    <td>: <span th:text="${ticket.date}"></td>
+                </tr>
+                <tr>
+                    <th>Class </th>
+                    <td>: <span th:text="${ticket.classes}"></td>
+                </tr>
+                <tr>
+                    <th>Food Price </th>
+                    <td>: <span th:text="${ticket.foodprice}"></td>
+                </tr>
+                <tr>
+                    <th>Ticket Price </th>
+                    <td>: <span th:text="${ticket.totalAmount}"></td>
+                </tr>
+                <tr>
+                    <th>Amount to be paid </th>
+                    <td>: <span th:text="${ticket.calculateFinalPrice()}"></td>
+                </tr>
+
+
+            </table>
+
+            <!-- Reservation Details Table -->
+            <h4 class="text-muted">Reservation Details</h4>
+            <table class="table table1">
+                <thead>
+                    <tr>
+                        <th scope="col">Passenger Name</th>
+                        <th scope="col">Age</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Birth Preference</th>
+                        <th scope="col">Senior Citizen</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="passenger : ${ticket.passengers}">
+                        <td th:text="${passenger.name}"></td>
+                        <td th:text="${passenger.age}"></td>
+                        <td th:text="${passenger.gender}"></td>
+                        <td th:text="${passenger.birthpreference}"></td>
+                        <td th:text="${passenger.isSeniorCitizen}"></td>
+
+                        <td>
+                            <form action="payment/make-payment" method="post">
+                                <button type="submit" class="btn btn-danger"
+                                    onclick="return confirm('Payment confirmed. Redirecting to payment gateway...')">Confirm
+                                    payment
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+
+
+        </div>
+    </div>
+
+    <script th:src="@{/admin.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

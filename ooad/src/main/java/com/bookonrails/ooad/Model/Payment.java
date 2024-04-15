@@ -19,11 +19,8 @@ public class Payment {
 
     private String posId; // Attribute for POS_ID
 
-    private double ticketPrice; // Attribute for ticket price
-
-    private double foodPrice; // Attribute for food price
-    
     private String paytmTransactionId; // Attribute for Paytm Transaction ID
+
     @Enumerated(EnumType.STRING)
     private PaymentStatus status;
 
@@ -92,20 +89,6 @@ public class Payment {
         this.paytmTransactionId = paytmTransactionId;
     }
 
-    public double getTicketPrice() {
-        return ticketPrice;
-    }
-
-    public void setTicketPrice(double ticketPrice) {
-        this.ticketPrice = ticketPrice;
-    }
-
-    public double getFoodPrice() {
-        return foodPrice;
-    }
-
-    public void setFoodPrice(double foodPrice) {
-        this.foodPrice = foodPrice;
-    }
+   
 
 }

@@ -42,25 +42,6 @@ public class PaymentService {
         return null; 
     }
 
-    public Payment updateTicketPrice(Long paymentId, double ticketPrice) {
-        Optional<Payment> optionalPayment = paymentRepository.findById(paymentId);
-        if (optionalPayment.isPresent()) {
-            Payment payment = optionalPayment.get();
-            payment.setTicketPrice(ticketPrice);
-            return paymentRepository.save(payment);
-        }
-        return null; 
-    }
-
-    public Payment updateFoodPrice(Long paymentId, double foodPrice) {
-        Optional<Payment> optionalPayment = paymentRepository.findById(paymentId);
-        if (optionalPayment.isPresent()) {
-            Payment payment = optionalPayment.get();
-            payment.setFoodPrice(foodPrice);
-            return paymentRepository.save(payment);
-        }
-        return null; 
-    }
 
     public Payment updatePaymentStatus(Long paymentId, PaymentStatus status) {
         Optional<Payment> optionalPayment = paymentRepository.findById(paymentId);

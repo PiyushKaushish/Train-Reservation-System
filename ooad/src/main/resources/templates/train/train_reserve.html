@@ -135,6 +135,12 @@
                     <option value="Lower">Lower</option>
                     <option value="Upper">Upper</option>
                 </select>
+                <label for="isSeniorCitizen${i}">Are you a Senior Citizen? </label>
+                <select id="isSeniorCitizen${i}" name="isSeniorCitizen[]" required>
+                    <option hidden value="">Select yes or no</option>
+                    <option value="true">Yes</option>
+                    <option selected value="false">No</option>
+                </select>
             </div>
         `;
       }

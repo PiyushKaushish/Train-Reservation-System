@@ -260,4 +260,8 @@ public class Ticket {
         return 0.0;
     }
 
+    public double calculateFinalPrice(){
+        return foodprice+totalAmount;
+    }
+
 }
