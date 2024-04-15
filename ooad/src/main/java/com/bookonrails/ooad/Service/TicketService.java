@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.bookonrails.ooad.Model.Passenger;
 import com.bookonrails.ooad.Model.PaymentStatus;
+import com.bookonrails.ooad.Model.SeatAvailability;
 import com.bookonrails.ooad.Model.Station;
 import com.bookonrails.ooad.Model.Ticket;
 import com.bookonrails.ooad.Model.TicketStatus;
@@ -22,6 +23,13 @@ public class TicketService {
     @Autowired
     private TicketRepository ticketRepository;
 
+    @Autowired
+    private PassengerService passengerService;
+
+    @Autowired
+    private SeatAvailabilityService seatAvailabilityService;
+
+
     public List<Ticket> getAllTickets() {
         return ticketRepository.findAll();
     }
@@ -32,6 +40,10 @@ public class TicketService {
         String pnr = uniqueID.substring(0, 6);
         pnr = "PNR"+ pnr;
         return pnr; 
+    }
+
+    public Ticket updateTicket(Ticket t){
+        return ticketRepository.save(t);
     }
 
     public Ticket getTicketById(Long id) {
@@ -132,4 +144,35 @@ public class TicketService {
     public void deleteTicket(Long id) {
         ticketRepository.deleteById(id);
     }
+
+    public Ticket allocateSeats(Ticket t){
+        // get passengers
+        List<Passenger> ps =t.getPassengers();
+        SeatAvailability s= t.getSeatAvailability();
+        s.allocatePassengerSeatNo(ps);
+        List<Passenger> sp= passengerService.saveAllPassenger(ps);
+        t.setPassengers(sp);
+        seatAvailabilityService.updateSeatAvailibity(s);
+        t.setSeatAvailability(s);
+        Ticket saved_ticket= saveTicket(t);
+        return saved_ticket;
+
+    }
+
+    public List<Ticket> getCancelledTickets(){
+        return ticketRepository.findByStatus(TicketStatus.Cancelled);
+    }
+
+    public List<Ticket> getConfirmedTickets(){
+        return ticketRepository.findByStatus(TicketStatus.Confirmed);
+    }
+
+    public List<Ticket> getWaitingListTickets(){
+        return ticketRepository.findByStatus(TicketStatus.Waiting);
+    }
+
+
+
+
+
 }
