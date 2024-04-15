@@ -11,6 +11,9 @@
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
 
     <title>Book On Rails</title>
+    <style>
+
+    </style>
 </head>
 
 <body>
@@ -18,8 +21,21 @@
 
     <div class="content-body container-fluid">
         <div class="container mt-5">
-
             <!-- Block Content will be here -->
+            <form action="/admin/operating-day/add" method="post">
+                <label class="form-label">Enter train number:</label>
+                <input required type="text" id="username" class="form-control form-control-lg" placeholder=""
+                    name="trainNo" />
+                <label class="form-label" style="margin-top: 20px;">Select which days of the week the train will
+                    run:</label>
+
+                <div class="form-check" th:each="d : ${dow}">
+                    <input type="checkbox" id="dow" name="dow[]" th:value="${d}" />
+                    <label for="Monday" th:text="${d}">Monday</label>
+                </div>
+
+                <button style="width:100%" class="btn btn-warning" type="submit">Add operating days</button>
+            </form>
         </div>
     </div>
 

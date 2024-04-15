@@ -30,39 +30,37 @@
 </head>
 
 <body>
-    <div class="container-fluid">
+    <div class="container mt-5">
         <section class="vh-100">
-            <div class="container-fluid h-custom">
-                <div class="row d-flex justify-content-center align-items-center h-100">
-                    <div class="col-md-9 col-lg-6 col-xl-5">
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-                            class="img-fluid" alt="Sample image">
-                    </div>
-                    <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                        <!-- Display error message if the "error" parameter is present -->
-                        <p class="text-danger" th:if="${param.error}" th:text="${param.error}"></p>
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-md-9 col-lg-6 col-xl-5">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                        class="img-fluid" alt="Sample image">
+                </div>
+                <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                    <!-- Display error message if the "error" parameter is present -->
+                    <p class="text-danger" th:if="${param.error}" th:text="${param.error}"></p>
 
-                        <form action="/admin/login" method="post" th:object="${Admin}">
+                    <form action="/admin/login" method="post" th:object="${Admin}">
 
-                            <!-- Email input -->
-                            <div data-mdb-input-init class="form-outline mb-4">
-                                <label class="form-label" for="username">Username</label>
-                                <input required type="text" id="username" class="form-control form-control-lg"
-                                    placeholder="Enter username" name="username" th:field="*{username}" />
-                            </div>
+                        <!-- Email input -->
+                        <div data-mdb-input-init class="form-outline mb-4">
+                            <label class="form-label" for="username">Username</label>
+                            <input required type="text" id="username" class="form-control form-control-lg"
+                                placeholder="Enter username" name="username" th:field="*{username}" />
+                        </div>
 
-                            <!-- Password input -->
-                            <div data-mdb-input-init class="form-outline mb-3">
-                                <label class="form-label" for="password">Password</label>
-                                <input required type="password" id="password" class="form-control form-control-lg"
-                                    placeholder="Enter password" name="password" th:field="*{password}" />
-                            </div>
-                            <div class="text-center text-lg-start mt-4 pt-2">
-                                <button style="width:100%" class="btn btn-primary" type="submit">Login</button>
-                            </div>
+                        <!-- Password input -->
+                        <div data-mdb-input-init class="form-outline mb-3">
+                            <label class="form-label" for="password">Password</label>
+                            <input required type="password" id="password" class="form-control form-control-lg"
+                                placeholder="Enter password" name="password" th:field="*{password}" />
+                        </div>
+                        <div class="text-center text-lg-start mt-4 pt-2">
+                            <button style="width:100%" class="btn btn-primary" type="submit">Login</button>
+                        </div>
 
-                        </form>
-                    </div>
+                    </form>
                 </div>
             </div>
 

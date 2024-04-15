@@ -53,10 +53,50 @@ public class SeatAvailability {
         setLastLowerSeat();
         setLastUpperSeat();
     }
+    
+    public SeatAvailability(int no_of_coaches){
+        this.no_of_coaches = no_of_coaches;
+        this.waitingList = new ArrayList<>();
+        this.CancelledSeats = new ArrayList<>();
+
+        this.setAvailableSeats();
+        this.lastUnbookedLowerSeat=1; // next seat that is lower birth and is not booked
+        this.lastUnbookedUpperSeat=2; // next seat that is upper birth and is not booked
+        setLastLowerSeat();
+        setLastUpperSeat();
+    }
 
     
     public Train getTrain() {
         return train;
+    }
+
+    public String getTrainNo(){
+        return train.getTrainNo();
+    }
+
+    private String convertDayOfWeekEnum(DayOfWeek d){
+        switch (d) {
+            case DayOfWeek.Monday:return "Monday";        
+            case DayOfWeek.Tuesday:return "Tuesday";        
+            case DayOfWeek.Wednesday:return "Wednesday";        
+            case DayOfWeek.Thursday:return "Thursday";        
+            case DayOfWeek.Friday:return "Monday";        
+            case DayOfWeek.Saturday:return "Saturday";        
+            case DayOfWeek.Sunday:return "Sunday";        
+            default: return "invalid";
+        }
+    }
+
+    public String getDaysRunning(){
+        List<OperatingDay> od= train.getOperatingDays();
+        String s = "";
+        for (OperatingDay o: od){
+            s+= convertDayOfWeekEnum(o.getDayOfWeek());
+            s+=" ";
+        }
+        return s;
+
     }
 
     public void setTrain(Train train) {

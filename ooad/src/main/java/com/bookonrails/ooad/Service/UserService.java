@@ -100,4 +100,8 @@ public class UserService implements UserManagement {
         return userRepository.findByUsername(username);
     }
 
+    public User getUserById(Long userId) {
+        return userRepository.findById(userId).orElse(null);
+    }
+
 }

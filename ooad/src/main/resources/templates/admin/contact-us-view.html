@@ -18,8 +18,21 @@
 
     <div class="content-body container-fluid">
         <div class="container mt-5">
+            <!-- Add a table -->
+            <table id="bookTable" class="table">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Query</th>
+                </tr>
+                <!-- Insert data from database using Thymeleaf expression language -->
+                <tr th:each="queryUser: qU">
+                    <td th:text="${queryUser.name}" ></td>
+                    <a th:href="mail:${email}"><td th:text="${queryUser.email}" ></td></a>
+                    <td th:text="${queryUser.messgae}" ></td>
+                </tr>
+            </table>
 
-            <!-- Block Content will be here -->
         </div>
     </div>
 

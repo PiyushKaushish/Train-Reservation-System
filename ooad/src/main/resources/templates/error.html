@@ -20,23 +20,7 @@
     <div class="container mt-5">
 
       <!-- Add content here -->
-      <h2>Train List</h2>
-        <table class="table mt-4">
-            <thead>
-                <tr>
-                    <th>Train Number</th>
-                    <th>Train Name</th>
-                    <th>Train Type</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="train : ${trains}">
-                    <td th:text="${train.trainNo}"></td>
-                    <td th:text="${train.trainName}"></td>
-                    <td th:text="${train.trainType}"></td>
-                </tr>
-            </tbody>
-        </table>
+      <div class="text-danger" th:text="${message}"></div>
     </div>
   </div>
 

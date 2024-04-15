@@ -15,7 +15,6 @@
         body {
             background-color: #f8f8f8;
             font-family: 'Roboto', sans-serif;
-            
         }
 
         h1 {
@@ -46,6 +45,7 @@
 
     <div class="content-body container-fluid">
         <!-- Block Content will be here -->
+        <br />
         <h1 class="text-muted">Admin Dashboard</h1>
         <div class="d-flex align-items-start">
             <div class="nav flex-column nav-pills me-4" id="v-pills-tab" role="tablist" aria-orientation="vertical">
@@ -53,9 +53,8 @@
                     data-bs-target="#v-pills-admin" type="button" role="tab" aria-controls="v-pills-admin"
                     aria-selected="true">Admin Management</button>
 
-                <button class="nav-link" id="v-pills-user-tab" data-bs-toggle="pill"
-                    data-bs-target="#v-pills-user" type="button" role="tab" aria-controls="v-pills-user"
-                    aria-selected="false">User Management</button>
+                <button class="nav-link" id="v-pills-user-tab" data-bs-toggle="pill" data-bs-target="#v-pills-user"
+                    type="button" role="tab" aria-controls="v-pills-user" aria-selected="false">User Management</button>
                 <button class="nav-link" id="v-pills-train-tab" data-bs-toggle="pill" data-bs-target="#v-pills-train"
                     type="button" role="tab" aria-controls="v-pills-train" aria-selected="false">Train
                     Management</button>
@@ -70,13 +69,20 @@
                     aria-controls="v-pills-seat-availibility" aria-selected="false">Seat Availibility
                     Management</button>
                 <button class="nav-link" id="v-pills-station-tab" data-bs-toggle="pill"
-                    data-bs-target="#v-pills-station" type="button" role="tab"
-                    aria-controls="v-pills-station" aria-selected="false">Station
+                    data-bs-target="#v-pills-station" type="button" role="tab" aria-controls="v-pills-station"
+                    aria-selected="false">Station
                     Management</button>
                 <button class="nav-link" id="v-pills-station-timings-tab" data-bs-toggle="pill"
                     data-bs-target="#v-pills-station-timings" type="button" role="tab"
-                    aria-controls="v-pills-station-timings" aria-selected="false">Station timings
-                    Management for Route</button>
+                    aria-controls="v-pills-station-timings" aria-selected="false">Stops and Time Management for a
+                    Route</button>
+                <button class="nav-link" id="v-pills-operating-day-tab" data-bs-toggle="pill"
+                    data-bs-target="#v-pills-operating-day" type="button" role="tab"
+                    aria-controls="v-pills-operating-day" aria-selected="false">Train's Operating Day
+                    Management</button>
+                <button class="nav-link" id="v-pills-contact-us-tab" data-bs-toggle="pill"
+                    data-bs-target="#v-pills-contact-us" type="button" role="tab" aria-controls="v-pills-contact-us"
+                    aria-selected="false">Contact Us Query</button>
             </div>
             <div class="tab-content container-fluid" id="v-pills-tabContent">
                 <div class="tab-pane fade show active" id="v-pills-admin" role="tabpanel"
@@ -86,8 +92,8 @@
                 </div>
 
 
-                <div class="tab-pane fade" id="v-pills-user" role="tabpanel"
-                    aria-labelledby="v-pills-user-tab" tabindex="0">
+                <div class="tab-pane fade" id="v-pills-user" role="tabpanel" aria-labelledby="v-pills-user-tab"
+                    tabindex="0">
                     <a href="/admin/user/add" class="tab-btn btn btn-success"> Add Users </a>
                     <a href="/admin/user/show" class="tab-btn btn btn-success"> View Users </a>
 
@@ -95,7 +101,7 @@
                 <div class="tab-pane fade" id="v-pills-train" role="tabpanel" aria-labelledby="v-pills-train-tab"
                     tabindex="0">
                     <a href="/admin/train/add" class="tab-btn btn btn-success"> Add Train </a>
-                    <a href="/admin/train/view" class="tab-btn btn btn-success"> View Train </a>
+                    <a href="/admin/train/show" class="tab-btn btn btn-success"> View Train </a>
                 </div>
                 <div class="tab-pane fade" id="v-pills-route" role="tabpanel" aria-labelledby="v-pills-route-tab"
                     tabindex="0">
@@ -107,7 +113,8 @@
                     tabindex="0">
                     <a href="/admin/tickets/add" class="tab-btn btn btn-success"> Add Ticket </a>
                     <a href="/admin/tickets/show" class="tab-btn btn btn-success"> Show Tickets </a>
-                    <a href="/admin/tickets/show-cancelled-tickets" class="tab-btn btn btn-success"> View Cancelled Tickets </a>
+                    <a href="/admin/tickets/show-cancelled-tickets" class="tab-btn btn btn-success"> View Cancelled
+                        Tickets </a>
 
 
                 </div>
@@ -117,18 +124,31 @@
                     <a href="/admin/seat-availability/show" class="tab-btn btn btn-success"> View Seat Availability </a>
 
                 </div>
-                <div class="tab-pane fade" id="v-pills-station" role="tabpanel"
-                    aria-labelledby="v-pills-station-tab" tabindex="0">
+                <div class="tab-pane fade" id="v-pills-station" role="tabpanel" aria-labelledby="v-pills-station-tab"
+                    tabindex="0">
                     <a href="/admin/station/add" class="tab-btn btn btn-success"> Add Station </a>
                     <a href="/admin/station/show" class="tab-btn btn btn-success"> View Station </a>
                 </div>
-                
+
                 <div class="tab-pane fade" id="v-pills-station-timings" role="tabpanel"
                     aria-labelledby="v-pills-station-timings-tab" tabindex="0">
-                    <a href="/admin/station-timings/add" class="tab-btn btn btn-success"> Add Station and Timing for a Route </a>
-                    <a href="/admin/station-timings/show" class="tab-btn btn btn-success"> View Station and Timings Availibile </a>
+                    <a href="/admin/station-timings/add" class="tab-btn btn btn-success"> Add Station and Timing for a
+                        Route </a>
+                    <a href="/admin/station-timings/show" class="tab-btn btn btn-success"> View Station and Timings
+                        Availibile </a>
                 </div>
-                
+                <div class="tab-pane fade" id="v-pills-operating-day" role="tabpanel"
+                    aria-labelledby="v-pills-operating-day-tab" tabindex="0">
+                    <a href="/admin/operating-day/add" class="tab-btn btn btn-success"> Add Operating days for a train
+                    </a>
+                    <a href="/admin/operating-day/show" class="tab-btn btn btn-success"> View Operating days for trains
+                    </a>
+                </div>
+                <div class="tab-pane fade" id="v-pills-contact-us" role="tabpanel"
+                    aria-labelledby="v-pills-contact-us-tab" tabindex="0">
+                    <a href="/admin/contact-us/show" class="tab-btn btn btn-success"> View Contact us Query </a>
+                </div>
+
 
             </div>
         </div>

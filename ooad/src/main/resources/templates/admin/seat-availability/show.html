@@ -20,6 +20,55 @@
         <div class="container mt-5">
 
             <!-- Block Content will be here -->
+            <div class="mb-3 justify-content-end">
+                <a href="/admin/seat-availability/add" class="btn btn-warning" style="width:100%;">Add Seat
+                    Availability</a>
+            </div>
+
+            <div class="mb-3">
+                <input class="form-control" type="text" id="trainNoInput" placeholder="Search by Train No..."
+                    onkeyup="searchSeatAvailability()">
+                <input class="form-control mt-3" type="text" id="classTypeInput" placeholder="Search by Class Type..."
+                    onkeyup="searchSeatAvailabilityOfClassType()">
+            </div>
+
+            <!-- Block Content will be here -->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Seat Availability ID</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Train No</th>
+                        <th scope="col">Train Name</th>
+                        <th scope="col">Class Type</th>
+                        <th scope="col">No of Coaches</th>
+                        <th scope="col">Available Seats</th>
+                        <th scope="col">Waiting List count</th>
+                        <th scope="col">Base Price</th>
+                        <th scope="col">Fare per Km Price</th>
+                        <th scope="col">Senior Citizen Discount</th>
+                        <th scope="col">Cancellation Charge</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="sa: ${seatAvailability}">
+                        <td th:text="${sa.id}" scope="row"></td>
+                        <td th:text="${sa.date}" scope="row"></td>
+                        <td th:text="${sa.train.trainNo}"></td>
+                        <td th:text="${sa.train.trainName}"></td>
+                        <td th:text="${sa.classes}"></td>
+                        <td th:text="${sa.no_of_coaches}"></td>
+                        <td th:text="${sa.getAvailableSeats()}"></td>
+                        <td th:text="${sa.getWaitingList().size()}"></td>
+                        <td th:text="${sa.basePrice}"></td>
+                        <td th:text="${sa.farePerKM}"></td>
+                        <td th:text="${sa.seniorCitizenDiscount}"></td>
+                        <td th:text="${sa.cancellationCharge}"></td>
+
+                    </tr>
+                </tbody>
+            </table>
+
         </div>
     </div>
 
@@ -27,6 +76,54 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+    <script>
+        function searchSeatAvailability() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("trainNoInput");
+            filter = input.value.toUpperCase();
+            table = document.querySelector("table");
+            tr = table.getElementsByTagName("tr");
+        
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[2]; 
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+        
+
+    </script>
+
+    <script>
+        function searchSeatAvailabilityOfClassType() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("classTypeInput");
+            filter = input.value.toUpperCase();
+            table = document.querySelector("table");
+            tr = table.getElementsByTagName("tr");
+        
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[4]; // index 4 corresponds to the Class Type column
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+    
+
+
 </body>
 
 </html>

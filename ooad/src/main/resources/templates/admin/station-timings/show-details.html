@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<!-- Base for all html pages -->
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/main.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+
+    <title>Book On Rails</title>
+</head>
+
+<body>
+    <header th:insert="~{admin-base :: header}"></header>
+
+    <div class="content-body container-fluid">
+        <div class="container mt-5">
+
+            <!-- Block Content will be here -->
+            <!-- Block Content will be here -->
+            <h2 style="margin:10px" class="text-muted" th:text="${TrainNo} + ' : ' + ${TrainName}"></h2>
+            <table id="routeTrainTable" class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Station Code</th>
+                        <th scope="col">Station Name</th>
+                        <th scope="col">Arrival Time</th>
+                        <th scope="col">Departure Time</th>
+                        <th scope="col">Distance to travel for next Station</th>
+                        <th scope="col">Action</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="stationTiming: ${stationTimings}">
+                        <td th:text="${stationTiming.station.stationCode}" scope="row"></td>
+                        <td th:text="${stationTiming.station.stationName}"></td>
+                        <td th:text="${stationTiming.arrivalTime}"></td>
+                        <td th:text="${stationTiming.departureTime}"></td>
+                        <td th:text="${stationTiming.distanceFromNextStation}"></td>
+                        <td>
+                            <span  style="display: inline;">
+                                <form  style="display: inline;" th:action="@{/admin/station-timings/update/{id}(id=${stationTiming.id})}"
+                                    method="get">
+                                    <input type="hidden" name="adminId" th:value="${stationTiming.id}">
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </form>
+                                <form  style="display: inline;" action="/admin/station-timings/delete" method="post">
+                                    <input type="hidden" name="timingId" th:value="${stationTiming.id}">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </span>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+            <form  style="display: inline;" th:action="@{/admin/station-timings/single-add/{id}(id=${route.Id})}" method="get">
+                <button type="submit" class="btn btn-danger">Add New Stop</button>
+            </form> 
+
+        </div>
+    </div>
+
+    <script th:src="@{/admin.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

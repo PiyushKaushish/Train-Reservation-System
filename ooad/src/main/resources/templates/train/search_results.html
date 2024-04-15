@@ -24,14 +24,22 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="train : ${trains}">
-                    <td th:text="${train.trainNo}"></td>
-                    <td th:text="${train.trainName}"></td>
-                    <!-- <td th:text="${train.operatingDays}"></td> -->
-                    <!-- <td th:text="${train.availableSeats}"></td> -->
+                <tr th:each="sa : ${seatAvailability}">
+                    <td th:text="${sa.getTrainNo()}"></td>
+                    <td th:text="${sa.train.trainName}"></td>
+                    <td th:text="${sa.getDaysRunning}"></td>
+                    <td th:text="${sa.getAvailableSeats()}"></td>
                     <td>
-                        <a th:href="@{'/book?trainNo=' + ${train.trainNo}}" class="btn btn-primary">Book Now</a>
+                        <form action="#" th:action="@{/train/book}" method="get">
+                            <input type="hidden" name="trainNo" th:value="${sa.train.trainNo}">
+                            <input type="hidden" name="seatAvailabilityId" th:value="${sa.getId()}">
+                            <button type="submit" class="btn btn-primary">Book Now</button>
+                        </form>
                     </td>
+                    
+                    
+
+                    
                 </tr>
             </tbody>
         </table>

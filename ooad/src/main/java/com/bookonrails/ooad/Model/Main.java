@@ -1,5 +1,6 @@
 package com.bookonrails.ooad.Model;
 
+import java.sql.Date;
 import java.sql.Time;
 import java.util.Arrays;
 
@@ -53,7 +54,7 @@ public class Main {
         r1.setTrain(t1);
         t1.setTrainName("Hatia Muri Express");
         t1.setTrainNo("12345");
-        t1.setTraintype("Express");
+        t1.setTrainType("Express");
 
         OperatingDay od1 = new OperatingDay();
         od1.setDayOfWeek(DayOfWeek.Monday);
@@ -90,7 +91,7 @@ public class Main {
 
         System.out.println(t1.getTrainName());
         System.out.println(t1.getTrainNo());
-        System.out.println(t1.getTraintype());
+        System.out.println(t1.getTrainType());
         //Station
         System.out.println(t1.getRoute().getStationTimings().get(0).getStation().getStationName());
         //Arrival time
@@ -114,7 +115,7 @@ public class Main {
         System.out.println(t1.getSeatAvailability().get(0).getBasePrice());
         System.out.println(t1.getSeatAvailability().get(0).getFarePerKM());
         System.out.println(t1.getSeatAvailability().get(0).getClasses());
-        System.out.println(t1.getFare(s2, s3, ClassType.AC2Tier));
+        System.out.println(t1.getFare(s2, s3, ClassType.AC2Tier,Date.valueOf("2024-10-01")));
         System.out.println(r1.calculateJourneyTime(s1, s3));
 
 

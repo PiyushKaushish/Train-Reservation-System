@@ -18,8 +18,36 @@
 
     <div class="content-body container-fluid">
         <div class="container mt-5">
-
-            <!-- Block Content will be here -->
+            <!-- Add Train Form -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Add Train</h5>
+                </div>
+                <div class="card-body">
+                    <form action="/admin/train/add" method="post" th:object="${train}">
+                        <div class="mb-3">
+                            <label for="trainNo" class="form-label">Train Number</label>
+                            <input type="text" class="form-control" id="trainNo" name="trainNo" th:field="*{trainNo}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="trainName" class="form-label">Train Name</label>
+                            <input type="text" class="form-control" id="trainName" name="trainName" th:field="*{trainName}" required>
+                        </div>  
+                        <div class="mb-3">
+                            <label for="trainType" class="form-label">Train Type</label>
+                            <input type="text" class="form-control" id="trainType" name="trainType" th:field="*{trainType}" required>
+                        </div>
+                        <!-- dropdown for route -->
+                        <div class="mb-3">
+                            <label for="route" class="form-label">Route</label>
+                            <select class="form-select" id="route" name="route" required>
+                                <option disabled value="">Select Route</option>
+                                <option th:each="route : ${routes}" th:value="${route.Id}" th:text="${route.routeCode}" th:field="*{route}" >Route 1</option>
+                            </select>
+                        <button type="submit" class="btn btn-primary">Add Train</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 

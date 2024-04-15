@@ -1,5 +1,6 @@
 package com.bookonrails.ooad.Model;
 
+import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ public class Train {
     @Id
     private String trainNo;
     private String trainName;
-    private String trainType;
+    public String trainType;
 
     @OneToMany(mappedBy = "train",fetch = FetchType.LAZY)
     private List<OperatingDay> operatingDays;
@@ -68,12 +69,12 @@ public class Train {
         this.trainName = trainName;
     }
 
-    public String getTraintype() {
+    public String getTrainType() { // Getter method for trainType
         return trainType;
     }
 
-    public void setTraintype(String traintype) {
-        this.trainType = traintype;
+    public void setTrainType(String trainType) { // Setter method for trainType
+        this.trainType = trainType;
     }
 
     public List<OperatingDay> getOperatingDays() {
@@ -121,10 +122,10 @@ public class Train {
         return trainNo+": "+trainName;
     }
 
-    public SeatAvailability getSeatAvailabilityClasswise(ClassType classes){
+    public SeatAvailability getSeatAvailabilityClasswise(ClassType classes,Date date){
         List<SeatAvailability> seats= getSeatAvailability();
         for (SeatAvailability s:seats){
-            if (s.getClasses().equals(classes)){
+            if (s.getClasses().equals(classes) && s.getDate().equals(date)){
                 return s;
             }
         }
@@ -140,8 +141,34 @@ public class Train {
         return availableSeats;
     }
 
-    public int getAvailableSeats(ClassType ct) {
-        return getSeatAvailabilityClasswise(ct).getAvailableSeats();
+    private String convertDayOfWeekEnum(DayOfWeek d){
+        switch (d) {
+            case DayOfWeek.Monday:return "Monday";        
+            case DayOfWeek.Tuesday:return "Tuesday";        
+            case DayOfWeek.Wednesday:return "Wednesday";        
+            case DayOfWeek.Thursday:return "Thursday";        
+            case DayOfWeek.Friday:return "Monday";        
+            case DayOfWeek.Saturday:return "Saturday";        
+            case DayOfWeek.Sunday:return "Sunday";        
+            default: return "invalid";
+        }
+    }
+
+
+    public String getDaysRunning(){
+        List<OperatingDay> od= getOperatingDays();
+        String s = "";
+        for (OperatingDay o: od){
+            s+= convertDayOfWeekEnum(o.getDayOfWeek());
+            s+=" ";
+        }
+        return s;
+        
+
+    }
+
+    public int getAvailableSeats(ClassType ct,Date date) {
+        return getSeatAvailabilityClasswise(ct,date).getAvailableSeats();
     }
 
     public List<String> getSchedule(){
@@ -173,8 +200,8 @@ public class Train {
         return false;
     }
 
-    public double getFare(Station SRC, Station DEST, ClassType classes){
-        return getSeatAvailabilityClasswise(classes).getFare(SRC, DEST);
+    public double getFare(Station SRC, Station DEST, ClassType classes,Date date){
+        return getSeatAvailabilityClasswise(classes,date).getFare(SRC, DEST);
     }
 
     public double getDistanceBetweenStations(Station SRC, Station DEST){
@@ -185,6 +212,22 @@ public class Train {
         route.calculateJourneyTime(SRC,DEST);
     }
 
-    
 
+    public boolean doesDateAndClassExist(Date date,ClassType c){
+        for(SeatAvailability s:seatAvailability){
+            if(s.getDate().equals(date) && s.getClasses()==c){return true;}
+        }
+        return false;
+    }
+
+    public SeatAvailability getSeatAvailabilityBasedOnClassAndDate(Date date,ClassType classType){
+        if(doesDateAndClassExist(date, classType)){
+            for (SeatAvailability s:seatAvailability){
+                if(s.getDate().equals(date) && s.getClasses()==classType){
+                    return s;
+                }
+            }
+        }
+        return null;
+    }
 }

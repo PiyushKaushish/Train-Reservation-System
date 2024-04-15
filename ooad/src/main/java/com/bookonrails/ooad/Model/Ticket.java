@@ -92,7 +92,7 @@ public class Ticket {
     }
     
     public void setTotalAmount() {
-        SeatAvailability s= train.getSeatAvailabilityClasswise(classes);
+        SeatAvailability s= train.getSeatAvailabilityClasswise(classes,date);
         if (s == null ){
             // seat for such classType is not available
             this.totalAmount=0;    
@@ -101,7 +101,7 @@ public class Ticket {
     }
 
     public double getCancellationCharge(){
-        SeatAvailability s= train.getSeatAvailabilityClasswise(classes);
+        SeatAvailability s= train.getSeatAvailabilityClasswise(classes,date);
         return s.getCancellationCharge();
     }
     
