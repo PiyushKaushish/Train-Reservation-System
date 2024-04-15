@@ -1,5 +1,6 @@
 package com.bookonrails.ooad.Model;
 
+import java.sql.Date;
 import java.sql.Time;
 import java.util.Arrays;
 
@@ -114,7 +115,7 @@ public class Main {
         System.out.println(t1.getSeatAvailability().get(0).getBasePrice());
         System.out.println(t1.getSeatAvailability().get(0).getFarePerKM());
         System.out.println(t1.getSeatAvailability().get(0).getClasses());
-        System.out.println(t1.getFare(s2, s3, ClassType.AC2Tier));
+        System.out.println(t1.getFare(s2, s3, ClassType.AC2Tier,Date.valueOf("2024-10-01")));
         System.out.println(r1.calculateJourneyTime(s1, s3));
 
 

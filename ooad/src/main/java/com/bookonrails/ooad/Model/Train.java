@@ -122,10 +122,10 @@ public class Train {
         return trainNo+": "+trainName;
     }
 
-    public SeatAvailability getSeatAvailabilityClasswise(ClassType classes){
+    public SeatAvailability getSeatAvailabilityClasswise(ClassType classes,Date date){
         List<SeatAvailability> seats= getSeatAvailability();
         for (SeatAvailability s:seats){
-            if (s.getClasses().equals(classes)){
+            if (s.getClasses().equals(classes) && s.getDate().equals(date)){
                 return s;
             }
         }
@@ -167,8 +167,8 @@ public class Train {
 
     }
 
-    public int getAvailableSeats(ClassType ct) {
-        return getSeatAvailabilityClasswise(ct).getAvailableSeats();
+    public int getAvailableSeats(ClassType ct,Date date) {
+        return getSeatAvailabilityClasswise(ct,date).getAvailableSeats();
     }
 
     public List<String> getSchedule(){
@@ -200,8 +200,8 @@ public class Train {
         return false;
     }
 
-    public double getFare(Station SRC, Station DEST, ClassType classes){
-        return getSeatAvailabilityClasswise(classes).getFare(SRC, DEST);
+    public double getFare(Station SRC, Station DEST, ClassType classes,Date date){
+        return getSeatAvailabilityClasswise(classes,date).getFare(SRC, DEST);
     }
 
     public double getDistanceBetweenStations(Station SRC, Station DEST){
