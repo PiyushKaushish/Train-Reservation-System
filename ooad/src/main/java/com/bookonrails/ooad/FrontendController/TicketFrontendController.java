@@ -57,7 +57,8 @@ public class TicketFrontendController {
     @PostMapping("/reserve")
     public String getPassengers(@RequestParam("passengerName[]") List<String> names,
             @RequestParam("passengerAge[]") List<Integer> age, @RequestParam("passengerGender[]") List<String> gender,
-            @RequestParam("passengerBirth[]") List<String> birth, @RequestParam("wantFood") String wantFood,
+            @RequestParam("passengerBirth[]") List<String> birth,
+            @RequestParam("isSeniorCitizen[]") List<String> isSeniorCitizen, @RequestParam("wantFood") String wantFood,
             @RequestParam("chooseFood") String chooseFood, @RequestParam("countForFood") int countForFood,
             Model m, HttpServletResponse response,
             HttpServletRequest request) {
@@ -119,7 +120,7 @@ public class TicketFrontendController {
 
         if (wantFood.equals("true")) {
             ticket.setWantFood(true);
-            if (chooseFood == "Veg") {
+            if (chooseFood.equals("Veg")) {
                 ticket.setVeg(true);
             } else {
                 ticket.setVeg(false);
@@ -139,6 +140,9 @@ public class TicketFrontendController {
             pass.setGender(Gender.valueOf(gender.get(i)));
             pass.setUser(u);
             pass.setTicket(ticket);
+            if (isSeniorCitizen.get(i).equals("true")) {
+                pass.setSeniorCitizen(true);
+            }
             p.add(pass);
         }
         if (p.size() > 0) {
@@ -147,14 +151,15 @@ public class TicketFrontendController {
             ticket.setTotalAmount();
         }
         Ticket saved_ticket = ticketService.saveTicket(ticket);
-        
+
         // Set cookie for saved ticket
         Cookie ticketIdCookie = new Cookie("ticketId", saved_ticket.getId().toString());
         ticketIdCookie.setMaxAge(7 * 24 * 60 * 60);
         ticketIdCookie.setPath("/");
         response.addCookie(ticketIdCookie);
 
-        return "format";
+        m.addAttribute("ticket", saved_ticket);
+        return "train/show_reservation";
     }
 
 }
