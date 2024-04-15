@@ -19,7 +19,9 @@ public class SeatAvailabilityService // extends TrainSeatAvailibilityManagement
     @Autowired
     private SeatAvailabilityRepository seatAvailabilityRepository;
 
-    
+    public SeatAvailability findById(Long sa){
+        return seatAvailabilityRepository.findById(sa).orElse(null);
+    }
     public void addSeatAvailabitity(SeatAvailability seatAvailability){
         seatAvailabilityRepository.save(seatAvailability);
     }

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{/main.css}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <title>Train Reservation Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 50px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    form label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    form input[type="text"],
+    form input[type="number"],
+    form select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    form input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    form input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    .passenger-details {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      margin-top: 10px;
+    }
+  </style>
+
+</head>
+
+<body>
+  <header th:insert="~{base :: header}"></header>
+
+
+  <div class="content-body container">
+    <h1>Train Reservation Form</h1>
+    <form action="/ticket/reserve" method="post">
+
+      <label for="numPassengers">Number of Passengers:</label>
+      <input type="number" id="numPassengers" name="numPassengers" min="1" max="10" onchange="generatePassengerFields()"
+        required>
+
+      <div id="passengerDetails"></div>
+
+      <select id="wantFood" name="wantFood" required>
+        <option hidden value="">Do you want Food? </option>
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+      </select>
+
+      <div id="isWantFoodYes" style="display:none;">
+        <select id="chooseFood" name="chooseFood" required>
+          <option hidden value="">Select Veg or Non Veg</option>
+          <option value="Veg">Veg</option>
+          <option value="NonVeg">Non Veg</option>
+        </select>
+        <label for="countForFood">For how many people? </label>
+        <input type="number" id="countForFood" name="countForFood" min="1" max="10" required>
+
+      </div>
+
+
+
+      <input type="submit" class="btn btn-warning" value="Make Reservation">
+    </form>
+  </div>
+
+  <script>
+    // Function to generate passenger fields dynamically
+    function generatePassengerFields() {
+      var numPassengers = document.getElementById("numPassengers").value;
+      var container = document.getElementById("passengerDetails");
+      container.innerHTML = ""; // Clear previous fields
+
+      for (var i = 1; i <= numPassengers; i++) {
+        container.innerHTML += `
+            <div class="passenger-details">
+                <h2>Passenger ${i} Details</h2>
+                <label for="passengerName${i}">Name:</label>
+                <input type="text" id="passengerName${i}" name="passengerName[]" required>
+                <label for="passengerAge${i}">Age:</label>
+                <input type="number" id="passengerAge${i}" name="passengerAge[]" required>
+                <label for="passengerGender${i}">Gender:</label>
+                <select id="passengerGender${i}" name="passengerGender[]" required>
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+                <label for="passengerBirth${i}">Birth Preference:</label>
+                <select id="passengerBirth${i}" name="passengerBirth[]" required>
+                    <option value="">Select Birth Preference</option>
+                    <option value="Lower">Lower</option>
+                    <option value="Upper">Upper</option>
+                </select>
+                <label for="isSeniorCitizen${i}">Are you a Senior Citizen? </label>
+                <select id="isSeniorCitizen${i}" name="isSeniorCitizen[]" required>
+                    <option hidden value="">Select yes or no</option>
+                    <option value="true">Yes</option>
+                    <option selected value="false">No</option>
+                </select>
+            </div>
+        `;
+      }
+    }
+    // Function to show food options if the user wants food
+    function showFoodOptions() {
+      var wantFood = document.getElementById("wantFood").value;
+      var foodOptions = document.getElementById("isWantFoodYes");
+      if (wantFood === "true") {
+        foodOptions.style.display = "block";
+      }
+      else {
+        foodOptions.style.display = "none";
+      }
+    }
+
+    // Event listener for changing wantFood select
+    document.getElementById("wantFood").addEventListener("change", showFoodOptions);
+
+  </script>
+
+</body>
+
+</html>

@@ -13,14 +13,14 @@ public class Ticket {
     private String PNR;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="trainNo", referencedColumnName = "trainNo")
+    @JoinColumn(name = "trainNo", referencedColumnName = "trainNo")
     private Train train;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="SRC", referencedColumnName = "stationCode")
+    @JoinColumn(name = "SRC", referencedColumnName = "stationCode")
     private Station SRC;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="DEST", referencedColumnName = "stationCode")
+    @JoinColumn(name = "DEST", referencedColumnName = "stationCode")
     private Station DEST;
 
     @ManyToOne
@@ -28,11 +28,11 @@ public class Ticket {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Passenger> passengers;
-    
+
     private Boolean wantFood;
     private Boolean veg;
     private int quantity;
-    
+
     private Date date;
     // enum
     @Enumerated(EnumType.STRING)
@@ -40,20 +40,18 @@ public class Ticket {
     // enum
     @Enumerated(EnumType.STRING)
     private TicketStatus status;
-    
+
     private int WaitingListNumber;
-    private String bogeyNumber;
     // enum
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
 
-    @OneToOne(mappedBy = "ticket",fetch=FetchType.LAZY)
+    @OneToOne(mappedBy = "ticket", fetch = FetchType.LAZY)
     private Payment payment;
-    
-    
+
     private double totalAmount;
     private double foodprice;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seat_availability_id", nullable = false)
     private SeatAvailability seatAvailability;
@@ -61,20 +59,24 @@ public class Ticket {
     @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL)
     private List<Feedback> feedbackList;
 
-    
-    
+    public Ticket() {
+        this.paymentStatus = PaymentStatus.Pending;
+        this.WaitingListNumber = -1;
+
+    }
+
     public Train getTrain() {
         return train;
     }
-    
+
     public void setTrain(Train train) {
         this.train = train;
     }
-    
+
     public PaymentStatus getPaymentStatus() {
         return paymentStatus;
     }
-    
+
     public void setPaymentStatus(PaymentStatus PaymentStatus) {
         paymentStatus = PaymentStatus;
     }
@@ -90,45 +92,44 @@ public class Ticket {
     public double getTotalAmount() {
         return totalAmount;
     }
-    
+
     public void setTotalAmount() {
-        SeatAvailability s= train.getSeatAvailabilityClasswise(classes,date);
-        if (s == null ){
+        if (seatAvailability == null) {
             // seat for such classType is not available
-            this.totalAmount=0;    
+            this.totalAmount = 0;
         }
-        this.totalAmount= s.getFare(SRC, DEST, passengers);
+        this.totalAmount = seatAvailability.getFare(SRC, DEST, passengers);
     }
 
-    public double getCancellationCharge(){
-        SeatAvailability s= train.getSeatAvailabilityClasswise(classes,date);
+    public double getCancellationCharge() {
+        SeatAvailability s = train.getSeatAvailabilityClasswise(classes, date);
         return s.getCancellationCharge();
     }
-    
+
     public String getPNR() {
         return PNR;
     }
-    
+
     public void setPNR(String pNR) {
         PNR = pNR;
     }
-    
+
     public Station getSRC() {
         return SRC;
     }
-    
+
     public void setSRC(Station sRC) {
         SRC = sRC;
     }
-    
+
     public Station getDEST() {
         return DEST;
     }
-    
+
     public void setDEST(Station dEST) {
         DEST = dEST;
     }
-    
+
     public User getUser() {
         return user;
     }
@@ -185,14 +186,6 @@ public class Ticket {
         WaitingListNumber = waitingListNumber;
     }
 
-    public String getBogeyNumber() {
-        return bogeyNumber;
-    }
-
-    public void setBogeyNumber(String bogeyNumber) {
-        this.bogeyNumber = bogeyNumber;
-    }
-
     public Long getTicket_id() {
         return ticket_id;
     }
@@ -231,19 +224,18 @@ public class Ticket {
     }
 
     public void setFoodprice() {
-        FoodPrice fp= new FoodPrice();
+        FoodPrice fp = new FoodPrice();
         double p;
-        if(veg){
-             p=fp.getVegprice()*quantity;
+        if (veg) {
+            p = fp.getVegprice() * quantity;
+        } else {
+            p = fp.getNonvegprice() * quantity;
         }
-        else{
-            p=fp.getNonvegprice()*quantity;
-        }
-        
+
         this.foodprice = p;
 
     }
-    
+
     public void setFoodprice(double foodprice) {
         this.foodprice = foodprice;
     }
@@ -254,6 +246,22 @@ public class Ticket {
 
     public void setSeatAvailability(SeatAvailability seatAvailability) {
         this.seatAvailability = seatAvailability;
+    }
+
+    public double calculateFoodPrice() {
+        FoodPrice fp = new FoodPrice();
+        if (wantFood) {
+            if (veg) {
+                return fp.getVegprice() * quantity;
+            } else {
+                return fp.getNonvegprice() * quantity;
+            }
+        }
+        return 0.0;
+    }
+
+    public double calculateFinalPrice(){
+        return foodprice+totalAmount;
     }
 
 }
