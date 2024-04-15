@@ -3,6 +3,7 @@ package com.bookonrails.ooad.Service;
 import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,14 @@ public class TicketService {
 
     public List<Ticket> getAllTickets() {
         return ticketRepository.findAll();
+    }
+
+    public String generateUniquePNR() {
+        
+        String uniqueID = UUID.randomUUID().toString();
+        String pnr = uniqueID.substring(0, 6);
+        pnr = "PNR"+ pnr;
+        return pnr; 
     }
 
     public Ticket getTicketById(Long id) {
@@ -109,15 +118,6 @@ public class TicketService {
         return null; // or throw an exception indicating ticket not found
     }
 
-    public Ticket updateBogeyNumber(Long ticketId, String newBogeyNumber) {
-        Optional<Ticket> optionalTicket = ticketRepository.findById(ticketId);
-        if (optionalTicket.isPresent()) {
-            Ticket ticket = optionalTicket.get();
-            ticket.setBogeyNumber(newBogeyNumber);
-            return ticketRepository.save(ticket);
-        }
-        return null; // or throw an exception indicating ticket not found
-    }
 
     public Ticket updatePaymentStatus(Long ticketId, PaymentStatus newPaymentStatus) {
         Optional<Ticket> optionalTicket = ticketRepository.findById(ticketId);

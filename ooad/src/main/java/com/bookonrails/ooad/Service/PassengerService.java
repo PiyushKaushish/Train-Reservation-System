@@ -51,8 +51,8 @@ public class PassengerService {
         }
     }
 
-    public void saveAllPassenger(List<Passenger> passengers){
-        passengerRepository.saveAll(passengers);
+    public List<Passenger> saveAllPassenger(List<Passenger> passengers){
+        return passengerRepository.saveAll(passengers);
     }
     
 }

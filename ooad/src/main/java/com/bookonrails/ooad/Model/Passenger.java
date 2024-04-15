@@ -20,12 +20,13 @@ public class Passenger {
     @Enumerated(EnumType.STRING)
     private Birth birthpreference;
     private int seatNo; 
+    private int coachNo;
 
     @ManyToOne
     @JoinColumn(name = "ticket_id", nullable = false)
     private Ticket ticket;
 
-    Passenger(){
+    public Passenger(){
         this.isWaitingList = false;
         this.isSeniorCitizen = false;
         this.seatNo = -1;
@@ -109,6 +110,14 @@ public class Passenger {
 
     public void setWaitingList(boolean isWaitingList) {
         this.isWaitingList = isWaitingList;
+    }
+
+    public int getCoachNo() {
+        return coachNo;
+    }
+
+    public void setCoachNo(int coachNo) {
+        this.coachNo = coachNo;
     }
 
     

@@ -58,7 +58,7 @@ public class TrainFrontendController {
 
     @PostMapping(path = "/search")
     public String searchTrainForm(@RequestParam("date") String date, @RequestParam("fromStation") String source,
-            @RequestParam("toStation") String destination, @RequestParam("classType") String classType, Model model) {
+            @RequestParam("toStation") String destination, @RequestParam("classType") String classType, Model model,HttpServletResponse response) {
         Date d = Date.valueOf(date);
         System.out.println(classType);
 
@@ -73,6 +73,26 @@ public class TrainFrontendController {
             model.addAttribute("message", "Class does not exist");
             return "message";
         }
+
+        Cookie classTypeCookie = new Cookie("classType", classType);
+        classTypeCookie.setMaxAge(7*24*60*60);
+        classTypeCookie.setPath("/");
+        response.addCookie(classTypeCookie);
+
+        Cookie dateCookie = new Cookie("date", date);
+        dateCookie.setMaxAge(7*24*60*60);
+        dateCookie.setPath("/");
+        response.addCookie(dateCookie);
+
+        Cookie srcStationCookie = new Cookie("srcStation", source);
+        srcStationCookie.setMaxAge(7*24*60*60);
+        srcStationCookie.setPath("/");
+        response.addCookie(srcStationCookie);
+
+        Cookie destStationCookie = new Cookie("destStation", destination);
+        destStationCookie.setMaxAge(7*24*60*60);
+        destStationCookie.setPath("/");
+        response.addCookie(destStationCookie);
 
         System.out.println(date + " " + source + " " + destination + " " + classType);
         List<SeatAvailability> seatA = trainService.searchTrain(source, destination, classes, d);
@@ -102,7 +122,7 @@ public class TrainFrontendController {
         model.addAttribute("seatAvailabilityId", seatAvailabilityId);
 
         // Return the name of the HTML page to display train number details
-        return "ticket/trainreserve";
+        return "train/train_reserve";
     }
 
 }
