@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,9 +42,6 @@ public class TicketFrontendController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private PassengerService passengerService;
 
     @Autowired
     private TrainService trainService;
@@ -160,6 +158,24 @@ public class TicketFrontendController {
 
         m.addAttribute("ticket", saved_ticket);
         return "train/show_reservation";
+    }
+
+    @GetMapping("/show-ticket")
+    public String showTicket(Model m,HttpServletRequest request)
+    {
+        String ticketId = null;
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("ticketId".equals(cookie.getName())) {
+                    ticketId = cookie.getValue();
+                    break;
+                }
+            }
+        }
+        Ticket t= ticketService.getTicketById(Long.parseLong(ticketId));
+        m.addAttribute("ticket",t);
+        return "train/ticket";
     }
 
 }

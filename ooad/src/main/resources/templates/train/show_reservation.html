@@ -90,7 +90,7 @@
                         <td th:text="${passenger.isSeniorCitizen}"></td>
 
                         <td>
-                            <form action="payment/make-payment" method="post">
+                            <form action="/payment/make-payment" method="get">
                                 <button type="submit" class="btn btn-danger"
                                     onclick="return confirm('Payment confirmed. Redirecting to payment gateway...')">Confirm
                                     payment

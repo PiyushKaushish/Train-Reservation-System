@@ -20,23 +20,19 @@ public class PaymentService {
         return paymentRepository.findAll();
     }
 
-    public Optional<Payment> getPaymentById(Long id) {
-        return paymentRepository.findById(id);
+    public Payment getPaymentById(Long id) {
+        return paymentRepository.findById(id).orElse(null);
     }
 
     public Payment savePayment(Payment payment) {
         return paymentRepository.save(payment);
     }
 
-    public Payment updateTransactionDetails(Long paymentId, String orderId, double transactionAmountValue, String transactionAmountCurrency, String posId, String paytmTransactionId) {
+    public Payment updateTransactionDetails(Long paymentId, PaymentStatus ps) {
         Optional<Payment> optionalPayment = paymentRepository.findById(paymentId);
         if (optionalPayment.isPresent()) {
             Payment payment = optionalPayment.get();
-            payment.setOrderId(orderId);
-            payment.setTransactionAmountValue(transactionAmountValue);
-            payment.setTransactionAmountCurrency(transactionAmountCurrency);
-            payment.setPosId(posId);
-            payment.setPaytmTransactionId(paytmTransactionId);
+            payment.setStatus(ps);
             return paymentRepository.save(payment);
         }
         return null; 
