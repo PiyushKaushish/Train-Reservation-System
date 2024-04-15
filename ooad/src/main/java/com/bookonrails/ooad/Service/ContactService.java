@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.bookonrails.ooad.Model.Contact;
 import com.bookonrails.ooad.Repository.ContactRepository;
 
-@Service
+@Service("frontendContactService")
 public class ContactService {
     @Autowired
     private ContactRepository contactRepository;
@@ -27,6 +27,10 @@ public class ContactService {
 
     public List<Contact> getContact(String email) {
         return contactRepository.findByEmail(email);
+    }
+
+     public List<Contact> getAllContacts() {
+        return contactRepository.findAll();
     }
     
 }
