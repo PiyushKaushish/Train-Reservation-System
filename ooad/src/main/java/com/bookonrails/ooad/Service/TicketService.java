@@ -162,11 +162,17 @@ public class TicketService {
         s.allocatePassengerSeatNo(ps);
         List<Passenger> sp= passengerService.saveAllPassenger(ps);
         t.setPassengers(sp);
-        seatAvailabilityService.updateSeatAvailibity(s);
         t.setSeatAvailability(s);
+        if(t.isPassengersWaiting()){
+            s.addTicketToWaitingList(t);
+            t.setStatus(TicketStatus.Waiting);
+        }
+        else{
+            t.setStatus(TicketStatus.Confirmed);
+        }
+        seatAvailabilityService.updateSeatAvailibity(s);
         Ticket saved_ticket= saveTicket(t);
         return saved_ticket;
-
     }
 
     public List<Ticket> getCancelledTickets(){

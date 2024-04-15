@@ -3,92 +3,110 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" th:href="@{/main.css}">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/main.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
 
-  <title>Book On Rails</title>
-  <style>
-    body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-}
+    <title>Book On Rails</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
 
-.ticket-container {
-    max-width: 800px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+        .ticket-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-h1, h2 {
-    color: #333;
-    text-align: center;
-}
+        h1,
+        h2 {
+            color: #333;
+            text-align: center;
+        }
 
-.journey-details, .passenger-details, .payment-details {
-    margin-bottom: 30px;
-}
+        .journey-details,
+        .passenger-details,
+        .payment-details {
+            margin-bottom: 30px;
+        }
 
-.passenger-details table {
-    width: 100%;
-    border-collapse: collapse;
-}
+        .passenger-details table {
+            width: 100%;
+            border-collapse: collapse;
+        }
 
-.passenger-details th, .passenger-details td {
-    padding: 10px;
-    text-align: center;
-    border: 1px solid #ddd;
-}
+        .passenger-details th,
+        .passenger-details td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
 
-.passenger-details th {
-    background-color: #f2f2f2;
-}
+        .passenger-details th {
+            background-color: #f2f2f2;
+        }
 
-.passenger-details tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
+        .passenger-details tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
 
-.button-container {
-    text-align: center;
-    margin-top: 20px;
-}
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
 
-button {
-    padding: 10px 20px;
-    background-color: #4caf50;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
 
-button:hover {
-    background-color: #45a049;
-}
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
 
-  </style>
 
-  
 </head>
 
 <body>
     <div class="ticket-container">
-        <h1>Ticket Details</h1>
+        <h4>Electronic Reservation Slip</h4>
         <div class="journey-details">
-            <h2>Journey Details</h2>
-            <p>Source: <!-- Source Station --></p>
-            <p>Destination: <!-- Destination Station --></p>
-            <p>Date of Journey: <!-- Date --></p>
-            <p>Time of Journey: <!-- Time --></p>
+            <p class="bold">Journey Details</p>
+            <p class="small">
+            <div class="row">
+                <div class="col">
+                    Source: <span th:text="${ticket.SRC}"></span><br>
+                    Destination: <span th:text="${ticket.DEST}"></span><br>
+                    Date of Journey: <span th:text="${ticket.date}"></span><br>
+                    Class: <span th:text="${ticket.classes}"></span><br>
+                    Departure Time: <span
+                        th:text="${ticket.train.route.getDepartureTimeByStation(ticket.SRC)}"></span><br>
+                    Arrival Time: <span
+                        th:text="${ticket.train.route.getArrivalTimeByStation(ticket.DEST)}"></span><br>
+                    Time of Journey: <span
+                        th:text="${ticket.train.route.calculateJourneyTime(ticket.SRC,ticket.DEST)}"></span><br>
+                    Ticket Status: <span th:text="${ticket.status}"></span><br>
+                    
+                </div>
+                <div class="col">
+                    Train No: <span th:text="${ticket.train.trainNo}"></span><br>
+                    Train Name: <span th:text="${ticket.train.trainName}"></span><br>
+                    Total No of Passengers: <span th:text="${ticket.passengers.size()}"></span><br>
+                    Booked by: <span th:text="${ticket.user.firstName+' '+ ticket.user.lastName}"></span><br>
+                    Ticket Price: <span th:text="${ticket.totalAmount}"></span><br>
+                    Food Price: <span th:text="${ticket.foodprice}"></span><br>
+                    Total Amount: <span th:text="${ticket.calculateFinalPrice()}"></span><br>
+                    Payment Status: <span th:text="${ticket.paymentStatus}"></span><br>
+                </div>
+            </div>
+            </p>
         </div>
         <div class="passenger-details">
             <h2>Passenger Details</h2>
@@ -99,19 +117,26 @@ button:hover {
                         <th>Age</th>
                         <th>Gender</th>
                         <th>Seat Number</th>
-                        <th>Booking Status</th>
+                        <th>Coach Number</th>
+                        <th>Waiting List</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Passenger details will be dynamically populated here -->
+                    <tr th:each="passenger : ${ticket.passengers}">
+                        <td th:text="${passenger.name}"></td>
+                        <td  th:text="${passenger.age}"></td>
+                        <td  th:text="${passenger.gender}"></td>
+                        <td  th:text="${passenger.seatNo}"></td>
+                        <td  th:text="${passenger.coachNo}" ></td>
+                        <td  th:text="${passenger.isWaitingList}" ></td>
+
+                    </tr>
                 </tbody>
             </table>
         </div>
-        <div class="payment-details">
-            <h2>Payment Details</h2>
-            <p>Total Amount Paid: <!-- Total Amount --></p>
-        </div>
-        <button onclick="window.print()">Print Ticket</button>
+        <button class="btn btn-success" onclick="window.print()">Print Ticket</button>
+        <a class="btn btn-success" href="/train/search">Book Another Ticket</a>
     </div>
 </body>
+
 </html>

@@ -198,6 +198,17 @@ public class Ticket {
         return wantFood;
     }
 
+    public boolean isPassengersWaiting(){
+        for(Passenger p : passengers)
+        {
+            if(p.isWaitingList()){
+                return true;
+            }
+        }
+        return false;
+
+    }
+
     public void setWantFood(Boolean wantFood) {
         this.wantFood = wantFood;
     }

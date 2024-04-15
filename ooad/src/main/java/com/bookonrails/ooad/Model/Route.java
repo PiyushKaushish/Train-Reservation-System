@@ -21,6 +21,26 @@ public class Route {
     @OneToMany(mappedBy = "route")
     private List<StationTimings> stationTimings;
 
+    public Time getDepartureTimeByStation(Station s){
+        for (StationTimings st : stationTimings) {
+            if(st.getStation().equals(s) ){
+                return st.getDepartureTime();
+            }
+        }
+        return null;
+    }
+
+    public Time getArrivalTimeByStation(Station s){
+        for (StationTimings st : stationTimings) {
+            if(st.getStation().equals(s) ){
+                return st.getArrivalTime();
+            }
+        }
+        return null;
+
+
+    }
+
     public Long getId() {
         return Id;
     }

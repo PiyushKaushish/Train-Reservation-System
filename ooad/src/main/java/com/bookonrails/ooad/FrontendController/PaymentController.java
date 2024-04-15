@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.bookonrails.ooad.Model.Payment;
 import com.bookonrails.ooad.Model.PaymentStatus;
 import com.bookonrails.ooad.Model.Ticket;
+import com.bookonrails.ooad.Model.TicketStatus;
 import com.bookonrails.ooad.Service.PaymentService;
 import com.bookonrails.ooad.Service.TicketService;
 

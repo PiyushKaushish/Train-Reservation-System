@@ -353,12 +353,14 @@ public class SeatAvailability {
             if(seatNo>0){
                 p.setWaitingList(isFull());
                 p.setSeatNo(seatNo);
+                p.setCoachNo((seatNo/this.no_of_coaches)+1);
                 continue;
             }
             seatNo= allocateSeatNumber();
             if(seatNo>0){
                 p.setWaitingList(isFull());
                 p.setSeatNo(seatNo);
+                p.setCoachNo((seatNo/this.no_of_coaches)+1);
                 // continue;
             }
         }

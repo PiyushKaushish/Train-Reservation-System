@@ -27,8 +27,8 @@
                     <div class="row">
                         <div class="col-6">
                             <h4 class="card-title mb-2" th:text="${ticket.train.trainName}">Sbc Tlgp Exp</h4>
-                            <p class="card-text mb-0" th:text="'Train No: #' + ${ticket.trainNo}">Train No :#45678</p>
-                            <p class="card-text mb-0" th:text="'PNR: ' + ${ticket.pnr}">PNR: 1234567890</p>
+                            <p class="card-text mb-0" th:text="'Train No: #' + ${ticket.train.trainNo}">Train No :#45678</p>
+                            <p class="card-text mb-0" th:text="'PNR: ' + ${ticket.PNR}">PNR: 1234567890</p>
                             <p class="card-text mb-0" th:text="'Class: ' + ${ticket.classes}">Class: 2A</p>
                             <p class="card-text mb-0" th:text="'Date of Journey: ' + ${ticket.date}">Date of Journey : 12/12/2021</p>
                             <p class="card-text mb-0" th:text="'Number Of Passengers: ' + ${ticket.passengers.size()}">Number Of Passengers : 5</p>
