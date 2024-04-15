@@ -22,17 +22,17 @@
             <h1 class="text-muted" th:text="${message}">Current tickets:</h1>
             <p class="text-danger" th:if="${param.error}" th:text="${param.error}"></p>
 
-            <div class="card mb-3">
+            <div th:each="ticket : ${tickets}" class="card mb-3">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-6">
-                            <h4 class="card-title mb-2">Sbc Tlgp Exp</h4>
-                            <p class="card-text mb-0">Train No :#45678</p>
-                            <p class="card-text mb-0">PNR: 1234567890</p>
-                            <p class="card-text mb-0">Class: 2A</p>
-                            <p class="card-text mb-0">Date of Journey : 12/12/2021</p>
-                            <p class="card-text mb-0">Number Of Passengers : 5</p>
-                            <p class="card-text mb-0">Total Fare: 2500.00</p>
+                            <h4 class="card-title mb-2" th:text="${ticket.train.trainName}">Sbc Tlgp Exp</h4>
+                            <p class="card-text mb-0" th:text="'Train No: #' + ${ticket.trainNo}">Train No :#45678</p>
+                            <p class="card-text mb-0" th:text="'PNR: ' + ${ticket.pnr}">PNR: 1234567890</p>
+                            <p class="card-text mb-0" th:text="'Class: ' + ${ticket.classes}">Class: 2A</p>
+                            <p class="card-text mb-0" th:text="'Date of Journey: ' + ${ticket.date}">Date of Journey : 12/12/2021</p>
+                            <p class="card-text mb-0" th:text="'Number Of Passengers: ' + ${ticket.passengers.size()}">Number Of Passengers : 5</p>
+                            <p class="card-text mb-0" th:text="'Total Fare: ' + ${ticket.calculateFinalPrice()}">Total Fare: 2500.00</p>
 
                         </div>
                         <div class="col-6 text-justify">
@@ -42,17 +42,17 @@
                             </p>
                             <div class="d-flex justify-content-between align-items-center mt-4">
                                 <div>
-                                    <p class="mb-0"><strong>3:12 PM, Thu</strong></p>
-                                    <p class="mb-0">Yesvantpur Jn (YPR)</p>
+                                    <p class="mb-0" th:text="${ticket.train.route.getDepartureTimeByStation(ticket.SRC)}"><strong>3:12 PM, Thu</strong></p>
+                                    <p class="mb-0" th:text="${ticket.SRC} ">Yesvantpur Jn (YPR)</p>
                                 </div>
                                 <div>
                                     <span class="mb-0">---------</span>
-                                    <span class="mb-0">4hrs 2mins</span>
+                                    <span class="mb-0"  th:text="${ticket.train.route.calculateJourneyTime(ticket.SRC,ticket.DEST)}">4hrs 2mins</span>
                                     <span class="mb-0">---------&gt;</span>
                                 </div>
                                 <div>
-                                    <p class="mb-0"><strong>7:14 PM, Thu</strong></p>
-                                    <p class="mb-0">Shivamogga H (SME)</p>
+                                    <p class="mb-0" th:text="${ticket.train.route.getArrivalTimeByStation(ticket.DEST)}"><strong>7:14 PM, Thu</strong></p>
+                                    <p class="mb-0" th:text="${ticket.DEST} ">Shivamogga H (SME)</p>
                                 </div>
                             </div>
                         </div>

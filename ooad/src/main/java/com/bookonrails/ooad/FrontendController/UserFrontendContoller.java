@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.bookonrails.ooad.Model.User;
+import com.bookonrails.ooad.Service.TicketService;
 import com.bookonrails.ooad.Service.UserService;
 
 import jakarta.servlet.http.Cookie;
@@ -21,6 +22,7 @@ public class UserFrontendContoller {
     @Autowired
     UserService userService;
     String errorMessage;
+    TicketService ticketService;
     
     @GetMapping(path="/login")
     public String login(Model m){
@@ -207,6 +209,7 @@ public class UserFrontendContoller {
         }
         model.addAttribute("user", u);
         model.addAttribute("message",u.getFirstName()+"'s Trips");
+        model.addAttribute("tickets", ticketService.getTicketByUser(u));
         return "user/my-trips";
     }
     

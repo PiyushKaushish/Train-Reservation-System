@@ -15,6 +15,7 @@ import com.bookonrails.ooad.Model.Station;
 import com.bookonrails.ooad.Model.Ticket;
 import com.bookonrails.ooad.Model.TicketStatus;
 import com.bookonrails.ooad.Model.Train;
+import com.bookonrails.ooad.Model.User;
 import com.bookonrails.ooad.Repository.TicketRepository;
 
 @Service
@@ -40,6 +41,15 @@ public class TicketService {
         String pnr = uniqueID.substring(0, 6);
         pnr = "PNR"+ pnr;
         return pnr; 
+    }
+
+    public List<Ticket> getTicketByUser(User user) {
+        List<Ticket> tickets = ticketRepository.findByUser(user);
+        if (tickets == null || tickets.isEmpty()) {
+            System.out.println("Ticket not present");
+        } 
+        return tickets; // Return the first and only ticket of this user
+        
     }
 
     public Ticket updateTicket(Ticket t){
