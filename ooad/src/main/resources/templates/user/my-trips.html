@@ -67,6 +67,13 @@
                                     <p class="mb-0" th:text="${ticket.DEST} ">Shivamogga H (SME)</p>
                                 </div>
                             </div>
+                            <!-- Add Feedback button if journey date is in the past -->
+                            <div th:if="${#dates.past(ticket.date)}">
+                                <form action="/ticket/give-feedback" method="get">
+                                    <input type="hidden" name="ticketId" th:value="${ticket.id}">
+                                    <button style="width:100%;" type="submit" class="btn btn-primary mt-3">Give Feedback</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
