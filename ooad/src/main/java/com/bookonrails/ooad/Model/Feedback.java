@@ -20,7 +20,6 @@ public class Feedback {
     private int rating;
     private String comment;
 
-
     public Long getId() {
         return Id;
     }
