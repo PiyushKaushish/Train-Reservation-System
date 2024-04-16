@@ -60,7 +60,7 @@
                             <!-- Add Feedback button if journey date is in the past -->
                             <!-- <div th:if="${#dates.past(ticket.date)}"> -->
                             <div th:if="${ticket.date.before(#dates.createToday())}">
-                                <form action="/feedback" method="get">
+                                <form action="/feedback/give-feedback" method="get">
                                     <input type="hidden" name="ticketId" th:value="${ticket.id}">
                                     <button style="width:100%;" type="submit" class="btn btn-primary mt-3">Give
                                         Feedback</button>

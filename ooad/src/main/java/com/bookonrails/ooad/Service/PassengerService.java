@@ -1,5 +1,6 @@
 package com.bookonrails.ooad.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,11 @@ public class PassengerService {
     }
 
     public List<Passenger> saveAllPassenger(List<Passenger> passengers){
-        return passengerRepository.saveAll(passengers);
+        List<Passenger> pa= new ArrayList<>();
+        for (Passenger p : passengers){
+            pa.add(passengerRepository.save(p));
+        }
+        return pa;
     }
     
 }

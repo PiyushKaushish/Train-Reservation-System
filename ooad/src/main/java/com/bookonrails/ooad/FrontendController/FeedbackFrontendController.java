@@ -22,8 +22,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 
 @Controller
-//@RequestMapping(path="/feedback")
-//@CrossOrigin(origins = "*")
+@RequestMapping(path="/feedback")
+@CrossOrigin(origins = "*")
 public class FeedbackFrontendController {
     
     @Autowired
@@ -34,8 +34,8 @@ public class FeedbackFrontendController {
 
     @Autowired
     private TicketService ticketService;
-    @GetMapping("/user/feedback")
-    public String feedback(Model model, HttpServletRequest request) {
+    @GetMapping("/give-feedback")
+    public String feedback(@RequestParam("ticketId") String ticketId ,Model model, HttpServletRequest request) {
         // Get the cookie with the name "username"
         String username = null;
         Cookie[] cookies = request.getCookies();
@@ -45,43 +45,26 @@ public class FeedbackFrontendController {
                 username = cookie.getValue();
                 break;
             }
-        }
-        }
+        }}
         if (username != null) {
         // Set the username as a model attribute
         model.addAttribute("username", username);
         }
 
+        model.addAttribute("ticketId", ticketId);
         return "user/feedback";
     }
 
     @PostMapping("user/feedback")
     public String submitFeedback(@RequestParam("rating") int rating,
                                  @RequestParam("comments") String comments,
-                                 //@RequestParam("username") String username,
+                                 @RequestParam("username") String username,
+                                 @RequestParam("ticketId") String ticketId,
                                  Model model,
                                  HttpServletRequest request) {
-        // Create a new feedback object
-        // Get the cookie with the name "username"
-        String username = null;
-        String ticketId = null;
-        Cookie[] cookies = request.getCookies();
-        
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("username".equals(cookie.getName())) {
-                    username = cookie.getValue();
-                } else if ("ticketId".equals(cookie.getName())) {
-                    ticketId = cookie.getValue();
-                }
-                if (username != null && ticketId != null) {
-                    break;
-                }
-            }
-        }
         if (username != null) {
-        // Set the username as a model attribute
-        model.addAttribute("username", username);
+            // Set the username as a model attribute
+            model.addAttribute("message", "user not logged in");
         }
         Ticket t= ticketService.getTicketById(Long.parseLong(ticketId));
         User u = userService.getUserByUsername(username);
