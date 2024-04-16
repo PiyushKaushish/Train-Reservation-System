@@ -341,7 +341,9 @@ public class SeatAvailability {
         if(availableSeats%2==0){
             this.lastUpperSeat= availableSeats;
         }
-        this.lastUpperSeat= availableSeats-1;
+        else{
+            this.lastUpperSeat= availableSeats-1;
+        }
     }
 
     public void allocatePassengerSeatNo(List<Passenger> passengers){ // allocate seatNo for Passengers present in a ticket
