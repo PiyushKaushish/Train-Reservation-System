@@ -192,6 +192,7 @@ public class TicketService {
         SeatAvailability sa = t.getSeatAvailability();
         sa.cancelTicket(t);
         t.setStatus(TicketStatus.Cancelled);
+        ticketRepository.save(t);
         // Get Waiting List tickets
         List<Ticket> wlTick = new ArrayList<>(sa.getWaitingList());
         List<Ticket> ticketsToSave = new ArrayList<>();
@@ -217,7 +218,6 @@ public class TicketService {
     
         ticketRepository.saveAll(ticketsToSave);
         seatAvailabilityService.updateSeatAvailibity(sa);
-        ticketRepository.save(t);
     }
     
 

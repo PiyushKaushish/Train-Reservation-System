@@ -20,6 +20,7 @@ import com.bookonrails.ooad.Model.Passenger;
 import com.bookonrails.ooad.Model.SeatAvailability;
 import com.bookonrails.ooad.Model.Station;
 import com.bookonrails.ooad.Model.Ticket;
+import com.bookonrails.ooad.Model.TicketStatus;
 import com.bookonrails.ooad.Model.Train;
 import com.bookonrails.ooad.Model.User;
 import com.bookonrails.ooad.Service.PassengerService;
@@ -182,6 +183,7 @@ public class TicketFrontendController {
     public String cancelTicket(@RequestParam("ticketId") String ticketId,Model m){
         Ticket t= ticketService.getTicketById(Long.parseLong(ticketId));
         ticketService.cancelTicket(t);
+        ticketService.updateTicketStatus(t.getId(), TicketStatus.Cancelled);
         
         double refund_amount = 0.0;
         if(t.calculateFinalPrice()>0.0){
