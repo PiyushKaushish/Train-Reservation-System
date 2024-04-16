@@ -1,6 +1,10 @@
 package com.bookonrails.ooad.FrontendController;
 
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bookonrails.ooad.Model.Ticket;
 import com.bookonrails.ooad.Model.User;
 import com.bookonrails.ooad.Service.TicketService;
 import com.bookonrails.ooad.Service.UserService;
@@ -213,9 +218,19 @@ public class UserFrontendContoller {
         if(u == null){
             return "redirect:/users/login";
         }
+        List<Ticket> tickets=ticketService.getTicketByUser(u);
+        Comparator<Ticket> ticketComparator = new Comparator<Ticket>() {
+            @Override
+            public int compare(Ticket t1, Ticket t2) {
+                // Compare ticketId in descending order
+                return t2.getId().compareTo(t1.getId());
+            }
+        };
+        // sort ticket by ticketId in decending order
+        Collections.sort(tickets, ticketComparator);
         model.addAttribute("user", u);
         model.addAttribute("message",u.getFirstName()+"'s Trips");
-        model.addAttribute("tickets", ticketService.getTicketByUser(u));
+        model.addAttribute("tickets",tickets );
         return "user/my-trips";
     }
     

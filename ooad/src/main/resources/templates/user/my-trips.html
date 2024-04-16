@@ -26,7 +26,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-6">
-                            <h4 class="card-title mb-2" th:text="${ticket.train.trainName}">Sbc Tlgp Exp</h4>
+                            <h4 class="card-title mb-2" th:text="${ticket.train.trainName}">Sbc Tlgp Exp</h4> <span class="text-danger h5" th:text="${ticket.status}"></span>
                             <p class="card-text mb-0" th:text="'Train No: #' + ${ticket.train.trainNo}">Train No :#45678</p>
                             <p class="card-text mb-0" th:text="'PNR: ' + ${ticket.PNR}">PNR: 1234567890</p>
                             <p class="card-text mb-0" th:text="'Class: ' + ${ticket.classes}">Class: 2A</p>
@@ -37,8 +37,20 @@
                         </div>
                         <div class="col-6 text-justify">
                             <p class="card-text mb-0">
-                                <a href="#" style="width: 100%;" class="btn btn-warning">View</a>
-                                <a href="#" style="width: 100%;" class="btn btn-danger">Cancel</a>
+                                <form action="/ticket/view-ticket" method="get">
+                                    <input type="hidden" name="ticketId" th:value="${ticket.id}">
+                                    <button style="width:100%;" type="submit" class="btn btn-warning">View Ticket
+                                    </button>
+                                </form>
+                                <div th:if="ticket.status == 'Confirmed' ">
+
+                                    <form action="/ticket/cancel-ticket" method="get">
+                                        <input type="hidden" name="ticketId" th:value="${ticket.id}">
+                                        <button style="width:100%;" type="submit" class="btn btn-danger"
+                                            onclick="return confirm('Are you sure you want to cancel this ticket?')" >Cancel Ticket
+                                        </button>
+                                    </form>
+                                </div>
                             </p>
                             <div class="d-flex justify-content-between align-items-center mt-4">
                                 <div>
@@ -54,6 +66,13 @@
                                     <p class="mb-0" th:text="${ticket.train.route.getArrivalTimeByStation(ticket.DEST)}"><strong>7:14 PM, Thu</strong></p>
                                     <p class="mb-0" th:text="${ticket.DEST} ">Shivamogga H (SME)</p>
                                 </div>
+                            </div>
+                            <!-- Add Feedback button if journey date is in the past -->
+                            <div th:if="${#dates.past(ticket.date)}">
+                                <form action="/ticket/give-feedback" method="get">
+                                    <input type="hidden" name="ticketId" th:value="${ticket.id}">
+                                    <button style="width:100%;" type="submit" class="btn btn-primary mt-3">Give Feedback</button>
+                                </form>
                             </div>
                         </div>
                     </div>

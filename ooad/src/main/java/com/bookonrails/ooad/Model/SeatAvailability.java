@@ -128,6 +128,7 @@ public class SeatAvailability {
     }
 
     public int getAvailableSeats() {
+        System.out.println("Cancelled seats size"+CancelledSeats.size());
         return availableSeats+CancelledSeats.size();
     }
 
@@ -426,7 +427,9 @@ public class SeatAvailability {
     public List<Integer> getPassengerSeats(List<Passenger> p){
         List<Integer> seats=new ArrayList<>();
         for(Passenger pa:p){
-            seats.add(pa.getSeatNo());
+            if (pa.getSeatNo()>0){ // ticket cancelled was confirmed
+                seats.add(pa.getSeatNo());
+            }
         }
         return seats;
     }
