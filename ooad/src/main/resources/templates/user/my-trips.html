@@ -47,7 +47,7 @@
                                 <button style="width:100%;" type="submit" class="btn btn-warning">View Ticket
                                 </button>
                             </form>
-                            <div th:if="${ticket.status == 'Confirmed' && ticket.date.after(#dates.createToday())} ">
+                            <div th:if="${ticket.date.after(#dates.createToday())} ">
 
                                 <form action="/ticket/cancel-ticket" method="get">
                                     <input type="hidden" name="ticketId" th:value="${ticket.id}">
@@ -59,7 +59,7 @@
                             </div>
                             <!-- Add Feedback button if journey date is in the past -->
                             <!-- <div th:if="${#dates.past(ticket.date)}"> -->
-                            <div th:if="${ticket.date.after(#dates.createToday())}">
+                            <div th:if="${ticket.date.before(#dates.createToday())}">
                                 <form action="/feedback" method="get">
                                     <input type="hidden" name="ticketId" th:value="${ticket.id}">
                                     <button style="width:100%;" type="submit" class="btn btn-primary mt-3">Give

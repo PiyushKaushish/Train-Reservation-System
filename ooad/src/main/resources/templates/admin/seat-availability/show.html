@@ -48,6 +48,7 @@
                         <th scope="col">Fare per Km Price</th>
                         <th scope="col">Senior Citizen Discount</th>
                         <th scope="col">Cancellation Charge</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -64,6 +65,14 @@
                         <td th:text="${sa.farePerKM}"></td>
                         <td th:text="${sa.seniorCitizenDiscount}"></td>
                         <td th:text="${sa.cancellationCharge}"></td>
+                        <td>
+                            <form method="get" th:action="@{/admin/seat-availability/delete/{id}(id=${sa.id})}">
+                                <button type="submit" class="btn btn-danger"
+                                    onclick="return confirm('Are you sure you want to delete this object?')">Delete
+                                </button>
+                            </form>
+                        </td>
+        
 
                     </tr>
                 </tbody>

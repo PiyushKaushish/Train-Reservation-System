@@ -84,9 +84,9 @@ public class AdminSeatAvailabilityFrontendController {
         return "admin/seat-availability/show";
     }
 
-    @PostMapping("/delete")
-    public String deleteSeatAvailability(@RequestParam("seatAvailabilityId") Long id) {
-        seatAvailabilityService.deleteSeatAvailabitity(seatAvailabilityService.getSeatAvailibity(id));
+    @GetMapping("/delete/{id}")
+    public String deleteSeatAvailability(@PathVariable String id) {
+        seatAvailabilityService.deleteSeatAvailabitity(seatAvailabilityService.getSeatAvailibity(Long.parseLong(id)));
         return "redirect:/admin/seat-availability/show";
     }
 
