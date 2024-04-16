@@ -1,6 +1,7 @@
 package com.bookonrails.ooad.Service;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -187,33 +188,38 @@ public class TicketService {
         return ticketRepository.findByStatus(TicketStatus.Waiting);
     }
 
-    public void  cancelTicket(Ticket t){
-        SeatAvailability sa= t.getSeatAvailability();
+    public void cancelTicket(Ticket t) {
+        SeatAvailability sa = t.getSeatAvailability();
         sa.cancelTicket(t);
+        t.setStatus(TicketStatus.Cancelled);
         // Get Waiting List tickets
-        List<Ticket> wlTick= sa.getWaitingList();
-        for (Ticket tk :wlTick) {
-            if(sa.getAvailableSeats()>0){
+        List<Ticket> wlTick = new ArrayList<>(sa.getWaitingList());
+        List<Ticket> ticketsToSave = new ArrayList<>();
+    
+        for (Ticket tk : wlTick) {
+            if (sa.getAvailableSeats() > 0) {
                 // Move from waiting list passenger and allocate seat
-                allocateSeats(tk);
-                if(tk.isPassengersWaiting()){
-                    sa.addTicketToWaitingList(t);
+                tk = allocateSeats(tk);
+    
+                if (tk.isPassengersWaiting()) {
+                    sa.addTicketToWaitingList(tk);
                     tk.setStatus(TicketStatus.Waiting);
-                }
-                else{
+                } else {
                     tk.setStatus(TicketStatus.Confirmed);
                     sa.deleteTicketFromWaitingList(tk);
                 }
-                ticketRepository.save(tk);
-            }
-            else{
+    
+                ticketsToSave.add(tk);
+            } else {
                 break;
             }
         }
+    
+        ticketRepository.saveAll(ticketsToSave);
         seatAvailabilityService.updateSeatAvailibity(sa);
         ticketRepository.save(t);
     }
-
+    
 
 
 

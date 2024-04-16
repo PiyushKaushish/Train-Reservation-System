@@ -199,7 +199,9 @@ public class SeatAvailability {
     }
 
     public void deleteTicketFromWaitingList(Ticket t){
-        this.waitingList.remove(t);
+        if(!waitingList.isEmpty()){
+            this.waitingList.remove(t);
+        }
     }
 
     public void checkWaitingPassengers(){
@@ -231,10 +233,12 @@ public class SeatAvailability {
     }
 
     
-    public void deleteCancelledSeat(int c){
-        CancelledSeats.remove(c);
+    public void deleteCancelledSeat(int c) {
+        if (!CancelledSeats.isEmpty()) {
+            CancelledSeats.remove(Integer.valueOf(c));
+        }
     }
-
+    
     public boolean isFull(){
         if(getAvailableSeats()<=0){
             return true; // all coaches are full

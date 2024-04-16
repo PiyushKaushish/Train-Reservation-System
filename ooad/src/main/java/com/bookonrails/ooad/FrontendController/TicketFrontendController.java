@@ -188,7 +188,7 @@ public class TicketFrontendController {
             refund_amount=t.calculateFinalPrice() - t.getSeatAvailability().getCancellationCharge();
         }
         System.out.println(refund_amount);
-        m.addAttribute("message", "The amount"+ refund_amount + " will be refunded in 10-15 working days");
+        m.addAttribute("message", "The amount of Rs. "+ refund_amount + " will be refunded in 10-15 working days");
         return "message";
     }
 

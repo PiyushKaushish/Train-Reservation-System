@@ -52,12 +52,15 @@ public class PassengerService {
         }
     }
 
-    public List<Passenger> saveAllPassenger(List<Passenger> passengers){
-        List<Passenger> pa= new ArrayList<>();
-        for (Passenger p : passengers){
-            pa.add(passengerRepository.save(p));
+    public List<Passenger> saveAllPassenger(List<Passenger> passengers) {
+        List<Passenger> savedPassengers = new ArrayList<>();
+        List<Passenger> passengersCopy = new ArrayList<>(passengers); // Create a copy of the list
+    
+        for (Passenger p : passengersCopy) {
+            savedPassengers.add(passengerRepository.save(p));
         }
-        return pa;
+    
+        return savedPassengers;
     }
     
 }
