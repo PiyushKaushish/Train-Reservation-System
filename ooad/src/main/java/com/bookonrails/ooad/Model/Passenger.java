@@ -22,7 +22,7 @@ public class Passenger {
     private int seatNo; 
     private int coachNo;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ticket_id", nullable = false)
     private Ticket ticket;
 

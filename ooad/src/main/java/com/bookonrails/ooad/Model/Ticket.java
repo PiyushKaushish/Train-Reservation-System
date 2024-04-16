@@ -46,7 +46,7 @@ public class Ticket {
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
 
-    @OneToOne(mappedBy = "ticket", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "ticket", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private Payment payment;
 
     private double totalAmount;
