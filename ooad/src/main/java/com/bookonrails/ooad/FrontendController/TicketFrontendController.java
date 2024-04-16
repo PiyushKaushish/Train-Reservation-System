@@ -178,4 +178,30 @@ public class TicketFrontendController {
         return "train/ticket";
     }
 
+    @GetMapping("/cancel-ticket")
+    public String cancelTicket(@RequestParam("ticketId") String ticketId,Model m){
+        Ticket t= ticketService.getTicketById(Long.parseLong(ticketId));
+        ticketService.cancelTicket(t);
+        
+        double refund_amount = 0.0;
+        if(t.calculateFinalPrice()>0.0){
+            refund_amount=t.calculateFinalPrice() - t.getSeatAvailability().getCancellationCharge();
+        }
+        System.out.println(refund_amount);
+        m.addAttribute("message", "The amount"+ refund_amount + " will be refunded in 10-15 working days");
+        return "message";
+    }
+
+    @GetMapping("/view-ticket")
+    public String viewTicket(@RequestParam("ticketId") String ticketId,HttpServletResponse response){
+        // set cookie for ticketId
+        Cookie ticketIdCookie = new Cookie("ticketId", ticketId);
+        ticketIdCookie.setMaxAge(7 * 24 * 60 * 60);
+        ticketIdCookie.setPath("/");
+        response.addCookie(ticketIdCookie);
+
+        return "redirect:/ticket/show-ticket";
+
+    }
+
 }

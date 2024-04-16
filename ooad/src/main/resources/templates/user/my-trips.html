@@ -37,8 +37,17 @@
                         </div>
                         <div class="col-6 text-justify">
                             <p class="card-text mb-0">
-                                <a href="#" style="width: 100%;" class="btn btn-warning">View</a>
-                                <a href="#" style="width: 100%;" class="btn btn-danger">Cancel</a>
+                                <form action="/ticket/view-ticket" method="get">
+                                    <input type="hidden" name="ticketId" th:value="${ticket.id}">
+                                    <button style="width:100%;" type="submit" class="btn btn-warning">View Ticket
+                                    </button>
+                                </form>
+                                <form action="/ticket/cancel-ticket" method="get">
+                                    <input type="hidden" name="ticketId" th:value="${ticket.id}">
+                                    <button style="width:100%;" type="submit" class="btn btn-danger"
+                                        onclick="return confirm('Are you sure you want to cancel this ticket?')" >Cancel Ticket
+                                    </button>
+                                </form>
                             </p>
                             <div class="d-flex justify-content-between align-items-center mt-4">
                                 <div>
