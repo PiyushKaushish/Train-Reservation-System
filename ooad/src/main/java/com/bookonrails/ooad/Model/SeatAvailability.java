@@ -350,22 +350,20 @@ public class SeatAvailability {
         for (Passenger p: passengers){
             Birth b=p.getBirthpreference();
             int seatNo= allocateSeatNumber(b);
-            if (isFull()){
-                p.setWaitingList(isFull());
-            }
             if(seatNo>0){
-                p.setWaitingList(isFull());
+                p.setWaitingList(false);
                 p.setSeatNo(seatNo);
                 p.setCoachNo((seatNo/this.no_of_coaches)+1);
                 continue;
             }
             seatNo= allocateSeatNumber();
             if(seatNo>0){
-                p.setWaitingList(isFull());
+                p.setWaitingList(false);
                 p.setSeatNo(seatNo);
                 p.setCoachNo((seatNo/this.no_of_coaches)+1);
-                // continue;
+                continue;
             }
+            p.setWaitingList(true);
         }
     }
 
