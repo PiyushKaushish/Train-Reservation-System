@@ -255,7 +255,7 @@ public class SeatAvailability {
             return -1;
         }
         if(b==Birth.Lower){
-            if(lastUnbookedLowerSeat<=availableSeats){ // seats are empty
+            if(lastUnbookedLowerSeat<=lastLowerSeat){ // seats are empty
                 int seatNo= lastUnbookedLowerSeat;
                 availableSeats--;
                 lastUnbookedLowerSeat+=2;
@@ -273,7 +273,7 @@ public class SeatAvailability {
             } 
         }
         else if (b== Birth.Upper){
-            if(lastUnbookedUpperSeat<=availableSeats){ // seats are empty
+            if(lastUnbookedUpperSeat<=lastUpperSeat){ // seats are empty
                 int seatNo= lastUnbookedUpperSeat;
                 lastUnbookedUpperSeat+=2;
                 availableSeats--;
