@@ -3,11 +3,11 @@ Content-Type: application/json
 
 {
     "id":1,
-    "username": "shreya123",
-    "password": "shreya",
-    "email": "s@gmail.com",
-    "phoneNumber": "838363262",
+    "username": "aditi123",
+    "password": "aditi",
+    "email": "aditi@gmail.com",
+    "phoneNumber": "7988842322",
     "address": "bangalore",
-    "firstName": "Shreya",
-    "lastName": "Mishra"
+    "firstName": "Aditi",
+    "lastName": "Goyal"
 }
