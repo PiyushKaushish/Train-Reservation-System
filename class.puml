@@ -1,7 +1,6 @@
 @startuml
 
 ' define enums
-
 enum PaymentStatus {
     Pending
     Success
