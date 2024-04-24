@@ -75,18 +75,27 @@ public class SeatAvailability {
         return train.getTrainNo();
     }
 
-    private String convertDayOfWeekEnum(DayOfWeek d){
+    private String convertDayOfWeekEnum(DayOfWeek d) {
         switch (d) {
-            case DayOfWeek.Monday:return "Monday";        
-            case DayOfWeek.Tuesday:return "Tuesday";        
-            case DayOfWeek.Wednesday:return "Wednesday";        
-            case DayOfWeek.Thursday:return "Thursday";        
-            case DayOfWeek.Friday:return "Monday";        
-            case DayOfWeek.Saturday:return "Saturday";        
-            case DayOfWeek.Sunday:return "Sunday";        
-            default: return "invalid";
+            case Monday:
+                return "Monday";
+            case Tuesday:
+                return "Tuesday";
+            case Wednesday:
+                return "Wednesday";
+            case Thursday:
+                return "Thursday";
+            case Friday:
+                return "Friday";
+            case Saturday:
+                return "Saturday";
+            case Sunday:
+                return "Sunday";
+            default:
+                return "Invalid";
         }
     }
+
 
     public String getDaysRunning(){
         List<OperatingDay> od= train.getOperatingDays();

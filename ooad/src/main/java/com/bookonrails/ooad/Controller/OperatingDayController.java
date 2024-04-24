@@ -28,24 +28,25 @@ public class OperatingDayController {
     // Map DayOfWeek enum to String
     private String mapDayOfWeekToString(DayOfWeek dayOfWeek) {
         switch(dayOfWeek) {
-            case DayOfWeek.Monday:
+            case Monday:
                 return "Monday";
-            case DayOfWeek.Tuesday:
+            case Tuesday:
                 return "Tuesday";
-            case DayOfWeek.Wednesday:
+            case Wednesday:
                 return "Wednesday";
-            case DayOfWeek.Thursday:
+            case Thursday:
                 return "Thursday";
-            case DayOfWeek.Friday:
+            case Friday:
                 return "Friday";
-            case DayOfWeek.Saturday:
+            case Saturday:
                 return "Saturday";
-            case DayOfWeek.Sunday:
+            case Sunday:
                 return "Sunday";
             default:
                 return "Invalid";
         }
     }
+
 
     @GetMapping("/get/{trainNo}")
     public List<String> getOperatingDaysByTrainNo(@PathVariable String trainNo) {
